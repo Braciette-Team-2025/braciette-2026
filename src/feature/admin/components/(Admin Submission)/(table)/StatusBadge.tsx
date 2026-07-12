@@ -6,24 +6,32 @@ export function StatusBadge({ status }: Props) {
   const config = {
     approved: {
       label: "Disetujui",
-      color: "bg-green-500",
+      bg: "bg-[#7F7F7F]",
+      circle: "bg-[#D9D9D9]",
+      text: "text-white",
     },
     pending: {
       label: "Menunggu",
-      color: "bg-yellow-500",
+      bg: "bg-[#D9D9D9]",
+      circle: "bg-[#7F7F7F]",
+      text: "text-[#7F7F7F]",
     },
     rejected: {
       label: "Ditolak",
-      color: "bg-red-500",
+      bg: "bg-[#9B9B9B]",
+      circle: "bg-[#D3D3D3]",
+      text: "text-[#D3D3D3]",
     },
   };
 
   const current = config[status];
 
   return (
-    <div className="flex items-center justify-between rounded-full bg-muted px-3 py-1 text-xs">
-      <span>{current.label}</span>
-      <div className={`h-2 w-2 rounded-full ${current.color}`} />
+    <div
+      className={`flex items-center justify-between rounded-full ${current.bg} px-1 text-[14px] border border-[#BEC8CF]`}
+    >
+      <span className={`${current.text}`}>{current.label}</span>
+      <div className={`h-2 w-2 rounded-full ${current.circle}`} />
     </div>
   );
 }
