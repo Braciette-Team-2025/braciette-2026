@@ -1,9 +1,49 @@
-import { StatisticProps } from "../../types/statistic";
+import { LucideIcon, Users } from "lucide-react";
 
-export default function Statistic({ cards }: StatisticProps) {
+export default function Statistic() {
+  interface PerformanceCard {
+    id: number;
+    label: string;
+    value: number;
+    icon: LucideIcon;
+  }
+
+  const PerformanceCards: PerformanceCard[] = [
+    {
+      id: 1,
+      label: "Ormawa",
+      value: 1284,
+      icon: Users,
+    },
+    {
+      id: 2,
+      label: "BEM",
+      value: 760,
+      icon: Users,
+    },
+    {
+      id: 3,
+      label: "DPM",
+      value: 130,
+      icon: Users,
+    },
+    {
+      id: 4,
+      label: "HIMA",
+      value: 590,
+      icon: Users,
+    },
+    {
+      id: 5,
+      label: "Ormawa",
+      value: 899,
+      icon: Users,
+    },
+  ];
+
   return (
     <div className="flex justify-between">
-      {cards.map((item) => {
+      {PerformanceCards.map((item) => {
         const Icon = item.icon;
         return (
           <div
