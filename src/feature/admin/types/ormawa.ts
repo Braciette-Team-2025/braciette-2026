@@ -1,3 +1,5 @@
+import SubmissionTable from "../components/(Admin Submission)/(table)/SubmissionTable";
+
 export type OrmawaType = "BEM" | "DPM" | "HIMA" | "UKM";
 
 export interface ConfirmationDialogProps {
@@ -42,4 +44,17 @@ export interface StepTwoValues {
   competitions: CompetitionItem[];
   subKategori: string;
   driveLink: string;
+}
+
+export interface OrmawaTable {
+  id: number;
+  nama: string;
+  pic: string;
+  kontak: string;
+  jenis: OrmawaType;
+  status: "approved" | "pending" | "rejected";
+}
+
+export interface SubmissionProps {
+  submissionList: OrmawaTable[];
 }
