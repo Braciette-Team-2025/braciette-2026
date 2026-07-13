@@ -6,14 +6,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function FilterDropdown() {
+export default function FilterJenis() {
   return (
     <Select>
-      <SelectTrigger className="h-12! w-[148px] border-gray-500">
-        <SelectValue placeholder="Filter" />
+      <SelectTrigger className="h-12! w-[148px] border-[#AFAFAF]">
+        <SelectValue placeholder="Filter Jenis" />
       </SelectTrigger>
-
       <SelectContent>
+        <SelectItem value="semua">Semua</SelectItem>
         <SelectItem value="bem">BEM</SelectItem>
         <SelectItem value="dpm">DPM</SelectItem>
         <SelectItem value="hima">HIMA</SelectItem>

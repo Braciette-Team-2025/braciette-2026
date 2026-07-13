@@ -54,57 +54,57 @@ export default function SubmissionTable() {
     },
   ];
   return (
-    <div className="border-gray-400 border rounded-xl overflow-hidden">
-      <Table>
-        <TableHeader className="bg-gray-500">
-          <TableRow className="text-white font-semibold font-inter hover:bg-gray-500">
-            <TableHead className="text-white font-semibold text-center border-r border-gray-400">
+    <div className="overflow-hidden rounded-xl border-2 border-[#BEC8CF]">
+      <Table className="border-separate border-spacing-0 text-[14px]">
+        <TableHeader className="">
+          <TableRow className="text-white font-semibold font-inter bg-[#7F7F7F] hover:bg-[#7F7F7F]">
+            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
               No
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r border-gray-400">
+            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
               Nama Ormawa
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r border-gray-400">
+            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
               Kontak PIC
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r border-gray-400">
+            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
               PIC
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r border-gray-400">
+            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
               Jenis Ormawa
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r border-gray-400">
+            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
               Status
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r border-gray-400">
+            <TableHead className="text-white font-semibold text-center">
               Aksi
             </TableHead>
           </TableRow>
         </TableHeader>
 
-        <TableBody>
+        <TableBody className="text-[#757575]">
           {listOrmawa.map((data) => (
             <TableRow key={data.id} className="text-center">
-              <TableCell className="border-r border-gray-400">
+              <TableCell className="border-r-2 border-[#BEC8CF]">
                 {data.id}
               </TableCell>
-              <TableCell className="border-r border-gray-400">
+              <TableCell className="border-r-2 border-[#BEC8CF]">
                 {data.nama}
               </TableCell>
-              <TableCell className="border-r border-gray-400">
+              <TableCell className="border-r-2 border-[#BEC8CF]">
                 {data.pic}
               </TableCell>
-              <TableCell className="border-r border-gray-400">
+              <TableCell className="border-r-2 border-[#BEC8CF]">
                 {data.kontak}
               </TableCell>
-              <TableCell className="border-r border-gray-400">
+              <TableCell className="border-r-2 border-[#BEC8CF]">
                 {data.jenis}
               </TableCell>
-              <TableCell className="border-r border-gray-400">
+              <TableCell className="border-r-2 border-[#BEC8CF]">
                 <StatusBadge status={data.status} />
               </TableCell>
 
-              <TableCell>
+              <TableCell className="">
                 <ActionButtons />
               </TableCell>
             </TableRow>
