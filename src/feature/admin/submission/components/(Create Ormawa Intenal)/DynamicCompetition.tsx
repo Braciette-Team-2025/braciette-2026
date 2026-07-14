@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { CompetitionItem } from "../../types/ormawa";
 import CompetitionField from "./CompetitionField";
 

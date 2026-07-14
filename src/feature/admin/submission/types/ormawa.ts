@@ -1,5 +1,3 @@
-import SubmissionTable from "../components/(Admin Submission)/(table)/SubmissionTable";
-
 export type OrmawaType = "BEM" | "DPM" | "HIMA" | "UKM";
 
 export interface ConfirmationDialogProps {
