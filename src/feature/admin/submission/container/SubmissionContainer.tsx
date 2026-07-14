@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SubmissionContent from "../components/(Admin Submission)/SubmissionContent";
+import SubmissionContent from "../components/(Submission)/SubmissionContent";
 
 export default function SubmissionContainer() {
   return (

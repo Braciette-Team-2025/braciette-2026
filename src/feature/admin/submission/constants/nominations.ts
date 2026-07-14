@@ -1,4 +1,4 @@
-import type { NominationItem } from "@/src/feature/admin/types/ormawa";
+import type { NominationItem } from "@/src/feature/admin/submission/types/ormawa";
 
 export const BEM_NOMINATIONS: NominationItem[] = [
   { id: "bem-most-productive", label: "Most Productive" },

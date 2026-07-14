@@ -5,10 +5,10 @@ import type {
   OrmawaType,
   StepOneValues,
   StepTwoValues,
-} from "@/src/feature/admin/types/ormawa";
-import CreateHeader from "@/src/feature/admin/components/(Create Ormawa Intenal)/CreateHeader";
-import StepOneForm from "@/src/feature/admin/components/(Create Ormawa Intenal)/StepOneForm";
-import StepTwoForm from "@/src/feature/admin/components/(Create Ormawa Intenal)/StepTwoForm";
+} from "@/src/feature/admin/submission/types/ormawa";
+import CreateHeader from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/CreateHeader";
+import StepOneForm from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/StepOneForm";
+import StepTwoForm from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/StepTwoForm";
 import ConfirmationDialog from "../components/(Create Ormawa Intenal)/(dialog)/ConfirmationDialog";
 
 const STEPS = ["Informasi Ormawa", "Kredensial"];
