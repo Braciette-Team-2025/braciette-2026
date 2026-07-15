@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SubmissionContent from "../components/(Submission)/SubmissionContent";
-import SubmissionDetailModalInternal from "../components/(Submission)/(modal)/SubmissionDetailModalInternal";
-import SubmissionDetailModalExternal from "../components/(Submission)/(modal)/SubmissionDetailModalExternal";
-import ConfirmationDialog from "../components/(Submission)/(modal)/ConfirmationDialog";
+import SubmissionContent from "../components/(Admin Submission)/SubmissionContent";
+import SubmissionDetailModalInternal from "../submission/components/(Submission)/(modal)/SubmissionDetailModalInternal";
+import SubmissionDetailModalExternal from "../submission/components/(Submission)/(modal)/SubmissionDetailModalExternal";
+import ConfirmationDialog from "../submission/components/(Submission)/(modal)/ConfirmationDialog";
 import type { OrmawaTable, SubmissionDetailData } from "../types/ormawa";
 import {
   externalSubmissionList,
