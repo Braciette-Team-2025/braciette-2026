@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SubmissionContent from "../components/(Admin Submission)/SubmissionContent";
+import SubmissionContent from "../components/(Submission)/SubmissionContent";
 import SubmissionDetailModalInternal from "../components/(Admin Submission)/(modal)/SubmissionDetailModalInternal";
 import SubmissionDetailModalExternal from "../components/(Admin Submission)/(modal)/SubmissionDetailModalExternal";
 import ConfirmationDialog from "../components/(Admin Submission)/(modal)/ConfirmationDialog";

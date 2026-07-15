@@ -5,15 +5,15 @@ import type {
   OrmawaType,
   StepOneValues,
   StepTwoValues,
-} from "@/src/feature/admin/types/ormawa";
-import CreateHeader from "@/src/feature/admin/components/(Create Ormawa)/CreateHeader";
-import StepOneForm from "@/src/feature/admin/components/(Create Ormawa)/StepOneForm";
-import StepTwoForm from "@/src/feature/admin/components/(Create Ormawa)/StepTwoForm";
-import ConfirmationDialog from "../components/(Create Ormawa)/(dialog)/ConfirmationDialog";
+} from "@/src/feature/admin/submission/types/ormawa";
+import CreateHeader from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/CreateHeader";
+import StepOneForm from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/StepOneForm";
+import StepTwoForm from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/StepTwoForm";
+import ConfirmationDialog from "../components/(Create Ormawa Intenal)/(dialog)/ConfirmationDialog";
 
 const STEPS = ["Informasi Ormawa", "Kredensial"];
 
-export default function CreateOrmawaContainer() {
+export default function CreateOrmawaInternalContainer() {
   const [currentStep, setCurrentStep] = useState<1 | 2>(1);
   const [stepOneData, setStepOneData] = useState<StepOneValues | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
