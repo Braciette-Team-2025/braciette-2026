@@ -46,13 +46,66 @@ export interface StepTwoValues {
 
 export interface OrmawaTable {
   id: number;
-  nama: string;
+  tanggalPendaftaran: string;
+  terakhirDiedit: string;
   pic: string;
-  kontak: string;
-  jenis: OrmawaType;
+  kontakPic: string;
+  namaOrmawa: string;
+  jenisOrmawa: OrmawaType;
+  namaKabinet: string;
+  nominasi: string[];
+  programKerjaUnggulan: string;
   status: "approved" | "pending" | "rejected";
+  deskripsiSingkat: string;
+  linkDrive: string;
+
+  subKategori?: string;
+  lombaDimenangkan?: string[];
 }
 
-export interface SubmissionProps {
+export interface SubmissionActionHandlers {
+  onDelete: (id: number) => void;
+  onEdit: (data: OrmawaTable) => void;
+  onDetail: (data: OrmawaTable) => void;
+}
+
+export interface SubmissionProps extends SubmissionActionHandlers {
   submissionList: OrmawaTable[];
+}
+
+export interface SubmissionContentProps extends SubmissionActionHandlers {
+  type: "internal" | "external";
+}
+
+export interface SubmissionDetailData {
+  id: number;
+  tanggalPendaftaran: string;
+  terakhirDiedit: string;
+  pic: string;
+  kontakPic: string;
+  namaOrmawa: string;
+  jenisOrmawa: OrmawaType;
+  namaKabinet: string;
+  nominasi: string[];
+  programKerjaUnggulan: string;
+  status: "approved" | "pending" | "rejected";
+  deskripsiSingkat: string;
+  linkDrive: string;
+
+  subKategori?: string;
+  lombaDimenangkan?: string[];
+}
+
+export interface SubmissionDetailModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  data: SubmissionDetailData;
+}
+
+export interface BaseModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title: string;
+  children: React.ReactNode;
+  widthClassName?: string;
 }

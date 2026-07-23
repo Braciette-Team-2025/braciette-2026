@@ -10,12 +10,14 @@ import {
   externalSubmissionList,
   internalSubmissionList,
 } from "../../constants/ormawaList";
+import type { SubmissionContentProps } from "../../types/ormawa";
 
-interface SubmissionContentProps {
-  type: "internal" | "external";
-}
-
-export default function SubmissionContent({ type }: SubmissionContentProps) {
+export default function SubmissionContent({
+  type,
+  onDelete,
+  onEdit,
+  onDetail,
+}: SubmissionContentProps) {
   const cards = type === "internal" ? internalCards : externalCards;
   const submissions =
     type === "internal" ? internalSubmissionList : externalSubmissionList;
@@ -32,7 +34,12 @@ export default function SubmissionContent({ type }: SubmissionContentProps) {
         <FilterStatus />
         <SortButton />
       </div>
-      <SubmissionTable submissionList={submissions} />
+      <SubmissionTable
+        submissionList={submissions}
+        onDelete={onDelete}
+        onEdit={onEdit}
+        onDetail={onDetail}
+      />
     </div>
   );
 }
