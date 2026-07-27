@@ -61,7 +61,6 @@ export default function CreateOrmawaInternalContainer() {
               confirmText="Konfirmasi"
               onConfirm={() => setOpenConfirm(false)}
             />
-            ;
           </>
         )}
       </div>

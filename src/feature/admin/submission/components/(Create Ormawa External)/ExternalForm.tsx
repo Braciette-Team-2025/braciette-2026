@@ -6,39 +6,32 @@ import * as z from "zod";
 import { Upload } from "lucide-react";
 import ConfirmationDialog from "../(Create Ormawa Intenal)/(dialog)/ConfirmationDialog";
 import { useState } from "react";
+import { ORMAWA_TYPES } from "../../constants/nominations";
 
-const ORMAWA_TYPES = ["BEM", "DPM", "HIMA", "UKM"];
-const UKM_CATEGORIES = ["Penalaran", "Seni", "Olahraga", "Kerohanian"];
+const ORMAWA_ENUM = [
+  "BEM",
+  "DPM",
+  "HIMA",
+  "UKM PENALARAN",
+  "UKM OLAHRAGA",
+  "UKM KESENIAN",
+  "UKM KEROHANIAN",
+] as const;
 
-const formSchema = z
-  .object({
-    ormawaType: z.enum(ORMAWA_TYPES),
-    subKategori: z.string().optional(),
-    namaOrmawa: z.string(),
-    logo: z
-      .any()
-      .refine((files) => files?.length > 0, "Logo wajib diunggah")
-      .refine(
-        (files) => files?.[0]?.size <= 5000000,
-        "Ukuran file maksimal 5 MB",
-      )
-      .refine(
-        (files) => files?.[0]?.type === "application/pdf",
-        "Hanya menerima format PDF",
-      ),
-  })
-  .superRefine((data, ctx) => {
-    if (
-      data.ormawaType === "UKM" &&
-      (!data.subKategori || data.subKategori === "")
-    ) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Pilih Kategori UKM",
-        path: ["subKategori"],
-      });
-    }
-  });
+const formSchema = z.object({
+  ormawaType: z.enum(ORMAWA_ENUM),
+
+  namaOrmawa: z.string(),
+
+  logo: z
+    .any()
+    .refine((files) => files?.length > 0, "Logo wajib diunggah")
+    .refine((files) => files?.[0]?.size <= 5000000, "Ukuran file maksimal 5 MB")
+    .refine(
+      (files) => files?.[0]?.type === "application/pdf",
+      "Hanya menerima format PDF",
+    ),
+});
 type FormValues = z.infer<typeof formSchema>;
 
 export default function ExternalForm() {
@@ -52,16 +45,11 @@ export default function ExternalForm() {
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      ormawaType: "",
+      namaOrmawa: "",
     },
   });
 
-  const selectedOrmawaType = watch("ormawaType");
-
   const onSubmit = (data: FormValues) => {
-    if (data.ormawaType !== "UKM") {
-      delete data.subKategori;
-    }
     setPendingData(data);
     setOpenConfirm(true);
   };
@@ -98,8 +86,8 @@ export default function ExternalForm() {
                 Pilih Jenis Ormawa
               </option>
               {ORMAWA_TYPES.map((item) => (
-                <option key={item} value={item}>
-                  {item}
+                <option key={item.value} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -123,53 +111,6 @@ export default function ExternalForm() {
             <p className="text-sm text-red-500">{errors.ormawaType.message}</p>
           )}
         </div>
-
-        {selectedOrmawaType === "UKM" && (
-          <div className="space-y-2">
-            <label
-              htmlFor="subKategori"
-              className="block text-sm font-semibold text-gray-700"
-            >
-              Sub Kategori
-            </label>
-            <div className="relative">
-              <select
-                id="subKategori"
-                {...register("subKategori")}
-                className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500"
-              >
-                <option value="" disabled className="text-gray-400">
-                  Pilih Kategori UKM
-                </option>
-                {UKM_CATEGORIES.map((kategori) => (
-                  <option key={kategori} value={kategori}>
-                    {kategori}
-                  </option>
-                ))}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-            </div>
-            {errors.subKategori && (
-              <p className="text-sm text-red-500">
-                {errors.subKategori.message}
-              </p>
-            )}
-          </div>
-        )}
 
         <div className="space-y-2">
           <label

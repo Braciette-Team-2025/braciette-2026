@@ -9,74 +9,104 @@ import {
 import { StatusBadge } from "./StatusBadge";
 import { ActionButtons } from "./ActionButton";
 import { SubmissionProps } from "../../../types/ormawa";
+import EmptyTable from "./EmptyTable";
 
 export default function SubmissionTable({
   submissionList,
   onDelete,
   onEdit,
   onDetail,
+  type,
 }: SubmissionProps) {
+  const columnCount = type === "internal" ? 7 : 4;
+  const isInternal = type === "internal";
+
   return (
     <div className="overflow-hidden rounded-xl border-2 border-[#BEC8CF]">
       <Table className="border-separate border-spacing-0 text-[14px]">
-        <TableHeader className="">
-          <TableRow className="text-white font-semibold font-inter bg-[#7F7F7F] hover:bg-[#7F7F7F]">
-            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
+        <TableHeader>
+          <TableRow className="bg-[#7F7F7F] font-inter font-semibold text-white hover:bg-[#7F7F7F]">
+            <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
               No
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
+
+            <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
               Nama Ormawa
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
-              Kontak PIC
-            </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
-              PIC
-            </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
+
+            {isInternal && (
+              <>
+                <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+                  PIC
+                </TableHead>
+
+                <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+                  Kontak PIC
+                </TableHead>
+              </>
+            )}
+
+            <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
               Jenis Ormawa
             </TableHead>
-            <TableHead className="text-white font-semibold text-center border-r-2 border-[#BEC8CF]">
-              Status
-            </TableHead>
-            <TableHead className="text-white font-semibold text-center">
-              Aksi
-            </TableHead>
+
+            {isInternal && (
+              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+                Status
+              </TableHead>
+            )}
+
+            <TableHead className="text-center text-white">Aksi</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody className="text-[#757575]">
-          {submissionList.map((data) => (
-            <TableRow key={data.id} className="text-center">
-              <TableCell className="border-r-2 border-[#BEC8CF]">
-                {data.id}
-              </TableCell>
-              <TableCell className="border-r-2 border-[#BEC8CF]">
-                {data.namaOrmawa}
-              </TableCell>
-              <TableCell className="border-r-2 border-[#BEC8CF]">
-                {data.kontakPic}
-              </TableCell>
-              <TableCell className="border-r-2 border-[#BEC8CF]">
-                {data.pic}
-              </TableCell>
-              <TableCell className="border-r-2 border-[#BEC8CF]">
-                {data.jenisOrmawa}
-              </TableCell>
-              <TableCell className="border-r-2 border-[#BEC8CF]">
-                <StatusBadge status={data.status} />
-              </TableCell>
+          {submissionList.length === 0 ? (
+            <EmptyTable colSpan={columnCount} />
+          ) : (
+            submissionList.map((data) => (
+              <TableRow key={data.id} className="text-center">
+                <TableCell className="border-r-2 border-[#BEC8CF]">
+                  {data.id}
+                </TableCell>
 
-              <TableCell className="">
-                <ActionButtons
-                  data={data}
-                  onDetail={onDetail}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                />
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell className="border-r-2 border-[#BEC8CF]">
+                  {data.namaOrmawa}
+                </TableCell>
+
+                {isInternal && (
+                  <>
+                    <TableCell className="border-r-2 border-[#BEC8CF]">
+                      {data.pic}
+                    </TableCell>
+
+                    <TableCell className="border-r-2 border-[#BEC8CF]">
+                      {data.kontakPic}
+                    </TableCell>
+                  </>
+                )}
+
+                <TableCell className="border-r-2 border-[#BEC8CF]">
+                  {data.jenisOrmawa}
+                </TableCell>
+
+                {isInternal && (
+                  <TableCell className="border-r-2 border-[#BEC8CF]">
+                    <StatusBadge status={data.status} />
+                  </TableCell>
+                )}
+
+                <TableCell>
+                  <ActionButtons
+                    data={data}
+                    onDetail={onDetail}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                  />
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </div>

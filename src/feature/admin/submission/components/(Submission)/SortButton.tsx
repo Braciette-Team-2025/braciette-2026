@@ -1,14 +1,40 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 
-export default function SortButton() {
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+interface SortButtonProps {
+  value: "az" | "za";
+  onChange: (value: "az" | "za") => void;
+}
+
+export default function SortButton({ value, onChange }: SortButtonProps) {
   return (
-    <Button
-      variant="outline"
-      className="h-12 w-[148px] gap-2 justify-between border-[#AFAFAF]"
-    >
-      <h1 className="text-gray-500">Urutkan</h1>
-      <ArrowUpDown className="w-4 h-4 text-gray-500" />
-    </Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          className="h-12 w-[148px] justify-between border-[#AFAFAF]"
+        >
+          Urutkan
+          <ArrowUpDown className="h-4 w-4 text-gray-500" />
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent className="w-[180px]">
+        <DropdownMenuItem onClick={() => onChange("az")}>
+          Nama A - Z
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={() => onChange("za")}>
+          Nama Z - A
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
