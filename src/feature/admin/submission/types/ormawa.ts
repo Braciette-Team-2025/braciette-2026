@@ -1,4 +1,12 @@
-export type OrmawaType = "BEM" | "DPM" | "HIMA" | "UKM";
+export type OrmawaType =
+  | "BEM"
+  | "DPM"
+  | "HIMA"
+  | "UKM"
+  | "UKM PENALARAN"
+  | "UKM OLAHRAGA"
+  | "UKM KESENIAN"
+  | "UKM KEROHANIAN";
 
 export interface ConfirmationDialogProps {
   open: boolean;
@@ -40,7 +48,6 @@ export interface StepOneValues {
 export interface StepTwoValues {
   selectedNominations: string[];
   competitions: CompetitionItem[];
-  subKategori: string;
   driveLink: string;
 }
 
@@ -71,6 +78,7 @@ export interface SubmissionActionHandlers {
 
 export interface SubmissionProps extends SubmissionActionHandlers {
   submissionList: OrmawaTable[];
+  type: "internal" | "external";
 }
 
 export interface SubmissionContentProps extends SubmissionActionHandlers {

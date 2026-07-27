@@ -20,6 +20,10 @@ const NOMINATIONS_MAP: Record<OrmawaType, typeof BEM_NOMINATIONS> = {
   DPM: DPM_NOMINATIONS,
   HIMA: HIMA_NOMINATIONS,
   UKM: UKM_NOMINATIONS,
+  "UKM PENALARAN": UKM_NOMINATIONS,
+  "UKM OLAHRAGA": UKM_NOMINATIONS,
+  "UKM KESENIAN": UKM_NOMINATIONS,
+  "UKM KEROHANIAN": UKM_NOMINATIONS,
 };
 
 const LABEL_MAP: Record<OrmawaType, string> = {
@@ -27,6 +31,10 @@ const LABEL_MAP: Record<OrmawaType, string> = {
   DPM: "Nominasi DPM",
   HIMA: "Nominasi HIMA",
   UKM: "Nominasi UKM",
+  "UKM PENALARAN": "Nominasi UKM Penalaran",
+  "UKM OLAHRAGA": "Nominasi UKM Olahraga",
+  "UKM KESENIAN": "Nominasi UKM Kesenian",
+  "UKM KEROHANIAN": "Nominasi UKM Kerohanian",
 };
 
 export default function NominationList({

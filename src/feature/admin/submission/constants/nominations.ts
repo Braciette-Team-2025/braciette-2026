@@ -40,4 +40,8 @@ export const ORMAWA_TYPES = [
   { value: "DPM", label: "DPM" },
   { value: "HIMA", label: "HIMA" },
   { value: "UKM", label: "UKM" },
+  { value: "UKM PENALARAN", label: "UKM PENALARAN" },
+  { value: "UKM OLAHRAGA", label: "UKM OLAHRAGA" },
+  { value: "UKM KESENIAN", label: "UKM KESENIAN" },
+  { value: "UKM KEROHANIAN", label: "UKM KEROHANIAN" },
 ];

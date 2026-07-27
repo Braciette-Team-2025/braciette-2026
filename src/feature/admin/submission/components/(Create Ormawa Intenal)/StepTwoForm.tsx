@@ -8,8 +8,8 @@ import type {
 } from "../../types/ormawa";
 import NominationList from "./NominationList";
 import DynamicCompetition from "./DynamicCompetition";
-import SubCategorySelect from "./SubCategorySelect";
 import DriveInput from "./DriveInput";
+import { UKM_TYPES } from "../../constants/ormawa";
 
 interface StepTwoFormProps {
   type: OrmawaType;
@@ -32,10 +32,9 @@ export default function StepTwoForm({
   const [competitions, setCompetitions] = useState<CompetitionItem[]>(
     initialValues?.competitions ?? DEFAULT_COMPETITION,
   );
-  const [subKategori, setSubKategori] = useState(
-    initialValues?.subKategori ?? "",
-  );
   const [driveLink, setDriveLink] = useState(initialValues?.driveLink ?? "");
+
+  const isUkm = UKM_TYPES.includes(type);
 
   const handleToggleNomination = (id: string) => {
     setSelectedNominations((prev) =>
@@ -48,21 +47,14 @@ export default function StepTwoForm({
     onSubmit({
       selectedNominations,
       competitions,
-      subKategori,
       driveLink,
     });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {type === "UKM" && (
-        <>
-          <SubCategorySelect
-            value={subKategori}
-            onValueChange={setSubKategori}
-          />
-          <DynamicCompetition value={competitions} onChange={setCompetitions} />
-        </>
+      {isUkm && (
+        <DynamicCompetition value={competitions} onChange={setCompetitions} />
       )}
 
       <NominationList
