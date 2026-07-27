@@ -79,6 +79,7 @@ export interface SubmissionActionHandlers {
 export interface SubmissionProps extends SubmissionActionHandlers {
   submissionList: OrmawaTable[];
   type: "internal" | "external";
+  startIndex: number;
 }
 
 export interface SubmissionContentProps extends SubmissionActionHandlers {
