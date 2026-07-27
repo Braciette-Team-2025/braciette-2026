@@ -6,17 +6,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function FilterStatus() {
+interface FilterStatusProps {
+  value: string;
+  onValueChange: (value: string) => void;
+}
+
+export default function FilterStatus({
+  value,
+  onValueChange,
+}: FilterStatusProps) {
   return (
-    <Select>
+    <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger className="h-12! w-[148px] border-[#AFAFAF]">
         <SelectValue placeholder="Filter Status" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="semua">Semua</SelectItem>
-        <SelectItem value="disetujui">Disetujui</SelectItem>
-        <SelectItem value="menunggu">Menunggu</SelectItem>
-        <SelectItem value="ditolak">Ditolak</SelectItem>
+        <SelectItem value="approved">Disetujui</SelectItem>
+        <SelectItem value="pending">Menunggu</SelectItem>
+        <SelectItem value="rejected">Ditolak</SelectItem>
       </SelectContent>
     </Select>
   );
