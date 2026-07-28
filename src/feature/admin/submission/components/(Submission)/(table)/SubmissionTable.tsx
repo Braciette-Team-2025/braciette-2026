@@ -17,6 +17,7 @@ export default function SubmissionTable({
   onEdit,
   onDetail,
   type,
+  startIndex,
 }: SubmissionProps) {
   const columnCount = type === "internal" ? 7 : 4;
   const isInternal = type === "internal";
@@ -64,10 +65,10 @@ export default function SubmissionTable({
           {submissionList.length === 0 ? (
             <EmptyTable colSpan={columnCount} />
           ) : (
-            submissionList.map((data) => (
+            submissionList.map((data, index) => (
               <TableRow key={data.id} className="text-center">
                 <TableCell className="border-r-2 border-[#BEC8CF]">
-                  {data.id}
+                  {startIndex + index + 1}
                 </TableCell>
 
                 <TableCell className="border-r-2 border-[#BEC8CF]">

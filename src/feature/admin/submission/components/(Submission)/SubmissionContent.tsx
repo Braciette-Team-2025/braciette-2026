@@ -11,8 +11,9 @@ import {
   internalSubmissionList,
 } from "../../constants/ormawaList";
 import type { SubmissionContentProps } from "../../types/ormawa";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Pagination from "./Pagination";
 
 export default function SubmissionContent({
   type,
@@ -29,6 +30,9 @@ export default function SubmissionContent({
   const [statusFilter, setStatusFilter] = useState("semua");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"az" | "za">("az");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const ITEMS_PER_PAGE = 5;
 
   const filteredSubmissions = useMemo(() => {
     let data = [...submissions];
@@ -58,6 +62,16 @@ export default function SubmissionContent({
     return data;
   }, [submissions, search, jenisFilter, statusFilter, sortBy, type]);
 
+  const paginatedData = filteredSubmissions.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredSubmissions.length / ITEMS_PER_PAGE),
+  );
+
   const addPage = () => {
     router.push(`/admin/submission/${type}-create`);
   };
@@ -68,20 +82,50 @@ export default function SubmissionContent({
       <AddOrmawaButton onClick={addPage} />
       <div className="flex items-center gap-4 py-4">
         <div className="flex-1">
-          <SearchBar onChange={setSearch} value={search} />
+          <SearchBar
+            value={search}
+            onChange={(value) => {
+              setSearch(value);
+              setCurrentPage(1);
+            }}
+          />
         </div>
-        <FilterJenis onValueChange={setJenisFilter} value={jenisFilter} />
+        <FilterJenis
+          value={jenisFilter}
+          onValueChange={(value) => {
+            setJenisFilter(value);
+            setCurrentPage(1);
+          }}
+        />
         {type === "internal" && (
-          <FilterStatus onValueChange={setStatusFilter} value={statusFilter} />
+          <FilterStatus
+            value={statusFilter}
+            onValueChange={(value) => {
+              setStatusFilter(value);
+              setCurrentPage(1);
+            }}
+          />
         )}
-        <SortButton onChange={setSortBy} value={sortBy} />
+        <SortButton
+          value={sortBy}
+          onChange={(value) => {
+            setSortBy(value);
+            setCurrentPage(1);
+          }}
+        />
       </div>
       <SubmissionTable
-        submissionList={filteredSubmissions}
+        submissionList={paginatedData}
         onDelete={onDelete}
         onEdit={onEdit}
         onDetail={onDetail}
         type={type}
+        startIndex={(currentPage - 1) * ITEMS_PER_PAGE}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
       />
     </div>
   );
