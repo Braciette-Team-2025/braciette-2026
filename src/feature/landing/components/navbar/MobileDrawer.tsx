@@ -8,7 +8,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import type { NavigationItem } from "../../types/navigation";
+import type { NavigationItem } from "./types/navigation";
 
 export interface MobileDrawerProps {
   open: boolean;
