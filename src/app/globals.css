@@ -48,6 +48,30 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
+  /* Blue */
+  --color-blue-50: var(--blue-50);
+  --color-blue-100: var(--blue-100);
+  --color-blue-200: var(--blue-200);
+  --color-blue-300: var(--blue-300);
+  --color-blue-400: var(--blue-400);
+  --color-blue-500: var(--blue-500);
+  --color-blue-600: var(--blue-600);
+  --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
+  --color-blue-900: var(--blue-900);
+
+  /* Yellow */
+  --color-yellow-50: var(--yellow-50);
+  --color-yellow-100: var(--yellow-100);
+  --color-yellow-200: var(--yellow-200);
+  --color-yellow-300: var(--yellow-300);
+  --color-yellow-400: var(--yellow-400);
+  --color-yellow-500: var(--yellow-500);
+  --color-yellow-600: var(--yellow-600);
+  --color-yellow-700: var(--yellow-700);
+  --color-yellow-800: var(--yellow-800);
+  --color-yellow-900: var(--yellow-900);
+
   /* Typography */
   --text-h1: 48px;
   --text-h1--line-height: 64px;
@@ -75,6 +99,41 @@
 
   --text-s2: 11px;
   --text-s2--line-height: 20px;
+
+  /* Typography Baru */
+
+  --text-8xl: 96px;
+  --text-8xl--line-height: 96px;
+
+  --text-7xl: 72px;
+  --text-7xl--line-height: 72px;
+
+  --text-6xl: 60px;
+  --text-6xl--line-height: 60px;
+
+  --text-5xl: 48px;
+  --text-5xl--line-height: 48px;
+
+  --text-4xl: 36px;
+  --text-4xl--line-height: 40px;
+
+  --text-3xl: 30px;
+  --text-3xl--line-height: 36px;
+
+  --text-2xl: 24px;
+  --text-2xl--line-height: 36px;
+
+  --text-xl: 20px;
+  --text-xl--line-height: 32px;
+
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+
+  --text-md: 16px;
+  --text-md--line-height: 24px;
+
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
 }
 
 :root {
@@ -188,15 +247,31 @@
 }
 
 @layer utilities {
-  .heading {
+  .font-heading {
+    @apply font-jakarta;
+  }
+
+  .font-body {
+    @apply font-inter;
+  }
+
+  .heading-bold {
     @apply font-jakarta font-bold;
   }
 
-  .subheading {
+  .heading-semibold {
     @apply font-jakarta font-semibold;
   }
 
-  .body-text {
-    @apply font-inter;
+  .heading-medium {
+    @apply font-jakarta font-medium;
+  }
+
+  .body-medium {
+    @apply font-inter font-medium;
+  }
+
+  .body-regular {
+    @apply font-inter font-normal;
   }
 }
