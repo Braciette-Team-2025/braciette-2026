@@ -1,5 +1,5 @@
 import { NavbarItem } from "./NavbarItem";
-import type { NavigationItem } from "../../types/navigation";
+import type { NavigationItem } from "./types/navigation";
 
 export interface NavbarMenuProps {
   items: NavigationItem[];

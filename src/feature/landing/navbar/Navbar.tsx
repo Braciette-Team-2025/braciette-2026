@@ -6,8 +6,8 @@ import { NavbarMenu } from "./NavbarMenu";
 import { NavbarActions } from "./NavbarAction";
 import { MobileMenuButton } from "./MobileMenuButton";
 import { MobileDrawer } from "./MobileDrawer";
-import { NAVIGATION_ITEMS } from "../../constants/navigation";
-import type { NavigationItem } from "../../types/navigation";
+import { NAVIGATION_ITEMS } from "./constants/navigation";
+import type { NavigationItem } from "./types/navigation";
 
 export interface NavbarProps {
   items?: NavigationItem[];
