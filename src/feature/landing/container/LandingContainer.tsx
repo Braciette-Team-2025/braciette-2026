@@ -1,5 +1,5 @@
-import Footer from "../components/footer/Footer";
-import { Navbar } from "../components/navbar/Navbar";
+import Footer from "../footer/Footer";
+import { Navbar } from "../navbar/Navbar";
 
 export function LandingContainer() {
   return (
