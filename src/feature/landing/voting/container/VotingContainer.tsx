@@ -21,7 +21,7 @@ export function VotingContainer() {
     searchQuery,
     setSearchQuery,
     isLoading: isLoadingOrganizations,
-  } = useOrganization(selectedCategory?.id ?? null);
+  } = useOrganization(selectedCategory?.id ?? "");
 
   const {
     selectedOrganizationId,
