@@ -22,7 +22,6 @@ export function useCreateOrmawaInternal() {
   };
 
   const handleConfirm = () => {
-    // TODO: panggil API submit di sini
     setOpenConfirm(false);
   };
 

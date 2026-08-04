@@ -18,7 +18,6 @@ export function useSubmissionList(type: "internal" | "external") {
   const [sortBy, setSortBy] = useState<"az" | "za">("az");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Reset ke halaman 1 tiap kali filter/search berubah
   function resetPage() {
     setCurrentPage(1);
   }
@@ -62,14 +61,11 @@ export function useSubmissionList(type: "internal" | "external") {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
   return {
-    // Data
     paginatedData,
     startIndex,
     totalPages,
     currentPage,
     setCurrentPage,
-
-    // Filter & search state + setters (auto-reset halaman)
     search,
     setSearch: (value: string) => {
       setSearch(value);
