@@ -1,8 +1,8 @@
 import { Table, TableBody } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { VotingTableHeader } from "../(table)/TableHeader";
-import { VotingTableRow } from "../(table)/TableRow";
-import { EmptyVoting } from "./EmptyVoting";
+import { VotingTableHeader } from "../table/TableHeader";
+import { VotingTableRow } from "../table/TableRow";
+import { EmptyVoting } from "../voting/EmptyVoting";
 import type { VotingResultItem } from "../../types/voting";
 
 export interface VotingTableProps {

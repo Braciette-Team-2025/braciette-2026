@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 
-import { VotingContent } from "../components/(voting)/VotingContent";
-import Pagination from "../../submission/components/(Submission)/Pagination";
+import { VotingContent } from "../components/voting/VotingContent";
+import Pagination from "../../submission/components/submission/Pagination";
 
 import {
   DEFAULT_VOTING_CATEGORY_ID,
