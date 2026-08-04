@@ -2,7 +2,7 @@
 
 import BaseModal from "./BaseModal";
 import DetailField from "./DetailField";
-import { StatusBadge } from "../(table)/StatusBadge";
+import { StatusBadge } from "../table/StatusBadge";
 
 import type { SubmissionDetailModalProps } from "../../../types/ormawa";
 

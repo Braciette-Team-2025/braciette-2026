@@ -2,78 +2,29 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SubmissionContent from "../components/(Submission)/SubmissionContent";
-import SubmissionDetailModalInternal from "../components/(Submission)/(modal)/SubmissionDetailModalInternal";
-import SubmissionDetailModalExternal from "../components/(Submission)/(modal)/SubmissionDetailModalExternal";
-import ConfirmationDialog from "../components/(Submission)/(modal)/ConfirmationDialog";
-import type { OrmawaTable, SubmissionDetailData } from "../types/ormawa";
-import {
-  externalSubmissionList,
-  internalSubmissionList,
-} from "../constants/ormawaList";
+import SubmissionContent from "../components/submission/SubmissionContent";
+import SubmissionDetailModalInternal from "../components/submission/modal/SubmissionDetailModalInternal";
+import SubmissionDetailModalExternal from "../components/submission/modal/SubmissionDetailModalExternal";
+import ConfirmationDialog from "../components/submission/modal/ConfirmationDialog";
+import { useSubmissionDetail } from "../hooks/useSubmissionDetail";
 
 export default function SubmissionContainer() {
-  const [detailOpen, setDetailOpen] = useState(false);
-  const [detailData, setDetailData] = useState<SubmissionDetailData | null>(
-    null,
-  );
-
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [deleteLoading, setDeleteLoading] = useState(false);
-
   const [activeTab, setActiveTab] = useState<"internal" | "external">(
     "internal",
   );
 
-  const handleDetail = (row: OrmawaTable) => {
-    const source =
-      activeTab === "internal"
-        ? internalSubmissionList
-        : externalSubmissionList;
-
-    const found = source.find((item) => item.id === row.id);
-
-    if (!found) return;
-
-    const detail: SubmissionDetailData = {
-      id: found.id,
-      namaOrmawa: found.namaOrmawa,
-      jenisOrmawa: found.jenisOrmawa,
-      namaKabinet: found.namaKabinet,
-      pic: found.pic,
-      kontakPic: found.kontakPic,
-      status: found.status,
-      tanggalPendaftaran: found.tanggalPendaftaran,
-      terakhirDiedit: found.terakhirDiedit,
-      nominasi: found.nominasi,
-      programKerjaUnggulan: found.programKerjaUnggulan,
-      deskripsiSingkat: found.deskripsiSingkat,
-      linkDrive: found.linkDrive,
-      lombaDimenangkan: found.lombaDimenangkan || [],
-      subKategori: found.subKategori || "-",
-    };
-
-    setDetailData(detail);
-    setDetailOpen(true);
-  };
-
-  const handleEdit = (row: OrmawaTable) => {
-    console.log("Edit:", row.id);
-  };
-
-  const handleDelete = (id: number) => {
-    setDeleteId(id);
-    setDeleteOpen(true);
-  };
-
-  const confirmDelete = async () => {
-    if (deleteId === null) return;
-    setDeleteLoading(true);
-    setDeleteLoading(false);
-    setDeleteOpen(false);
-    setDeleteId(null);
-  };
+  const {
+    detailOpen,
+    setDetailOpen,
+    detailData,
+    deleteOpen,
+    setDeleteOpen,
+    deleteLoading,
+    handleDetail,
+    handleEdit,
+    handleDelete,
+    confirmDelete,
+  } = useSubmissionDetail(activeTab);
 
   const DetailModal =
     activeTab === "internal"
@@ -136,10 +87,4 @@ export default function SubmissionContainer() {
       />
     </div>
   );
-}
-
-function fetchOrmawaDetail(
-  id: number,
-): SubmissionDetailData | PromiseLike<SubmissionDetailData> {
-  throw new Error("Function not implemented.");
 }

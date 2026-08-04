@@ -1,35 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import type {
-  OrmawaType,
-  StepOneValues,
-  StepTwoValues,
-} from "@/src/feature/admin/submission/types/ormawa";
-import CreateHeader from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/CreateHeader";
-import StepOneForm from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/StepOneForm";
-import StepTwoForm from "@/src/feature/admin/submission/components/(Create Ormawa Intenal)/StepTwoForm";
-import ConfirmationDialog from "../components/(Create Ormawa Intenal)/(dialog)/ConfirmationDialog";
+import type { OrmawaType } from "@/src/feature/admin/submission/types/ormawa";
+import CreateHeader from "@/src/feature/admin/submission/components/create-ormawa-internal/CreateHeader";
+import StepOneForm from "@/src/feature/admin/submission/components/create-ormawa-internal/StepOneForm";
+import StepTwoForm from "@/src/feature/admin/submission/components/create-ormawa-internal/StepTwoForm";
+import ConfirmationDialog from "../components/create-ormawa-internal/dialog/ConfirmationDialog";
+import { useCreateOrmawaInternal } from "../hooks/useCreateOrmawaInternal";
 
 const STEPS = ["Informasi Ormawa", "Kredensial"];
 
 export default function CreateOrmawaInternalContainer() {
-  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
-  const [stepOneData, setStepOneData] = useState<StepOneValues | null>(null);
-  const [openConfirm, setOpenConfirm] = useState(false);
-
-  const handleStepOneNext = (data: StepOneValues) => {
-    setStepOneData(data);
-    setCurrentStep(2);
-  };
-
-  const handleStepTwoBack = () => {
-    setCurrentStep(1);
-  };
-
-  const handleStepTwoSubmit = (data: StepTwoValues) => {
-    setOpenConfirm(true);
-  };
+  const {
+    currentStep,
+    stepOneData,
+    openConfirm,
+    setOpenConfirm,
+    handleStepOneNext,
+    handleStepTwoBack,
+    handleStepTwoSubmit,
+    handleConfirm,
+  } = useCreateOrmawaInternal();
 
   return (
     <div className="min-h-full py-12 px-6 font-inter">
@@ -59,7 +49,7 @@ export default function CreateOrmawaInternalContainer() {
               title="Konfirmasi data"
               description="Pastikan seluruh data yang dimasukkan sudah benar sebelum disimpan"
               confirmText="Konfirmasi"
-              onConfirm={() => setOpenConfirm(false)}
+              onConfirm={handleConfirm}
             />
           </>
         )}

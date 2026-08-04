@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Upload } from "lucide-react";
-import ConfirmationDialog from "../(Create Ormawa Intenal)/(dialog)/ConfirmationDialog";
+import ConfirmationDialog from "../create-ormawa-internal/dialog/ConfirmationDialog";
 import { useState } from "react";
 import { ORMAWA_TYPES } from "../../constants/nominations";
 

@@ -1,6 +1,6 @@
 "use client";
-import CreateHeader from "../components/(Create Ormawa External)/CreateHeader";
-import StepOneForm from "../components/(Create Ormawa External)/ExternalForm";
+import CreateHeader from "../components/create-ormawa-external/CreateHeader";
+import StepOneForm from "../components/create-ormawa-external/ExternalForm";
 
 export default function CreateOrmawaEksternalContainer() {
   return (

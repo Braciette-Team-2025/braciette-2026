@@ -1,5 +1,5 @@
 import { TableCell, TableRow as UiTableRow } from "@/components/ui/table";
-import { ProgressBar } from "../(voting)/ProgressBar";
+import { ProgressBar } from "../voting/ProgressBar";
 import type { VotingResultItem } from "../../types/voting";
 
 export interface VotingTableRowProps {
