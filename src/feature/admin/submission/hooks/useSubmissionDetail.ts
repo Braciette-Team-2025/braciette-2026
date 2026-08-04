@@ -26,8 +26,6 @@ export function useSubmissionDetail(activeTab: "internal" | "external") {
     const found = source.find((item) => item.id === row.id);
     if (!found) return;
 
-    // OrmawaTable dan SubmissionDetailData memiliki bentuk yang sama,
-    // sehingga bisa langsung di-assign tanpa copy field satu per satu.
     setDetailData({
       ...found,
       lombaDimenangkan: found.lombaDimenangkan ?? [],
@@ -37,7 +35,6 @@ export function useSubmissionDetail(activeTab: "internal" | "external") {
   };
 
   const handleEdit = (row: OrmawaTable) => {
-    // TODO: implementasi logika edit
     console.log("Edit:", row.id);
   };
 
@@ -49,24 +46,18 @@ export function useSubmissionDetail(activeTab: "internal" | "external") {
   const confirmDelete = async () => {
     if (deleteId === null) return;
     setDeleteLoading(true);
-    // TODO: panggil API delete di sini
     setDeleteLoading(false);
     setDeleteOpen(false);
     setDeleteId(null);
   };
 
   return {
-    // State detail
     detailOpen,
     setDetailOpen,
     detailData,
-
-    // State delete
     deleteOpen,
     setDeleteOpen,
     deleteLoading,
-
-    // Handler
     handleDetail,
     handleEdit,
     handleDelete,
