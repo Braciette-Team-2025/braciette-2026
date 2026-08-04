@@ -29,10 +29,11 @@ export default function StepTwoForm({
   onBack,
   onSubmit,
 }: StepTwoFormProps) {
+  const isDriveLinkValid = data.linkDrive.includes("https://drive");
   const isComplete =
     data.talentDitampilkan.trim() !== "" &&
     data.jenisPenampilan.trim() !== "" &&
-    data.linkDrive.trim() !== "";
+    isDriveLinkValid;
 
   return (
     <div className="space-y-6">
@@ -51,19 +52,28 @@ export default function StepTwoForm({
         onValueChange={(val) => onChange({ jenisPenampilan: val })}
       />
 
-      <NumberField
-        label="Jumlah Anggota"
-        value={data.jumlahAnggota}
-        onChange={(val) => onChange({ jumlahAnggota: val })}
-      />
+      {data.jenisPenampilan !== "individu" && (
+        <NumberField
+          label="Jumlah Anggota"
+          value={data.jumlahAnggota}
+          onChange={(val) => onChange({ jumlahAnggota: val })}
+        />
+      )}
 
-      <FormField
-        label="Link Drive"
-        placeholder="http://"
-        value={data.linkDrive}
-        onChange={(val) => onChange({ linkDrive: val })}
-        type="url"
-      />
+      <div>
+        <FormField
+          label="Link Drive"
+          placeholder="https://drive..."
+          value={data.linkDrive}
+          onChange={(val) => onChange({ linkDrive: val })}
+          type="url"
+        />
+        {data.linkDrive.length > 0 && !isDriveLinkValid && (
+          <p className="text-red-500 text-sm mt-1 font-medium">
+            Link harus diawali dengan https://drive
+          </p>
+        )}
+      </div>
 
       <div className="flex justify-between pt-4">
         <Button
