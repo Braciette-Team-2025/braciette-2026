@@ -15,12 +15,12 @@ export function ActionButtons({
   data,
 }: ActionButtonsProps) {
   return (
-    <div className="flex gap-2 items-center justify-between">
+    <div className="flex w-full gap-[10px] items-center">
       <Button
         onClick={() => onDetail(data)}
         size="xs"
         variant="secondary"
-        className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"
+        className="flex-1 border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-0"
       >
         Detail
       </Button>
@@ -29,7 +29,7 @@ export function ActionButtons({
         onClick={() => onEdit(data)}
         size="xs"
         variant="secondary"
-        className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"
+        className="flex-1 border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-0"
       >
         Edit
       </Button>
@@ -38,7 +38,7 @@ export function ActionButtons({
         onClick={() => onDelete(data.id)}
         size="xs"
         variant="secondary"
-        className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"
+        className="flex-1 border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-0"
       >
         Hapus
       </Button>

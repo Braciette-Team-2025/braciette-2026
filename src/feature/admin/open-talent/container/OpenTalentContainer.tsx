@@ -7,9 +7,23 @@ import OpenTalentTable from "../components/table/OpenTalentTable";
 import Pagination from "../components/Pagination";
 
 import { useRouter } from "next/navigation";
+import { useOpenTalentList } from "../hooks/useOpenTalentList";
 
 export default function OpenTalentContainer() {
   const router = useRouter();
+  const {
+    paginatedData,
+    startIndex,
+    totalPages,
+    currentPage,
+    setCurrentPage,
+    search,
+    setSearch,
+    statusFilter,
+    setStatusFilter,
+    sortBy,
+    setSortBy,
+  } = useOpenTalentList();
 
   return (
     <div className="py-15 pl-6 pr-[100px] bg-white min-h-screen space-y-6">
@@ -20,11 +34,11 @@ export default function OpenTalentContainer() {
 
       <div className="flex justify-between gap-4">
         <div className="flex-1">
-          <SearchBar value={""} onChange={() => {}} />
+          <SearchBar value={search} onChange={setSearch} />
         </div>
         <div className="flex gap-4">
-          <FilterStatus value={""} onValueChange={() => {}} />
-          <SortButton value={"az"} onChange={() => {}} />
+          <FilterStatus value={statusFilter} onValueChange={setStatusFilter} />
+          <SortButton value={sortBy} onChange={setSortBy} />
         </div>
       </div>
 
@@ -34,9 +48,15 @@ export default function OpenTalentContainer() {
         />
       </div>
 
-      <OpenTalentTable />
+      <OpenTalentTable data={paginatedData} startIndex={startIndex} />
 
-      <Pagination currentPage={1} totalPages={5} onPageChange={() => {}} />
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      )}
     </div>
   );
 }
