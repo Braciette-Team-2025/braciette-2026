@@ -34,8 +34,20 @@ export default function StepOneForm({
   const set = (field: keyof StepOneValues) => (value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
+  const isComplete =
+    form.jenisOrmawa.trim() !== "" &&
+    form.namaOrmawa.trim() !== "" &&
+    form.namaKabinet.trim() !== "" &&
+    form.pic.trim() !== "" &&
+    form.kontakPic.trim() !== "" &&
+    form.deskripsi.trim() !== "" &&
+    form.programKerja.trim() !== "";
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isComplete) return;
+
     onNext(form);
   };
 
@@ -102,7 +114,8 @@ export default function StepOneForm({
       <button
         type="submit"
         id="step-one-submit"
-        className="w-full rounded-lg bg-gray-700 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-gray-800 active:scale-[0.99]"
+        disabled={!isComplete}
+        className="w-full rounded-lg bg-gray-700 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-gray-800 active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:active:scale-100"
       >
         Selanjutnya
       </button>
