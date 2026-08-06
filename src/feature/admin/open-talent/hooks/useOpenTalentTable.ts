@@ -21,7 +21,6 @@ export function useOpenTalentTable() {
   };
 
   const handleConfirmDelete = () => {
-    // Implement delete logic here using itemToDelete
     setDeleteConfirmOpen(false);
     setItemToDelete(null);
   };

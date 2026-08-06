@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
 import Background from "./Background";
-import { Navbar } from "../navbar/Navbar";
-import Footer from "../footer/Footer";
+import { Navbar } from "../../landing/navbar";
+import Footer from "../../landing/footer/Footer";
 
 interface PublicLayoutProps {
   children: ReactNode;
