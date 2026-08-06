@@ -16,7 +16,7 @@ export function useCreateOpenTalent() {
 
   const [stepTwoData, setStepTwoData] = useState({
     talentDitampilkan: "",
-    jenisPenampilan: "",
+    jenisPenampilan: "individu",
     jumlahAnggota: 1,
     linkDrive: "",
   });

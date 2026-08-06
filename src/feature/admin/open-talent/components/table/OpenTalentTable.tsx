@@ -11,10 +11,18 @@ import { ActionButtons } from "./ActionButton";
 import EmptyTable from "./EmptyTable";
 import OpenTalentDetailModal from "../modal/OpenTalentDetailModal";
 import ConfirmationDialog from "../modal/ConfirmationDialog";
-import { dummyData } from "../../constants";
+import { OpenTalentData } from "../../types";
 import { useOpenTalentTable } from "../../hooks/useOpenTalentTable";
 
-export default function OpenTalentTable() {
+interface OpenTalentTableProps {
+  data: OpenTalentData[];
+  startIndex: number;
+}
+
+export default function OpenTalentTable({
+  data,
+  startIndex,
+}: OpenTalentTableProps) {
   const {
     detailModalOpen,
     setDetailModalOpen,
@@ -28,11 +36,19 @@ export default function OpenTalentTable() {
 
   return (
     <>
-      <div className="overflow-hidden rounded-xl border-2 border-[#BEC8CF]">
-        <Table className="border-separate border-spacing-0 text-[14px]">
+      <div className="overflow-hidden rounded-xl border-2 border-[#BEC8CF] w-full">
+        <Table className="w-full table-fixed border-separate border-spacing-0 text-[14px]">
+          <colgroup>
+            <col style={{ width: "5%" }} />
+            <col style={{ width: "25%" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "25%" }} />
+          </colgroup>
           <TableHeader>
             <TableRow className="bg-[#7F7F7F] font-inter font-semibold text-white hover:bg-[#7F7F7F]">
-              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white w-[60px]">
+              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
                 No
               </TableHead>
               <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
@@ -47,44 +63,42 @@ export default function OpenTalentTable() {
               <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
                 Status
               </TableHead>
-              <TableHead className="text-center text-white w-[300px]">
-                Aksi
-              </TableHead>
+              <TableHead className="text-center text-white">Aksi</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody className="text-[#757575]">
-            {dummyData.length === 0 ? (
+            {data.length === 0 ? (
               <EmptyTable colSpan={6} />
             ) : (
-              dummyData.map((data, index) => (
+              data.map((item, index) => (
                 <TableRow
-                  key={data.id}
+                  key={item.id}
                   className="text-center bg-white hover:bg-white"
                 >
                   <TableCell className="border-r-2 border-[#BEC8CF] py-4">
-                    {index + 1}
+                    {startIndex + index + 1}
+                  </TableCell>
+
+                  <TableCell className="border-r-2 border-[#BEC8CF] py-4 break-words whitespace-normal">
+                    {item.namaKetua}
                   </TableCell>
 
                   <TableCell className="border-r-2 border-[#BEC8CF] py-4">
-                    {data.namaKetua}
+                    {item.kontakKetua}
                   </TableCell>
 
                   <TableCell className="border-r-2 border-[#BEC8CF] py-4">
-                    {data.kontakKetua}
+                    {item.jenisPenampilan}
                   </TableCell>
 
-                  <TableCell className="border-r-2 border-[#BEC8CF] py-4">
-                    {data.jenisPenampilan}
-                  </TableCell>
-
-                  <TableCell className="border-r-2 border-[#BEC8CF] py-4 px-6">
-                    <StatusBadge status={data.status} />
+                  <TableCell className="border-r-2 border-[#BEC8CF] py-4 px-4">
+                    <StatusBadge status={item.status} />
                   </TableCell>
 
                   <TableCell className="py-4">
                     <ActionButtons
-                      data={data}
+                      data={item}
                       onDetail={handleOpenDetail}
                       onEdit={() => {}}
                       onDelete={handleOpenDelete}
