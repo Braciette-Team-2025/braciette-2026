@@ -32,7 +32,6 @@ export default function OpenTalentDetailModal({
           <StatusBadge status={data.status} />
         </div>
         <div />{" "}
-        {/* Empty div for grid alignment if necessary, though grid-cols-2 will handle it */}
         <DetailField
           label="Link Drive"
           fullWidth

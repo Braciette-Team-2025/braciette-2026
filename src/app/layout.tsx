@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { jakarta, inter } from "@/src/styles/fonts";
+import { jakarta, inter, sloop, theSeasons } from "@/src/styles/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${jakarta.variable} ${inter.variable} h-full antialiased`}
+      className={`${jakarta.variable} ${inter.variable} ${sloop.variable} ${theSeasons.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

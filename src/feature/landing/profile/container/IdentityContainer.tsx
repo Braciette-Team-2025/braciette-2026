@@ -12,7 +12,6 @@ export function IdentityContainer() {
 
   const handleSubmit = (data: IdentityFormData) => {
     console.log("Update identity:", data);
-    // TODO: panggil API update profile
   };
 
   return (

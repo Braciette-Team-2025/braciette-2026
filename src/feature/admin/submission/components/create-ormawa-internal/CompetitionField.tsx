@@ -20,7 +20,6 @@ export default function CompetitionField({
 }: CompetitionFieldProps) {
   return (
     <div className="flex items-center gap-3">
-      {/* Add / Remove button */}
       <button
         type="button"
         onClick={showAdd ? onAdd : onRemove}
@@ -34,7 +33,6 @@ export default function CompetitionField({
         )}
       </button>
 
-      {/* Input */}
       <Input
         id={id}
         placeholder="Nama lomba yang dimenangkan"
