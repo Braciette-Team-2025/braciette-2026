@@ -1,14 +1,26 @@
+import AuthCard from "../../components/AuthCard";
 import LoginOptions from "../components/LoginOptions";
-import FloatingNotesWrapper from "../../components/FloatingNotesWrapper";
 
 export default function LoginOptionContainer() {
   return (
-    <div className="w-full pt-50 pb-55">
-      <div className="flex justify-center items-center h-full">
-        <FloatingNotesWrapper>
-          <LoginOptions />
-        </FloatingNotesWrapper>
-      </div>
-    </div>
+    <>
+      <AuthCard
+        title={
+          <>
+            S <span className="font-the-seasons text-6xl">elamat</span> D
+            <span className="font-the-seasons text-6xl">atang</span>
+          </>
+        }
+        description={
+          <>
+            Silakan masuk terlebih dahulu
+            <br />
+            menggunakan akun Google Anda.
+          </>
+        }
+      >
+        <LoginOptions />
+      </AuthCard>
+    </>
   );
 }
