@@ -3,11 +3,11 @@ import { Button } from "../../components/AuthButton";
 
 export default function LoginForm() {
   return (
-    <form className="flex flex-col gap-8 w-full sm:w-[516px]">
+    <form className="flex flex-col gap-5 md:gap-8 w-full sm:w-[516px]">
       <div className="flex flex-col gap-2">
         <label
           htmlFor="username"
-          className="text-yellow-500 text-md font-semibold"
+          className="text-yellow-500 text-sm md:text-md font-semibold"
         >
           Username / Email
         </label>
@@ -19,7 +19,7 @@ export default function LoginForm() {
       <div className="flex flex-col gap-2">
         <label
           htmlFor="password"
-          className="text-yellow-500 text-md font-semibold"
+          className="text-yellow-500 text-sm md:text-md font-semibold"
         >
           Password
         </label>

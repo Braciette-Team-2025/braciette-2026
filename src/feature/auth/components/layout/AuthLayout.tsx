@@ -16,7 +16,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
 
       <Navbar />
 
-      <div className="w-full pt-50 pb-55">
+      <div className="w-full pt-25 pb-50 sm:pt-50 sm:pb-55">
         <div className="flex justify-center items-center h-full">
           <FloatingNotesWrapper>{children}</FloatingNotesWrapper>
         </div>

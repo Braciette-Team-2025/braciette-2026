@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import AuthCard from "../../components/AuthCard";
 import LoginOptions from "../components/LoginOptions";
 
@@ -7,8 +8,26 @@ export default function LoginOptionContainer() {
       <AuthCard
         title={
           <>
-            S <span className="font-the-seasons text-6xl">elamat</span> D
-            <span className="font-the-seasons text-6xl">atang</span>
+            S{" "}
+            <span
+              className={cn(
+                "font-the-seasons text-4xl",
+                "md:text-5xl",
+                "lg:text-6xl",
+              )}
+            >
+              elamat
+            </span>{" "}
+            D
+            <span
+              className={cn(
+                "font-the-seasons text-4xl",
+                "md:text-5xl",
+                "lg:text-6xl",
+              )}
+            >
+              atang
+            </span>
           </>
         }
         description={

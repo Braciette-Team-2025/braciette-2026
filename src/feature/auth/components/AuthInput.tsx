@@ -1,10 +1,5 @@
 import * as React from "react";
-import { twMerge } from "tailwind-merge";
-import { clsx, type ClassValue } from "clsx";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from "@/lib/utils";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -14,7 +9,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          "flex w-full rounded-[8px] border-2 border-[#E3E3E3] bg-white px-4 py-[14px] text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 transition-colors placeholder:text-md placeholder:text-[#666666]",
+          // Layout & Spacing
+          "flex w-full px-4 py-3.5 md:py-3",
+          // Typography
+          "text-sm placeholder:text-sm md:text-md text-gray-900 md:placeholder:text-md placeholder:text-[#666666]",
+          // Appearance & Styling
+          "rounded-[8px] border-2 border-[#E3E3E3] bg-white transition-colors",
+          // States (Focus, Disabled)
+          "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50",
+          // Custom Classes Passed via Props
           className,
         )}
         ref={ref}

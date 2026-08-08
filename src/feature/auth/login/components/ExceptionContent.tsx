@@ -5,9 +5,9 @@ export default function ExceptionContent() {
   return (
     <>
       <div className="flex bg-blue-900 rounded-[8px] overflow-hidden w-full shadow-lg">
-        <div className="w-1.5 bg-yellow-500 shrink-0"></div>
-        <div className="px-10 py-5">
-          <p className="text-blue-50 text-xl font-semibold">
+        <div className="w-1 md:w-1.5 bg-yellow-500 shrink-0"></div>
+        <div className="px-4 py-6 md:px-10 md:py-5">
+          <p className="text-blue-50 text-sm md:text-xl font-semibold">
             Jika ini adalah kesalahan, silakan hubungi
             <br />
             Unit Layanan TIK (ULTIK) UB

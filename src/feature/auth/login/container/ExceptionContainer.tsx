@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import AuthCard from "../../components/AuthCard";
 import ExceptionContent from "../components/ExceptionContent";
 
@@ -7,8 +8,26 @@ export default function ExceptionContainer() {
       <AuthCard
         title={
           <>
-            T <span className="font-the-seasons text-6xl">erjadi</span> M
-            <span className="font-the-seasons text-6xl">asalah</span>
+            T{" "}
+            <span
+              className={cn(
+                "font-the-seasons text-4xl",
+                "md:text-5xl",
+                "lg:text-6xl",
+              )}
+            >
+              erjadi
+            </span>{" "}
+            M
+            <span
+              className={cn(
+                "font-the-seasons text-4xl",
+                "md:text-5xl",
+                "lg:text-6xl",
+              )}
+            >
+              asalah
+            </span>
           </>
         }
         description={
