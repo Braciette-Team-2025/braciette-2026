@@ -1,14 +1,14 @@
 import { cn } from "@/lib/utils";
 import AuthCard from "../../components/AuthCard";
-import LoginOptions from "../components/LoginOptions";
+import LoginForm from "../components/LoginForm";
 
-export default function LoginOptionContainer() {
+export default function LoginFormContainer() {
   return (
     <>
       <AuthCard
         title={
           <>
-            S{" "}
+            L
             <span
               className={cn(
                 "font-the-seasons text-4xl",
@@ -16,9 +16,9 @@ export default function LoginOptionContainer() {
                 "lg:text-6xl",
               )}
             >
-              elamat
+              ogin
             </span>{" "}
-            D
+            O
             <span
               className={cn(
                 "font-the-seasons text-4xl",
@@ -26,19 +26,19 @@ export default function LoginOptionContainer() {
                 "lg:text-6xl",
               )}
             >
-              atang
+              rmawa
             </span>
           </>
         }
         description={
           <>
-            Silakan masuk terlebih dahulu
+            Masuk sebagai ormawa menggunakan akun
             <br />
-            menggunakan akun Google Anda.
+            yang telah disediakan
           </>
         }
       >
-        <LoginOptions />
+        <LoginForm />
       </AuthCard>
     </>
   );
