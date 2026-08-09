@@ -3,7 +3,7 @@ import { Button } from "../../components/AuthButton";
 
 export default function LoginForm() {
   return (
-    <form className="flex flex-col gap-5 md:gap-8 w-full sm:w-[516px]">
+    <form className="flex flex-col gap-5 md:gap-4 w-full sm:w-[516px]">
       <div className="flex flex-col gap-2">
         <label
           htmlFor="username"
@@ -29,7 +29,7 @@ export default function LoginForm() {
           placeholder="Masukkan NIM kamu disini"
         />
       </div>
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center mt-4">
         <Button className="w-fit">Konfirmasi</Button>
       </div>
     </form>

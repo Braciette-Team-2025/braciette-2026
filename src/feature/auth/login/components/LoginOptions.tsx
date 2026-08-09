@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export default function LoginOptions() {
   return (
-    <div className="flex flex-col gap-3 md:gap-6 items-center justify-center text-yellow-200 w-full">
+    <div className="flex flex-col gap-3 md:gap-4 items-center justify-center text-yellow-200 w-full">
       <button
         className={cn(
           // Mobile (Base)

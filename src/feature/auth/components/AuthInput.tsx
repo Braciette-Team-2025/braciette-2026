@@ -10,7 +10,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         type={type}
         className={cn(
           // Layout & Spacing
-          "flex w-full px-4 py-3.5 md:py-3",
+          "flex w-full px-4 py-2",
           // Typography
           "text-sm placeholder:text-sm md:text-md text-gray-900 md:placeholder:text-md placeholder:text-[#666666]",
           // Appearance & Styling

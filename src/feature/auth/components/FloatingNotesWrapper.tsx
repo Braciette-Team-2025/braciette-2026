@@ -14,9 +14,9 @@ export default function FloatingNotesWrapper({
           // Mobile (Base)
           "absolute opacity-80 scale-50 -top-40 right-20",
           // Tablet
-          "md:scale-70 md:-top-50 md:left-40",
+          "md:scale-60 md:-top-20 md:-left-70",
           // Desktop
-          "lg:scale-100 lg:-top-20 lg:-left-70",
+          "lg:scale-75 lg:-top-20 lg:-left-70",
         )}
       >
         <Image
@@ -32,9 +32,9 @@ export default function FloatingNotesWrapper({
           // Mobile (Base)
           "absolute opacity-80 scale-50 -bottom-45 -right-5",
           // Tablet
-          "md:scale-70 md:-bottom-50 md:-right-5",
+          "md:scale-60 md:top-15 md:-right-45",
           // Desktop
-          "lg:scale-100 lg:top-1/3 lg:-right-60",
+          "lg:scale-75 lg:top-15 lg:-right-45",
         )}
       >
         <Image
@@ -50,9 +50,9 @@ export default function FloatingNotesWrapper({
           // Mobile (Base)
           "absolute opacity-80 scale-40 -bottom-55",
           // Tablet
-          "md:scale-65 md:-bottom-60",
+          "md:scale-60 md:-bottom-20 md:-left-40",
           // Desktop
-          "lg:scale-100 lg:-bottom-30 lg:-left-50",
+          "lg:scale-70 lg:-bottom-20 lg:-left-45",
         )}
       >
         <Image

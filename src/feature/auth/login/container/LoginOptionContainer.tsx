@@ -12,8 +12,8 @@ export default function LoginOptionContainer() {
             <span
               className={cn(
                 "font-the-seasons text-4xl",
-                "md:text-5xl",
-                "lg:text-6xl",
+                "md:text-4xl",
+                "lg:text-5xl",
               )}
             >
               elamat
@@ -22,8 +22,8 @@ export default function LoginOptionContainer() {
             <span
               className={cn(
                 "font-the-seasons text-4xl",
-                "md:text-5xl",
-                "lg:text-6xl",
+                "md:text-4xl",
+                "lg:text-5xl",
               )}
             >
               atang
