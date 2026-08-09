@@ -1,9 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MusicBackground } from "@/src/feature/landing/components/MusicBackground";
-import { PROFILE_MENU_ITEMS } from "../constants/menu";
-import { CURRENT_USER_PROFILE } from "../constants/menu";
+import { PROFILE_MENU_ITEMS, CURRENT_USER_PROFILE } from "../constants/menu";
 import { ProfileCard } from "../components/ProfileCard";
 import { ProfileMenu } from "../components/ProfileMenu";
 import { LogoutButton } from "../components/LogoutButton";
@@ -16,13 +14,12 @@ export function ProfileContainer() {
   };
 
   return (
-    <MusicBackground>
+    <div className="relative z-10 mx-auto flex w-[535px] max-w-[calc(100vw-32px)] flex-col gap-4">
       <ProfileCard profile={CURRENT_USER_PROFILE} />
 
-      <div className="mx-auto flex w-full max-w-xl flex-col gap-4">
-        <ProfileMenu items={PROFILE_MENU_ITEMS} />
-        <LogoutButton onClick={handleLogout} />
-      </div>
-    </MusicBackground>
+      <ProfileMenu items={PROFILE_MENU_ITEMS} />
+
+      <LogoutButton onClick={handleLogout} />
+    </div>
   );
 }
