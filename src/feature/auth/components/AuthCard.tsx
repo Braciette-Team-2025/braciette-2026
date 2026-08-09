@@ -16,36 +16,36 @@ export default function AuthCard({
         // Mobile (Base)
         "px-6 py-8 bg-blue-800 w-[calc(100vw-2rem)] max-w-100 shadow-[0_0_40px_rgba(255,214,133,0.16)] rounded-[12px]",
         // Tablet (md)
-        "md:p-15 md:max-w-none md:w-fit md:rounded-[20px] md:mx-0",
+        "md:p-10 md:max-w-none md:w-fit md:rounded-[20px] md:mx-0",
         // Desktop (lg)
-        "lg:p-15",
+        "lg:pt-6 pb-10 px-10",
       )}
     >
-      <div className="flex flex-col gap-8 md:gap-12 items-center justify-center">
-        <div className="flex flex-col gap-4 md:gap-10 items-center justify-center">
+      <div className="flex flex-col gap-6 items-center justify-center">
+        <div className="flex flex-col gap-4 items-center justify-center">
           <Image
             src="/images/logo/braciate-logo.svg"
             alt="Braciate Logo"
-            width={120}
-            height={120}
+            width={0}
+            height={0}
             className={cn(
               // Mobile (Base)
               "w-17 h-17",
               // Tablet (md)
-              "md:w-30 md:h-30",
+              "md:w-19 md:h-19",
               // Desktop (lg)
-              "lg:w-30 lg:h-30",
+              "lg:w-23 lg:h-23",
             )}
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col -space-y-1">
             <h1
               className={cn(
                 // Mobile (Base)
-                "font-sloop text-6xl text-yellow-300 drop-shadow-[0_0_40px_rgba(218,161,17,1)] text-center leading-none",
+                "font-sloop text-5xl text-yellow-300 drop-shadow-[0_0_15px_rgba(218,161,17,1)] text-center leading-none",
                 // Tablet (md)
-                "md:text-7xl",
+                "md:text-5xl",
                 // Desktop (lg)
-                "lg:text-8xl",
+                "lg:text-6xl",
               )}
             >
               {title}
@@ -55,9 +55,9 @@ export default function AuthCard({
                 // Mobile (Base)
                 "text-center text-sm text-blue-100 font-semibold",
                 // Tablet (md)
-                "md:text-md md:mt-0",
+                "md:text-sm",
                 // Desktop (lg)
-                "lg:text-xl lg:mt-0",
+                "lg:text-md",
               )}
             >
               {description}
