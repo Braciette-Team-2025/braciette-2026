@@ -10,18 +10,8 @@ export function OpenTalentContainer() {
   const router = useRouter();
 
   return (
-    <MusicBackground>
-      <div className="mx-auto flex w-full max-w-xl flex-col gap-6 md:gap-8">
-        <div className="w-full mx-auto">
-          <ProfilePageHeader
-            title="Hasil Open Talent"
-            subtitle="Hasil open talent yang sudah kamu daftarkan."
-            onBack={() => router.back()}
-          />
-        </div>
-
-        <OpenTalentDetailCard data={DUMMY_OPEN_TALENT} />
-      </div>
-    </MusicBackground>
+    <div className="relative z-10 mx-auto flex w-full max-w-xl flex-col gap-6 md:gap-8">
+      <OpenTalentDetailCard data={DUMMY_OPEN_TALENT} />
+    </div>
   );
 }

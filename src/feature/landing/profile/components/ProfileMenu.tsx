@@ -11,7 +11,7 @@ interface ProfileMenuProps {
 
 export function ProfileMenu({ items, className }: ProfileMenuProps) {
   return (
-    <div className={cn("flex w-full flex-col gap-4", className)}>
+    <div className={cn("relative z-10 flex w-full flex-col gap-4", className)}>
       {items.map((item) => (
         <ProfileMenuItem key={item.id} item={item} />
       ))}
