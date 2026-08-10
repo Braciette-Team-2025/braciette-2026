@@ -6,6 +6,7 @@ import { ProfilePageHeader } from "../components/ProfilePageHeader";
 import { IdentityCard } from "../(identity)/components/IdentityCard";
 import { DUMMY_IDENTITY } from "../(identity)/constants/identity";
 import type { IdentityFormData } from "../(identity)/types/identity";
+import FloatingNotesWrapper from "@/src/feature/auth/components/FloatingNotesWrapper";
 
 export function IdentityContainer() {
   const router = useRouter();
@@ -15,8 +16,10 @@ export function IdentityContainer() {
   };
 
   return (
-    <div className="relative z-10 mx-auto flex w-full max-w-xl flex-col gap-6 md:gap-8">
-      <IdentityCard initialData={DUMMY_IDENTITY} onSubmit={handleSubmit} />
-    </div>
+    <FloatingNotesWrapper>
+      <div className="relative z-10 mx-auto flex w-full max-w-xl flex-col gap-6 md:gap-8">
+        <IdentityCard initialData={DUMMY_IDENTITY} onSubmit={handleSubmit} />
+      </div>
+    </FloatingNotesWrapper>
   );
 }
