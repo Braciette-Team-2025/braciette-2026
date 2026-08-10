@@ -38,13 +38,13 @@ export function VotingContainer() {
     <section className="relative flex w-full flex-col items-center gap-10 overflow-hidden px-4 py-16 md:py-24">
       {!selectedCategory ? (
         <>
-          <VotingHero variant="step-1" />
+          <VotingHero variant="category" />
 
           <CategoryGrid categories={categories} onSelect={selectCategory} />
         </>
       ) : (
         <>
-          <VotingHero variant="step-2" />
+          <VotingHero variant="organization" />
 
           <CategoryButton category={selectedCategory} onClick={resetCategory} />
 
