@@ -1,56 +1,75 @@
-"use client";
-
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { ScriptWord } from "../components/ScriptWord";
 
-type VotingHeroVariant = "step-1" | "step-2";
-
-const HERO_IMAGES: Record<
-  VotingHeroVariant,
-  {
-    src: string;
-    width: number;
-    height: number;
-    alt: string;
-  }
-> = {
-  "step-1": {
-    src: "/images/logo/Hero-title.svg",
-    width: 900,
-    height: 330,
-    alt: "Voting Hero Step 1",
-  },
-  "step-2": {
-    src: "/images/logo/Hero-title-step2.svg",
-    width: 900,
-    height: 330,
-    alt: "Voting Hero Step 2",
-  },
-};
+type VotingHeroVariant = "category" | "organization";
 
 interface VotingHeroProps {
   variant?: VotingHeroVariant;
   className?: string;
 }
 
-export function VotingHero({ variant = "step-1", className }: VotingHeroProps) {
-  const hero = HERO_IMAGES[variant];
-
+export function VotingHero({
+  variant = "category",
+  className,
+}: VotingHeroProps) {
   return (
-    <div
-      className={cn(
-        "mx-auto flex w-full max-w-5xl justify-center px-4",
-        className,
-      )}
-    >
-      <Image
-        src={hero.src}
-        alt={hero.alt}
-        width={hero.width}
-        height={hero.height}
-        priority
-        className="h-auto w-full max-w-2xl md:max-w-3xl lg:max-w-4xl"
-      />
+    <div className={cn("mx-auto flex w-full justify-center px-4", className)}>
+      <h1 className={cn("text-center leading-none", "tracking-[-0.03em]")}>
+        <span
+          className={cn(
+            "flex items-end justify-center",
+            "gap-4 md:gap-6 lg:gap-8",
+          )}
+        >
+          <ScriptWord
+            initial="C"
+            rest="hoose"
+            color="light"
+            initialClassName="-left-1 md:-left-2"
+          />
+
+          <ScriptWord
+            initial="Y"
+            rest="our"
+            color="light"
+            initialClassName="-left-1 md:-left-2"
+          />
+        </span>
+
+        <span
+          className={cn(
+            "mt-[1rem]",
+            "flex items-end justify-center",
+            "gap-4 md:gap-6 lg:gap-8",
+          )}
+        >
+          <ScriptWord
+            initial="F"
+            rest="avorite"
+            color="gold"
+            initialClassName="-left-1 md:-left-2"
+            suffix={variant === "organization" ? "!" : undefined}
+            suffixClassName={cn(
+              "ml-1",
+              "font-sloop",
+              "text-[4rem]",
+              "md:text-[5rem]",
+              "lg:text-[6rem]",
+              "align-middle",
+              "-rotate-[8deg]",
+            )}
+          />
+
+          {variant === "category" && (
+            <ScriptWord
+              initial="O"
+              rest="rmawa"
+              color="gold"
+              initialClassName="-left-1 md:-left-2"
+            />
+          )}
+        </span>
+      </h1>
     </div>
   );
 }
