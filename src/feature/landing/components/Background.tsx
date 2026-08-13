@@ -20,8 +20,9 @@ export default function Background() {
         className="absolute inset-0"
         style={{
           backgroundImage: "url('/images/background/dots.svg')",
-          backgroundRepeat: "repeat",
-          backgroundSize: "650px 650px",
+          backgroundRepeat: "repeat-y",
+          backgroundPosition: "top center",
+          backgroundSize: "auto auto",
         }}
       />
     </div>

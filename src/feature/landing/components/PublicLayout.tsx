@@ -17,13 +17,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
       <Background />
 
       <Navbar />
-
-      <div className="w-full pt-25 pb-50 sm:pt-50 sm:pb-55">
-        <div className="flex justify-center items-center h-full">
-          <>{children}</>
-        </div>
-      </div>
-
+      <div className="flex justify-center items-center h-full">{children}</div>
       <Footer />
     </div>
   );
