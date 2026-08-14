@@ -1,3 +1,5 @@
+import { ComingSoonContainer } from "../feature/landing/coming-soon/container/ComingSoonContainer";
+
 export default function Home() {
-  return <div className="flex">hello world</div>;
+  return <ComingSoonContainer />;
 }
