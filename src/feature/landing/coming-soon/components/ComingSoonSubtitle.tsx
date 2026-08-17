@@ -12,7 +12,7 @@ export function ComingSoonSubtitle({
   yearRef,
 }: ComingSoonSubtitleProps) {
   return (
-    <div className="absolute left-1/2 z-40 flex -translate-x-1/2 flex-col items-center text-center font-the-seasons tracking-widest whitespace-nowrap top-[62vh] md:top-[64vh] lg:top-[66vh]">
+    <div className="absolute left-1/2 z-40 flex -translate-x-1/2 flex-col items-center whitespace-nowrap text-center font-the-seasons tracking-widest top-[46vh] sm:top-[48vh] md:top-[50vh] lg:top-[60vh]">
       <p
         ref={subtitleRef}
         className="text-xs text-yellow-100 sm:text-sm md:text-base lg:text-xl xl:text-2xl"
@@ -26,7 +26,7 @@ export function ComingSoonSubtitle({
 
       <p
         ref={yearRef}
-        className="text-xs mt-2 font-medium text-yellow-100 sm:text-sm md:text-base lg:text-xl xl:text-2xl"
+        className="mt-2 text-xs font-medium text-yellow-100 sm:text-sm md:text-base lg:text-xl xl:text-2xl"
         style={{
           letterSpacing: "0.15em",
           opacity: 0,
