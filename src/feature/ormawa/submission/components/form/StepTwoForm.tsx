@@ -3,7 +3,6 @@ import StepTwoFormUKM from "./StepTwoFormUKM";
 import { Button } from "../ui/Button";
 import { ArrowLeft } from "lucide-react";
 import type { FormData, SetFormData } from "../../hooks/useSubmissionContainer";
-import { JenisOrmawa } from "../../constants/submission";
 import StepTwoFormDPM from "./StepTwoFormDPM";
 import StepTwoFormHIMA from "./StepTwoFormHIMA";
 import { useStepTwoForm } from "../../hooks/useStepTwoForm";
