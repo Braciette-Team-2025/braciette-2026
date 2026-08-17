@@ -126,10 +126,6 @@ export const STAR_KEYFRAMES = [
     rotate: -2,
     opacity: 1,
   },
-
-  // Pivot selesai.
-  // Mulai dari sini bintang langsung tumbuh
-  // secara kontinu sampai full-screen.
   {
     time: 3.8,
     scale: 0.65,
@@ -138,8 +134,6 @@ export const STAR_KEYFRAMES = [
     rotate: -8,
     opacity: 1,
   },
-
-  // Final state — tidak ada checkpoint tengah lagi.
   {
     time: 8.5,
     scale: 8,
@@ -171,8 +165,6 @@ export const WORLD_TRANSLATE_KEYFRAMES = [
     progress: 0.38,
   },
 
-  // Setelah pivot, world langsung naik terus
-  // sampai posisi final.
   {
     time: 8.5,
     progress: 1,
