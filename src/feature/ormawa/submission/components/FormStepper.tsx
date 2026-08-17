@@ -53,7 +53,7 @@ export default function FormStepper({
         <span
           className={cn(
             "font-jakarta text-md tracking-wide",
-            currentStep >= 2 ? "text-yellow-300" : "text-yellow-300",
+            currentStep >= 2 ? "text-yellow-300" : "text-yellow-300/70",
           )}
         >
           Kredensial

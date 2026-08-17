@@ -59,9 +59,9 @@ export function useStepOneForm(formData: FormData, setFormData: SetFormData) {
       label: "Kontak PIC",
       value: kontakPic,
       onChange: setKontakPic,
-      placeholder: "08xxxxxxxxxx",
+      placeholder: "08XXXXXXXXXX",
       type: "tel",
-      maxLength: 15,
+      maxLength: 12,
     },
     {
       id: "deskripsi",

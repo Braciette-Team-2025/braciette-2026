@@ -1,11 +1,10 @@
-"use client";
-
 import { Input } from "../ui/Input";
 import { Select } from "../ui/Select";
 import { Button } from "../ui/Button";
-import { MultiValueInput } from "../ui/MultiValueInput";
+import { MultiSocialMediaInput } from "../ui/MultiSocialMediaInput";
 import { useStepOneForm } from "../../hooks/useStepOneForm";
 import type { FormData, SetFormData } from "../../hooks/useSubmissionContainer";
+import { JenisOrmawa, LABEL_ORMAWA } from "../../constants/submission";
 
 interface StepOneFormProps {
   onNext?: () => void;
@@ -37,16 +36,14 @@ export default function StepOneForm({
           </label>
           <Select
             value={jenisOrmawa}
-            onChange={(e) => setJenisOrmawa(e.target.value)}
+            onChange={(e) => setJenisOrmawa(e.target.value as JenisOrmawa)}
             placeholder="Pilih Jenis Ormawa"
           >
-            <option value="bem">BEM</option>
-            <option value="dpm">DPM</option>
-            <option value="hima">HIMA</option>
-            <option value="ukm-penalaran">UKM Penalaran</option>
-            <option value="ukm-olahraga">UKM Olahraga</option>
-            <option value="ukm-kesenian">UKM Kesenian</option>
-            <option value="ukm-kerohanian">UKM Kerohanian</option>
+            {Object.values(JenisOrmawa).map((value) => (
+              <option key={value} value={value}>
+                {LABEL_ORMAWA[value]}
+              </option>
+            ))}
           </Select>
         </div>
 
@@ -69,10 +66,9 @@ export default function StepOneForm({
           <label className="text-yellow-500 font-jakarta font-semibold text-sm md:text-md">
             Pendataan Media Sosial
           </label>
-          <MultiValueInput
+          <MultiSocialMediaInput
             values={formData.mediaSosial}
             onChange={setFormData.setMediaSosial}
-            placeholder="Masukkan Link Media Sosial"
           />
         </div>
       </div>

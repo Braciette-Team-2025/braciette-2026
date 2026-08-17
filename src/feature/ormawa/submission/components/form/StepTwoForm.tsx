@@ -3,6 +3,10 @@ import StepTwoFormUKM from "./StepTwoFormUKM";
 import { Button } from "../ui/Button";
 import { ArrowLeft } from "lucide-react";
 import type { FormData, SetFormData } from "../../hooks/useSubmissionContainer";
+import { JenisOrmawa } from "../../constants/submission";
+import StepTwoFormDPM from "./StepTwoFormDPM";
+import StepTwoFormHIMA from "./StepTwoFormHIMA";
+import { useStepTwoForm } from "../../hooks/useStepTwoForm";
 
 interface StepTwoFormProps {
   onBack?: () => void;
@@ -17,62 +21,30 @@ export default function StepTwoForm({
 }: StepTwoFormProps) {
   const { jenisOrmawa } = formData;
 
-  const renderFormContent = () => {
+  const content = (() => {
     if (jenisOrmawa === "bem") {
       return <StepTwoFormBEM formData={formData} setFormData={setFormData} />;
     }
     if (jenisOrmawa.startsWith("ukm")) {
       return <StepTwoFormUKM formData={formData} setFormData={setFormData} />;
     }
+    if (jenisOrmawa === "hima") {
+      return <StepTwoFormHIMA formData={formData} setFormData={setFormData} />;
+    }
+    if (jenisOrmawa === "dpm") {
+      return <StepTwoFormDPM formData={formData} setFormData={setFormData} />;
+    }
     return null;
-  };
+  })();
 
-  const content = renderFormContent();
-
-  const isFormValid = () => {
-    if (jenisOrmawa === "bem") {
-      return formData.selectedNominasi?.length > 0 && formData.linkDrive !== "";
-    }
-    if (jenisOrmawa.startsWith("ukm")) {
-      const hasLomba = formData.lomba?.length > 0;
-      const hasNominasi = formData.selectedNominasi?.length > 0;
-      const hasLinkDrive = formData.linkDrive !== "";
-      return hasLomba && hasNominasi && hasLinkDrive;
-    }
-    return false;
-  };
+  const { isValid } = useStepTwoForm(formData);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isFormValid()) return;
+    if (!isValid) return;
 
-    let payload = {};
-    const baseData = {
-      jenisOrmawa: formData.jenisOrmawa,
-      namaOrmawa: formData.namaOrmawa,
-      namaKabinet: formData.namaKabinet,
-      pic: formData.pic,
-      kontakPic: formData.kontakPic,
-      deskripsi: formData.deskripsi,
-      proker: formData.proker,
-      linkDrive: formData.linkDrive,
-      mediaSosial: formData.mediaSosial,
-    };
-
-    if (jenisOrmawa === "bem") {
-      payload = {
-        ...baseData,
-        selectedNominasi: formData.selectedNominasi,
-      };
-    } else if (jenisOrmawa.startsWith("ukm")) {
-      payload = {
-        ...baseData,
-        lomba: formData.lomba,
-        selectedNominasi: formData.selectedNominasi,
-      };
-    }
-
-    console.log("Data Submit:", payload);
+    // TODO: kirim formData ke API
+    console.log("Data Submit:", formData);
   };
 
   return (
@@ -89,7 +61,7 @@ export default function StepTwoForm({
         </Button>
         <Button
           type="submit"
-          disabled={!isFormValid()}
+          disabled={!isValid}
           className="w-full md:w-auto py-3 px-8 rounded-[12px] text-blue-900 font-jakarta font-bold text-base md:text-lg justify-center"
         >
           Konfirmasi

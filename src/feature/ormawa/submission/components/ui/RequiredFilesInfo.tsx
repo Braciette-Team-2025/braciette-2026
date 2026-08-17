@@ -1,4 +1,4 @@
-import React from "react";
+import { cn } from "@/src/lib/utils";
 import { Upload } from "lucide-react";
 
 interface RequiredFilesInfoProps {
@@ -14,11 +14,12 @@ export function RequiredFilesInfo({
 
   return (
     <div
-      className={`grid transition-all duration-300 ease-in-out ${
+      className={cn(
+        "grid transition-all duration-300 ease-in-out",
         isVisible
           ? "grid-rows-[1fr] opacity-100 mt-1"
-          : "grid-rows-[0fr] opacity-0"
-      }`}
+          : "grid-rows-[0fr] opacity-0",
+      )}
     >
       <div className="overflow-hidden">
         <div className="w-[812px] max-w-full">

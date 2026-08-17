@@ -11,7 +11,7 @@ export default function SubmissionContainer() {
     useSubmissionContainer();
 
   return (
-    <div className="font-jakarta py-17 flex flex-col items-center">
+    <div className="py-17 flex flex-col items-center">
       <div className="flex flex-col w-fit gap-10">
         <SubmissionHeader />
         <SubmissionCard currentStep={step}>

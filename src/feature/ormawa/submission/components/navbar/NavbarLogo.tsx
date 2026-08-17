@@ -9,7 +9,7 @@ interface NavbarLogoProps {
 export default function NavbarLogo({ className }: NavbarLogoProps) {
   return (
     <Link
-      href={"/"}
+      href="/"
       className={cn("flex shrink-0 items-center gap-3", className)}
       aria-label="Braciate Logo"
     >
