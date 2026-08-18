@@ -34,6 +34,7 @@ const INITIAL_FORM_STATE: FormState = {
 export function useSubmissionContainer() {
   const [step, setStep] = useState<1 | 2>(1);
   const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const updateField = <K extends keyof FormState>(
     key: K,
@@ -52,6 +53,13 @@ export function useSubmissionContainer() {
     setStep(1);
   };
 
+  const handleReset = () => {
+    setStep(1);
+    setFormState(INITIAL_FORM_STATE);
+    setIsSuccessModalOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const formData = formState;
 
   const setFormData = {
@@ -68,7 +76,16 @@ export function useSubmissionContainer() {
     setMediaSosial: (v: SocialMedia[]) => updateField("mediaSosial", v),
   };
 
-  return { step, handleNext, handleBack, formData, setFormData };
+  return {
+    step,
+    handleNext,
+    handleBack,
+    handleReset,
+    formData,
+    setFormData,
+    isSuccessModalOpen,
+    setIsSuccessModalOpen,
+  };
 }
 
 export type SubmissionContainerState = ReturnType<

@@ -9,6 +9,7 @@ export function useStepOneForm(formData: FormData, setFormData: SetFormData) {
     kontakPic,
     deskripsi,
     proker,
+    mediaSosial,
   } = formData;
   const {
     setJenisOrmawa,
@@ -18,6 +19,7 @@ export function useStepOneForm(formData: FormData, setFormData: SetFormData) {
     setKontakPic,
     setDeskripsi,
     setProker,
+    setMediaSosial,
   } = setFormData;
 
   const isFormValid =
@@ -27,7 +29,12 @@ export function useStepOneForm(formData: FormData, setFormData: SetFormData) {
     pic.trim() !== "" &&
     kontakPic.trim() !== "" &&
     deskripsi.trim() !== "" &&
-    proker.trim() !== "";
+    proker.trim() !== "" &&
+    mediaSosial.length > 0 &&
+    mediaSosial.some(
+      (medsos) =>
+        medsos.platform.trim() !== "" && medsos.username.trim() !== "",
+    );
 
   const inputFields = [
     {
@@ -61,7 +68,7 @@ export function useStepOneForm(formData: FormData, setFormData: SetFormData) {
       onChange: setKontakPic,
       placeholder: "08XXXXXXXXXX",
       type: "tel",
-      maxLength: 12,
+      maxLength: 20,
     },
     {
       id: "deskripsi",

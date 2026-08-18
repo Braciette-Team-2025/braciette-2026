@@ -5,6 +5,7 @@ import { MultiSocialMediaInput } from "../ui/MultiSocialMediaInput";
 import { useStepOneForm } from "../../hooks/useStepOneForm";
 import type { FormData, SetFormData } from "../../hooks/useSubmissionContainer";
 import { JenisOrmawa, LABEL_ORMAWA } from "../../constants/submission";
+import ModalThankyou from "../PopupThankyou";
 
 interface StepOneFormProps {
   onNext?: () => void;
