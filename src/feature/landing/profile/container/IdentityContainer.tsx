@@ -1,8 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MusicBackground } from "@/src/feature/landing/components/MusicBackground";
-import { ProfilePageHeader } from "../components/ProfilePageHeader";
 import { IdentityCard } from "../(identity)/components/IdentityCard";
 import { DUMMY_IDENTITY } from "../(identity)/constants/identity";
 import type { IdentityFormData } from "../(identity)/types/identity";
