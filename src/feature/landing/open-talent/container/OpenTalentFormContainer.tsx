@@ -1,6 +1,5 @@
 "use client";
 
-import { SuccessModal } from "@/src/feature/landing/components/SucessModalTitle";
 import { OpenTalentTitle } from "../components/OpenTalentTitle";
 import { OpenTalentStepOne } from "../components/OpenTalentStepOne";
 import { OpenTalentStepTwo } from "../components/OpenTalentStepTwo";
