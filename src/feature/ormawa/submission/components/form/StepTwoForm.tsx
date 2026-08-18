@@ -9,12 +9,14 @@ import { useStepTwoForm } from "../../hooks/useStepTwoForm";
 
 interface StepTwoFormProps {
   onBack?: () => void;
+  onSubmitSuccess?: () => void;
   formData: FormData;
   setFormData: SetFormData;
 }
 
 export default function StepTwoForm({
   onBack,
+  onSubmitSuccess,
   formData,
   setFormData,
 }: StepTwoFormProps) {
@@ -44,6 +46,7 @@ export default function StepTwoForm({
 
     // TODO: kirim formData ke API
     console.log("Data Submit:", formData);
+    if (onSubmitSuccess) onSubmitSuccess();
   };
 
   return (

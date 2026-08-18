@@ -14,11 +14,7 @@ export function useStepTwoForm(formData: FormData) {
     }
 
     if (jenisOrmawa.startsWith("ukm")) {
-      return (
-        formData.lomba.length > 0 &&
-        formData.selectedNominasi.length > 0 &&
-        formData.linkDrive !== ""
-      );
+      return formData.selectedNominasi.length > 0 && formData.linkDrive !== "";
     }
     return false;
   })();
