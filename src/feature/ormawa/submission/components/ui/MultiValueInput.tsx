@@ -67,17 +67,19 @@ export function MultiValueInput({
       {values.length > 0 && (
         <div className="flex flex-col gap-2 md:gap-3 bg-yellow-400 p-2 md:p-3 rounded-[12px] md:rounded-[16px]">
           {values.map((item, index) => (
-            <div key={item.id} className="flex items-center gap-2 md:gap-3">
-              <button
-                type="button"
-                onClick={() => handleRemove(index)}
-                className="flex items-center justify-center w-10 h-10 md:w-[52px] md:h-[52px] shrink-0 rounded-[8px] md:rounded-[12px] bg-yellow-800 hover:bg-yellow-900 transition-colors text-white focus:outline-none"
-              >
-                <CircleMinus
-                  className="w-6 h-6 md:w-7 md:h-7"
-                  strokeWidth={1.5}
-                />
-              </button>
+            <div key={item.id} className="flex gap-2 md:gap-3">
+              <div className="h-full flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => handleRemove(index)}
+                  className="flex items-center justify-center w-10 h-10 md:w-[52px] md:h-[52px] shrink-0 rounded-[8px] md:rounded-[12px] bg-yellow-800 hover:bg-yellow-900 transition-colors text-white focus:outline-none"
+                >
+                  <CircleMinus
+                    className="w-6 h-6 md:w-7 md:h-7"
+                    strokeWidth={1.5}
+                  />
+                </button>
+              </div>
               <Input
                 value={item.value}
                 onChange={(e) => handleChange(index, e.target.value)}

@@ -13,7 +13,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         type={type}
         className={cn(
           // Layout & Sizing
-          "flex w-[812px] max-w-full h-fit",
+          "flex w-full max-w-full h-fit",
           "px-4 py-3",
 
           // Appearance (Background, Border, Radius, Shadow)

@@ -15,7 +15,7 @@ export function NominasiCheckboxGroup({
   onChange,
 }: NominasiCheckboxGroupProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 lg:gap-4">
       {nominasiList.map((nominasi) => {
         const isChecked = selectedNominasi.includes(nominasi);
         return (

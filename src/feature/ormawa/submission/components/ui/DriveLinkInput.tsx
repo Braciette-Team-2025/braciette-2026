@@ -23,7 +23,7 @@ export function DriveLinkInput({ value, onChange }: DriveLinkInputProps) {
   const showError = isTouched && !isValid && value.length > 0;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-1 md:gap-2">
       <label className="text-yellow-500 font-jakarta font-bold text-sm md:text-base">
         Link Drive
       </label>

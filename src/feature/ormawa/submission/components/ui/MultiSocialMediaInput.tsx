@@ -55,28 +55,45 @@ export function MultiSocialMediaInput({
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-full">
-      <div className="flex items-center gap-2 md:gap-3">
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="flex items-center justify-center w-10 h-10 md:w-[52px] md:h-[52px] shrink-0 rounded-[8px] md:rounded-[12px] bg-yellow-500 hover:bg-yellow-600 transition-colors text-yellow-50 focus:outline-none shadow-[0_0_20px_0_rgba(234,179,8,0.3)]"
-        >
-          <CirclePlus className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
-        </button>
-        <Input
-          value={inputPlatform}
-          onChange={(e) => setInputPlatform(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Nama Media Sosial"
-          className="flex-1 w-full"
-        />
-        <Input
-          value={inputUsername}
-          onChange={(e) => setInputUsername(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Nama Akun"
-          className="flex-1 w-full"
-        />
+      <div className="flex gap-2 md:gap-3">
+        <div className="flex flex-col gap-1 md:gap-2">
+          <label className="text-yellow-500 font-jakarta font-semibold text-xs md:text-sm opacity-0 select-none pointer-events-none">
+            -
+          </label>
+          <div className="flex items-center h-full">
+            <button
+              type="button"
+              onClick={handleAdd}
+              className="flex items-center justify-center w-10 h-10 md:w-[52px] md:h-[52px] shrink-0 rounded-[8px] md:rounded-[12px] bg-yellow-500 hover:bg-yellow-600 transition-colors text-yellow-50 focus:outline-none shadow-[0_0_20px_0_rgba(234,179,8,0.3)]"
+            >
+              <CirclePlus className="w-6 h-6 md:w-7 md:h-7" strokeWidth={1.5} />
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col flex-1 gap-1 md:gap-2">
+          <label className="text-yellow-500 font-jakarta font-semibold text-xs md:text-sm">
+            Sosial Media
+          </label>
+          <Input
+            value={inputPlatform}
+            onChange={(e) => setInputPlatform(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="e.g. instagram"
+            className="w-full"
+          />
+        </div>
+        <div className="flex flex-col flex-1 gap-1 md:gap-2">
+          <label className="text-yellow-500 font-jakarta font-semibold text-xs md:text-sm">
+            Nama Akun
+          </label>
+          <Input
+            value={inputUsername}
+            onChange={(e) => setInputUsername(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="@braciate"
+            className="w-full"
+          />
+        </div>
       </div>
 
       {values.length > 0 && (

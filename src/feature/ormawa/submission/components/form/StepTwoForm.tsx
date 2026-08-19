@@ -53,7 +53,7 @@ export default function StepTwoForm({
     <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit}>
       {content}
 
-      <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4 mt-8">
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4">
         <Button
           type="button"
           onClick={onBack}

@@ -21,8 +21,8 @@ export default function SubmissionContainer() {
 
   return (
     <>
-      <div className="py-17 flex flex-col items-center">
-        <div className="flex flex-col w-fit gap-10">
+      <div className="py-8 md:py-10 lg:py-17 px-[10%] xl:px-[18%] flex flex-col">
+        <div className="flex flex-col w-full gap-4 md:gap-8 lg:gap-10 items-center">
           <SubmissionHeader />
           <SubmissionCard currentStep={step}>
             {step === 1 && (

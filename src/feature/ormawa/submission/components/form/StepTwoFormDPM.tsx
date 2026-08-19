@@ -22,8 +22,8 @@ export default function StepTwoFormDPM({
 
   const allRequiredFiles = getRequiredFiles(selectedNominasi, DPM_NOMINATIONS);
   return (
-    <div className="w-full flex flex-col gap-6">
-      <div className="flex flex-col gap-3">
+    <div className="w-full flex flex-col gap-3 lg:gap-6">
+      <div className="flex flex-col gap-2 md:gap-3">
         <label className="text-yellow-500 font-jakarta font-bold text-sm md:text-base">
           Nominasi DPM
         </label>
