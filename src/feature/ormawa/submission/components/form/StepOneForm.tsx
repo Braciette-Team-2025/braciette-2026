@@ -29,9 +29,9 @@ export default function StepOneForm({
   };
 
   return (
-    <form className="w-full flex flex-col gap-12" onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col gap-2">
+    <form className="flex flex-col gap-4 lg:gap-12" onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-4  lg:gap-8">
+        <div className="flex flex-col gap-1 md:gap-2">
           <label className="text-yellow-500 font-jakarta font-semibold text-sm md:text-md">
             Jenis Ormawa
           </label>
@@ -49,7 +49,7 @@ export default function StepOneForm({
         </div>
 
         {inputFields.map((field) => (
-          <div key={field.id} className="flex flex-col gap-2">
+          <div key={field.id} className="flex flex-col gap-1 md:gap-2">
             <label className="text-yellow-500 font-jakarta font-semibold text-sm md:text-md">
               {field.label}
             </label>

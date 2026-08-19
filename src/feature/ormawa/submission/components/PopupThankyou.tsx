@@ -23,13 +23,13 @@ export default function ModalThankyou({ onClose }: { onClose?: () => void }) {
     buttonLabel: "Ok",
   };
 
-  const isHighlight = "font-sloop text-[200px]";
+  const isHighlight = "font-sloop text-[80px] md:text-[140px] lg:text-[200px]";
   return (
     <div
       className={cn(
-        "w-fit px-33.5 pt-10 pb-16 bg-[#03061E]",
-        "shadow-[0_0_40px_rgba(201,162,39,0.4)] rounded-[60px]",
-        "relative flex flex-col gap-10 items-center justify-center overflow-hidden",
+        "w-[90%] md:w-fit px-8 md:px-16 lg:px-33.5 pt-8 md:pt-10 pb-10 md:pb-16 bg-[#03061E]",
+        "shadow-[0_0_20px_rgba(201,162,39,0.4)] md:shadow-[0_0_40px_rgba(201,162,39,0.4)] rounded-[40px] md:rounded-[60px]",
+        "relative flex flex-col gap-6 md:gap-10 items-center justify-center overflow-hidden mx-auto",
       )}
     >
       <div className="absolute inset-x-0 inset-y-60 bg-[#171A3B] rounded-[100%] blur-[80px]" />
@@ -41,19 +41,28 @@ export default function ModalThankyou({ onClose }: { onClose?: () => void }) {
           backgroundPosition: "center",
         }}
       />
-      <div className="relative">
-        <Image src={data.logoSrc} width={89} height={127} alt="Logo Braciate" />
+      <div className="relative w-16 md:w-[89px]">
+        <Image
+          src={data.logoSrc}
+          width={89}
+          height={127}
+          alt="Logo Braciate"
+          className="w-full h-auto"
+        />
       </div>
-      <h1 className="text-center text-[80px] font-the-seasons leading-[0.7]">
-        <span className="block text-blue-100 drop-shadow-[0_0_20px_rgba(132,98,255,0.6)]">
+      <h1 className="text-center text-[32px] md:text-[56px] lg:text-[80px] font-the-seasons leading-[0.7]">
+        <span className="block text-blue-100 drop-shadow-[0_0_10px_rgba(132,98,255,0.6)] md:drop-shadow-[0_0_20px_rgba(132,98,255,0.6)]">
           <span className={isHighlight}>T</span>hanks
           <span className={isHighlight}>F</span> or
         </span>
-        <span className="block text-yellow-300 drop-shadow-[0_0_20px_rgba(252,186,3,0.8)]">
+        <span className="block text-yellow-300 drop-shadow-[0_0_10px_rgba(252,186,3,0.8)] md:drop-shadow-[0_0_20px_rgba(252,186,3,0.8)]">
           <span className={isHighlight}>A</span>pplying
         </span>
       </h1>
-      <Button className="relative px-39.5!" onClick={onClose}>
+      <Button
+        className="relative w-[200px] md:w-auto md:px-24 lg:px-[158px] py-3 md:py-4 text-sm md:text-base font-bold"
+        onClick={onClose}
+      >
         {data.buttonLabel}
       </Button>
     </div>

@@ -11,7 +11,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     return (
       <label
         className={cn(
-          "group flex items-stretch gap-3 cursor-pointer w-[812px] max-w-full",
+          "group flex items-center gap-3 cursor-pointer w-[812px] max-w-full",
           className,
         )}
       >

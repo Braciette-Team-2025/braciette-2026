@@ -13,16 +13,16 @@ export default function SubmissionCard({
   return (
     <div
       className={cn(
-        "flex flex-col items-center",
+        "flex flex-col items-center w-full",
         // Mobile (Base)
-        "px-6 py-8 bg-blue-900 w-fit shadow-[0_0_40px_rgba(255,214,133,0.16)] rounded-[12px]",
+        "py-4 px-6 bg-blue-900 shadow-[0_0_40px_rgba(255,214,133,0.16)] rounded-[12px]",
         // Tablet (md)
-        "md:p-10 md:max-w-none md:rounded-[20px] md:mx-0",
+        "md:py-6 md:px-9 md:rounded-[20px] md:mx-0",
         // Desktop (lg)
-        "lg:py-10 lg:px-19.5",
+        "lg:py-10 lg:px-15",
       )}
     >
-      <FormStepper currentStep={currentStep} className="mb-10 lg:mb-12" />
+      <FormStepper currentStep={currentStep} className="mb-4 lg:mb-12" />
       <div className="w-full">{children}</div>
     </div>
   );

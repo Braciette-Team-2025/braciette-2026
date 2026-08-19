@@ -10,7 +10,7 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, error, placeholder, children, ...props }, ref) => {
     return (
-      <div className={cn("relative w-[812px] max-w-full h-fit", className)}>
+      <div className={cn("relative w-full max-w-full h-fit", className)}>
         <select
           className={cn(
             // Layout & Sizing
