@@ -6,7 +6,7 @@ export default function HeroSection() {
     "font-sloop text-[60px] md:text-[120px] lg:text-[200px]";
 
   return (
-    <section className="relative w-full min-h-[calc(100vh-106px)] flex flex-col items-center justify-center gap-4 md:gap-8 lg:gap-14 overflow-hidden">
+    <section className="relative w-full  md:min-h-[calc(100vh-106px)] flex flex-col items-center justify-center gap-4 md:gap-8 lg:gap-14">
       <div className="pointer-events-none absolute -left-20 md:-left-40 lg:-left-65 top-1/2 -translate-y-1/2 w-[40vw] max-w-[600px] min-w-[150px] lg:min-w-[250px] rotate-180 scale-y-[-1]">
         <Image
           src="/images/gold_string/gold_string_1.svg"
