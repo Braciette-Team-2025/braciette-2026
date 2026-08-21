@@ -12,7 +12,7 @@ export default function LogoTransition() {
           alt="Gold Wave"
         />
       </div>
-      <div className="w-12.5 md:w-28 lg:w-42.5 shrink-0 z-10">
+      <div className="w-12.5 md:w-28 xl:w-42.5 shrink-0 z-10">
         <Image
           src="/images/logo/braciate-logo.svg"
           width={170}

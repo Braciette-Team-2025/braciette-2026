@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function PhotoSection() {
   return (
-    <section className="w-full flex flex-col items-center justify-center px-4 sm:px-8 md:px-[10%] lg:px-[17%]">
+    <section className="w-full flex flex-col items-center justify-center px-4 sm:px-8 md:px-[10%] lg:px-[17%] md:min-h-screen">
       <div className="w-38 sm:w-64 md:w-96 lg:w-118 -scale-100">
         <Image
           src={"/images/about/frame.svg"}
