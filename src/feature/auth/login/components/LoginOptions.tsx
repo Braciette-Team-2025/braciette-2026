@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { GoogleLogoIcon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
+import { redirectToGoogleLogin } from "../services/googleAuth";
 
 export default function LoginOptions() {
   return (
@@ -16,6 +17,7 @@ export default function LoginOptions() {
           // Desktop (lg)
           "lg:px-12",
         )}
+        onClick={redirectToGoogleLogin}
       >
         <GoogleLogoIcon size={20} weight="bold" />
         <span
