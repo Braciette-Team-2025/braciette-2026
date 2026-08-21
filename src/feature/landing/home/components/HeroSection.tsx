@@ -3,7 +3,7 @@ import { LandingButton } from "./ui/LandingButton";
 
 export default function HeroSection() {
   const highlightClass =
-    "font-sloop text-[60px] md:text-[120px] lg:text-[200px]";
+    "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
 
   return (
     <section className="relative w-full  md:min-h-[calc(100vh-106px)] flex flex-col items-center justify-center gap-4 md:gap-8 lg:gap-14">
@@ -30,7 +30,7 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-10 text-center space-y-2  lg:space-y-6 flex flex-col justify-center items-center">
-        <h1 className="font-the-seasons text-[24px] md:text-[40px] lg:text-[80px] leading-[0.7]">
+        <h1 className="font-the-seasons text-[24px] md:text-[40px] xl:text-[80px] leading-[0.7]">
           <span className="block text-yellow-300 drop-shadow-[0_0_20px_rgba(218,161,17,0.8)]">
             <span className="sr-only">Brawijaya Festival</span>
             <span aria-hidden="true">
@@ -47,7 +47,7 @@ export default function HeroSection() {
             </span>
           </span>
         </h1>
-        <p className="font-the-seasons text-xs max-w-[244px] md:max-w-[320px] lg:max-w-fit md:text-md lg:text-2xl text-blue-50">
+        <p className="font-the-seasons text-xs max-w-[244px] md:max-w-[320px] lg:max-w-fit md:text-md xl:text-2xl text-blue-50">
           Bring The Great Story with Harmonization and Collaborative Simpul
           Brawijaya
         </p>
