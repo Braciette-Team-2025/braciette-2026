@@ -1,11 +1,21 @@
+import { setAccessToken } from "@/src/lib/auth/acces-token";
+import { api } from "@/src/lib/axios";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-function getApiBaseUrl() {
-  if (!API_BASE_URL) {
-    throw new Error("NEXT_PUBLIC_API_BASE_URL is not configured");
-  }
-
-  return API_BASE_URL;
+export interface GoogleCallbackResponse {
+  success: boolean;
+  message: string;
+  data: {
+    access_token: string;
+    expires_in: number;
+    token_type: string;
+    user: {
+      name: string;
+      email: string;
+      photo_url: string;
+    };
+  };
 }
 
 export interface RefreshTokenResponse {
@@ -22,60 +32,49 @@ export interface CurrentUserResponse {
   success: boolean;
   message: string;
   data: {
+    id: string;
     name: string;
     email: string;
     photo_url: string;
   };
 }
 
-export async function refreshAccessToken(): Promise<string> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/auth/refresh`, {
-    method: "POST",
-    credentials: "include",
-  });
-
-  const body = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    throw new Error(
-      body?.message ?? `Failed to refresh access token (${response.status})`,
-    );
+export function redirectToGoogleLogin() {
+  if (!API_BASE_URL) {
+    throw new Error("NEXT_PUBLIC_API_BASE_URL is not configured");
   }
 
-  return body.data.access_token;
+  window.location.href = `${API_BASE_URL}/api/v1/auth/google`;
 }
 
-export async function getCurrentUser(
-  accessToken: string,
-): Promise<CurrentUserResponse> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/auth/me`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    credentials: "include",
-  });
+export interface RefreshTokenResponse {
+  success: boolean;
+  message: string;
+  data: {
+    access_token: string;
+    expires_in: number;
+    token_type: string;
+  };
+}
 
-  const body = await response.json().catch(() => null);
+export async function refreshAccessToken(): Promise<string> {
+  const response = await api.post<RefreshTokenResponse>("/v1/auth/refresh");
 
-  if (!response.ok) {
-    throw new Error(
-      body?.message ?? `Failed to get current user (${response.status})`,
-    );
-  }
+  const accessToken = response.data.data.access_token;
 
-  return body;
+  setAccessToken(accessToken);
+
+  return accessToken;
+}
+
+export async function getCurrentUser(): Promise<CurrentUserResponse> {
+  const response = await api.get<CurrentUserResponse>("/v1/auth/me");
+
+  return response.data;
 }
 
 export async function logout(): Promise<void> {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/auth/logout`, {
-    method: "POST",
-    credentials: "include",
-  });
+  await api.post("/v1/auth/logout");
 
-  if (!response.ok) {
-    const body = await response.json().catch(() => null);
-
-    throw new Error(body?.message ?? `Failed to logout (${response.status})`);
-  }
+  setAccessToken(null);
 }

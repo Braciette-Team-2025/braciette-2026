@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   refreshAccessToken,
   getCurrentUser,
-} from "@/src/feature/auth/login/services/googleAuth";
+} from "@/src/feature/auth/services/authApi";
 import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
 export default function OAuthCallbackPage() {
@@ -25,15 +25,11 @@ export default function OAuthCallbackPage() {
           return;
         }
 
-        const tokenResponse = await refreshAccessToken();
+        const accessToken = await refreshAccessToken();
 
-        const userResponse = await getCurrentUser(
-          tokenResponse.data.access_token,
-        );
+        const userResponse = await getCurrentUser();
 
-        useAuthStore
-          .getState()
-          .setAuth(tokenResponse.data.access_token, userResponse.data);
+        useAuthStore.getState().setAuth(accessToken, userResponse.data);
 
         router.replace("/");
       } catch (error) {

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { GoogleLogoIcon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
-import { redirectToGoogleLogin } from "../services/googleAuth";
+import { redirectToGoogleLogin } from "@/src/feature/auth/services/authApi";
 
 export default function LoginOptions() {
   return (
