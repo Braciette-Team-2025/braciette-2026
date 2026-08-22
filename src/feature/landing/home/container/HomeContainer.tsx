@@ -1,4 +1,5 @@
 import AboutSection from "../components/AboutSection";
+import FaqSection from "../components/FaqSection";
 import HeroSection from "../components/HeroSection";
 import LogoTransition from "../components/LogoTransition";
 import PhotoSection from "../components/PhotoSection";
@@ -10,6 +11,7 @@ export default function HomeContainer() {
       <div className="flex flex-col gap-7 md:gap-28">
         <AboutSection />
         <PhotoSection />
+        <FaqSection />
       </div>
     </main>
   );
