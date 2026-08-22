@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { jakarta, inter, sloop, theSeasons } from "@/src/styles/fonts";
 import "./globals.css";
+import { AuthProvider } from "../feature/auth/providers/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +18,9 @@ export default function RootLayout({
       lang="en"
       className={`${jakarta.variable} ${inter.variable} ${sloop.variable} ${theSeasons.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }
