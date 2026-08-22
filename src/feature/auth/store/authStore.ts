@@ -1,11 +1,9 @@
 import { create } from "zustand";
 
-import {
-  getCurrentUser,
-  refreshAccessToken,
-} from "../login/services/googleAuth";
+import { getCurrentUser, refreshAccessToken } from "../services/authApi";
 
 interface User {
+  id: string;
   name: string;
   email: string;
   photo_url: string;
@@ -16,11 +14,10 @@ interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   isInitialized: boolean;
+  isLoading: boolean;
 
   setAuth: (accessToken: string, user: User) => void;
-
   clearAuth: () => void;
-
   initialize: () => Promise<void>;
 }
 
@@ -29,6 +26,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
   isInitialized: false,
+  isLoading: false,
 
   setAuth: (accessToken, user) => {
     set({
@@ -36,6 +34,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       user,
       isAuthenticated: true,
       isInitialized: true,
+      isLoading: false,
     });
   },
 
@@ -45,31 +44,44 @@ export const useAuthStore = create<AuthState>((set) => ({
       user: null,
       isAuthenticated: false,
       isInitialized: true,
+      isLoading: false,
     });
   },
 
   initialize: async () => {
+    console.log("[AuthStore] initialize");
+
+    set({
+      isLoading: true,
+    });
+
     try {
+      console.log("[AuthStore] refreshing token");
+
       const tokenResponse = await refreshAccessToken();
 
-      const accessToken = tokenResponse.data.access_token;
+      console.log("[AuthStore] refresh success", tokenResponse);
 
-      const userResponse = await getCurrentUser(accessToken);
+      const accessToken = tokenResponse;
+
+      const userResponse = await getCurrentUser();
 
       set({
         accessToken,
         user: userResponse.data,
         isAuthenticated: true,
         isInitialized: true,
+        isLoading: false,
       });
     } catch (error) {
-      console.error("Failed to initialize authentication:", error);
+      console.error("[AuthStore] initialize failed", error);
 
       set({
         accessToken: null,
         user: null,
         isAuthenticated: false,
         isInitialized: true,
+        isLoading: false,
       });
     }
   },

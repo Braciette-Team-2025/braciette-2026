@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAccessToken } from "./auth/acces-token";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -14,14 +15,15 @@ export const api = axios.create({
   },
 });
 
-api.interceptors.request.use((config) => {
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("access_token");
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = getAccessToken();
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
-  }
 
-  return config;
-});
+    return config;
+  },
+  (error: unknown) => Promise.reject(error),
+);
