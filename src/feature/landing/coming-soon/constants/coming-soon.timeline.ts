@@ -1,14 +1,13 @@
-export const WORLD_HEIGHT_VH = {
-  mobile: 200,
-  tablet: 210,
-  desktop: 220,
-} as const;
-
-export const STAGE_TOP_HEIGHT_VH = {
-  mobile: 100,
-  tablet: 110,
-  desktop: 120,
-} as const;
+/**
+ * coming-soon.timeline.ts
+ * -----------------------------------------------------------------------
+ * Split out of the old `coming-soon.constant.ts` (see
+ * coming-soon-responsive-audit.md §2 & §3). This file holds ONLY GSAP
+ * animation TIMING — durations, delays, keyframes. No layout/responsive
+ * constants live here; those moved to `coming-soon.layout.ts` and
+ * `coming-soon.spacing.ts`.
+ * -----------------------------------------------------------------------
+ */
 
 export const COMING_SOON_TIMELINE = {
   star: {
@@ -39,7 +38,23 @@ export const COMING_SOON_TIMELINE = {
     moveDuration: 0.9,
 
     finalScale: 0.35,
-    finalYVh: -20,
+
+    /**
+     * REPLACES the old `finalYVh: -20` (a fixed viewport-height percentage).
+     *
+     * `finalYVh` moved the logo up by a fixed fraction of the FULL
+     * viewport height — a value with no relationship to the 520px-capped
+     * hero wrapper the logo actually lives in (audit §4.1, "Sistem C").
+     * On a tall phone that translated to a huge jump; on a short/wide
+     * desktop window it barely moved.
+     *
+     * `finalYFactor` is instead a fraction of the HERO CLUSTER's own
+     * rendered height (`heroRef.getBoundingClientRect().height`,
+     * measured once at mount in useComingSoonTimeline.tsx) — so the logo
+     * always travels the same proportional distance relative to the
+     * content it's actually part of, on every screen size.
+     */
+    finalYFactor: -0.3,
   },
 
   title: {
@@ -73,6 +88,14 @@ export const COMING_SOON_TIMELINE = {
 /**
  * STAR_KEYFRAMES — viewport-relative positioning
  *
+ * Deliberately kept in `vw`/`vh` of the FULL viewport (not the 520px
+ * hero wrapper): the shooting star is a full-bleed cinematic effect that
+ * scales up to 8x and eventually fills the screen — it is not part of
+ * the hero content cluster and should keep tracking the real window
+ * size. This is different from the Logo's `finalYFactor` above, which
+ * DOES need to move with the audit's fix because the logo visually lives
+ * inside the capped hero wrapper.
+ *
  * xVw / yVh are offsets FROM THE VIEWPORT CENTER expressed as
  * percentage of viewport WIDTH and HEIGHT respectively.
  *
@@ -83,21 +106,12 @@ export const COMING_SOON_TIMELINE = {
  *   x = xVw * (window.innerWidth  / 100)
  *   y = yVh * (window.innerHeight / 100)
  *
- * WHY: xPercent/yPercent were relative to the element's own CSS size
- * (42vmin).  On a 1920px screen the star is 453px wide; on 1024px it
- * is 322px wide.  The same xPercent value therefore produces a
- * completely different absolute position.  Using vw/vh ensures the
- * star always lands at the SAME proportional viewport position on
- * every screen size.
- *
  * Trajectory (offsets from viewport CENTER):
  *   Frame 0 (t=0)     — hidden, at viewport center
  *   Frame 1 (t=0.2)   — barely visible, still at center
  *   Frame 2 (t=2.0)   — PIVOT: far left (star partially off-screen left)
  *   Frame 3 (t=3.8)   — sweep back to slightly right of center, slightly above
- *   Frame 4 (t=5.2)   — growing, stays in same quadrant
- *   Frame 5 (t=6.5)   — large, starts fading
- *   Frame 6 (t=8.5)   — maximum size, fully faded
+ *   Frame 4 (t=8.5)   — maximum size, fully faded
  */
 export const STAR_KEYFRAMES = [
   {
