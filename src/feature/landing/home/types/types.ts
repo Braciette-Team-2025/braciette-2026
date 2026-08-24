@@ -3,3 +3,10 @@ export type FaqItem = {
   title: string;
   desc: string;
 };
+
+export type TimelineItem = {
+  id: number;
+  title: string;
+  date: string;
+  desc: string;
+};
