@@ -1,9 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { openTalentFormService } from "../services/openTalentForm.service";
+import {
+  openTalentFormService,
+  OpenTalentSubmitError,
+} from "../services/openTalentForm.service";
 import { EMPTY_OPEN_TALENT_FORM_VALUES } from "../constants/performanceType";
 import { OpenTalentFormValues } from "../types/openTalentForm";
+import { isValidDriveLink } from "../utils/validation";
 
 interface UseOpenTalentFormOptions {
   initialValues?: OpenTalentFormValues;
@@ -19,6 +23,7 @@ export function useOpenTalentForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const setField = <K extends keyof OpenTalentFormValues>(
     field: K,
@@ -33,6 +38,10 @@ export function useOpenTalentForm({
 
       return next;
     });
+
+    // Ubah field apapun setelah submit gagal -> bersihkan pesan error lama,
+    // supaya tidak nyangkut nampilin error basi begitu user mulai benerin.
+    if (submitError) setSubmitError(null);
   };
 
   const isStepOneValid = Boolean(
@@ -41,8 +50,20 @@ export function useOpenTalentForm({
     values.leaderContact.trim(),
   );
 
+  const isDriveLinkValid = isValidDriveLink(values.driveLink);
+
+  // Pesan error di bawah field Link Drive — cuma tampil kalau user SUDAH
+  // isi sesuatu tapi formatnya salah, bukan begitu field masih kosong.
+  const driveLinkError =
+    values.driveLink.trim().length > 0 && !isDriveLinkValid
+      ? "Link harus diawali https://drive.google.com/"
+      : null;
+
   const isStepTwoValid = Boolean(
-    values.talent.trim() && values.performanceType && values.driveLink.trim(),
+    values.talent.trim() &&
+    values.performanceType &&
+    values.driveLink.trim() &&
+    isDriveLinkValid,
   );
 
   const goToStepTwo = () => {
@@ -53,10 +74,22 @@ export function useOpenTalentForm({
 
   const submit = async () => {
     if (!isStepTwoValid) return;
+
     setIsSubmitting(true);
-    await openTalentFormService.submit(values);
-    setIsSubmitting(false);
-    setIsSuccessModalOpen(true);
+    setSubmitError(null);
+
+    try {
+      await openTalentFormService.submit(values);
+      setIsSuccessModalOpen(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof OpenTalentSubmitError
+          ? error.message
+          : "Gagal mengirim pendaftaran, coba lagi.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const closeSuccessModal = () => {
@@ -70,6 +103,7 @@ export function useOpenTalentForm({
     setField,
     isStepOneValid,
     isStepTwoValid,
+    driveLinkError,
     goToStepTwo,
     goToStepOne,
     submit,
@@ -77,5 +111,6 @@ export function useOpenTalentForm({
     isSuccessModalOpen,
     closeSuccessModal,
     hasSubmitted,
+    submitError,
   };
 }

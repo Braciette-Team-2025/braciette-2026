@@ -27,6 +27,7 @@ export function OpenTalentFormContainer({
     setField,
     isStepOneValid,
     isStepTwoValid,
+    driveLinkError,
     goToStepTwo,
     goToStepOne,
     submit,
@@ -34,6 +35,7 @@ export function OpenTalentFormContainer({
     isSuccessModalOpen,
     closeSuccessModal,
     hasSubmitted,
+    submitError,
   } = useOpenTalentForm({ initialValues });
   const displayMode: OpenTalentFormMode = hasSubmitted ? "view" : mode;
 
@@ -65,6 +67,8 @@ export function OpenTalentFormContainer({
           onSubmit={submit}
           isValid={isStepTwoValid}
           isSubmitting={isSubmitting}
+          driveLinkError={driveLinkError}
+          submitError={submitError}
           resultHref={resultHref}
         />
       )}
