@@ -26,6 +26,8 @@ interface OpenTalentStepTwoProps {
   onSubmit: () => void;
   isValid: boolean;
   isSubmitting: boolean;
+  driveLinkError?: string | null;
+  submitError?: string | null;
   resultHref: string;
 }
 
@@ -37,6 +39,8 @@ export function OpenTalentStepTwo({
   onSubmit,
   isValid,
   isSubmitting,
+  driveLinkError,
+  submitError,
   resultHref,
 }: OpenTalentStepTwoProps) {
   const isViewMode = mode === "view";
@@ -87,17 +91,31 @@ export function OpenTalentStepTwo({
               value={values.driveLink}
               placeholder={isViewMode ? "Link Google Drive" : "Link Drive"}
               readOnly={isViewMode}
+              error={isViewMode ? null : driveLinkError}
               onChange={(value) => onFieldChange("driveLink", value)}
             />
-            {!isViewMode && (
+            {!isViewMode && !driveLinkError && (
               <p
                 className="text-blue-100/70"
                 style={{ fontSize: "clamp(0.7rem, 0.85vw, 0.8rem)" }}
               >
-                Pastikan link sudah diberikan akses &quot;anyone can view&quot;
+                Pastikan link diawali https://drive.google.com/ dan sudah
+                diberikan akses &quot;anyone can view&quot;
               </p>
             )}
           </div>
+
+          {submitError && (
+            <p
+              className="rounded-lg border border-red-400/60 bg-red-500/10 text-red-300"
+              style={{
+                fontSize: "clamp(0.75rem, 0.9vw, 0.85rem)",
+                padding: "clamp(0.6rem, 1vw, 0.75rem)",
+              }}
+            >
+              {submitError}
+            </p>
+          )}
         </div>
       </OpenTalentFormCard>
 
