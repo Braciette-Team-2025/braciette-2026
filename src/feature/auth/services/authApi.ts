@@ -1,5 +1,9 @@
 import { setAccessToken } from "@/src/lib/auth/acces-token";
 import { api } from "@/src/lib/axios";
+import type {
+  LoginOrmawaRequest,
+  LoginOrmawaResponse,
+} from "../types/auth.type";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -47,14 +51,14 @@ export function redirectToGoogleLogin() {
   window.location.href = `${API_BASE_URL}/api/v1/auth/google`;
 }
 
-export interface RefreshTokenResponse {
-  success: boolean;
-  message: string;
-  data: {
-    access_token: string;
-    expires_in: number;
-    token_type: string;
-  };
+export async function loginOrmawa(
+  credentials: LoginOrmawaRequest,
+): Promise<LoginOrmawaResponse> {
+  const response = await api.post<LoginOrmawaResponse>(
+    "/v1/auth/login",
+    credentials,
+  );
+  return response.data;
 }
 
 export async function refreshAccessToken(): Promise<string> {
