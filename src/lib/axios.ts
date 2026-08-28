@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getAccessToken, setAccessToken } from "./auth/acces-token";
+import { getRouter } from "./router";
 
 if (!process.env.NEXT_PUBLIC_API_BASE_URL) {
   console.warn(
@@ -55,11 +56,28 @@ api.interceptors.response.use(
     };
 
     const isRefreshEndpoint = originalRequest?.url?.includes("/auth/refresh");
-    if (
-      error.response?.status !== 401 ||
-      originalRequest?._retry ||
-      isRefreshEndpoint
-    ) {
+
+    // Jika endpoint refresh itu sendiri yang 401 → session expired, redirect ke login
+    if (isRefreshEndpoint && error.response?.status === 401) {
+      setAccessToken(null);
+      const isAuthPage =
+        typeof window !== "undefined" &&
+        (window.location.pathname.startsWith("/login") ||
+          window.location.pathname.startsWith("/oauth"));
+      if (!isAuthPage) {
+        console.warn("[axios] Refresh token expired — redirecting to /login");
+        const router = getRouter();
+        if (router) {
+          router.push("/login");
+        } else {
+          // Fallback sebelum router singleton tersedia (rare case)
+          window.location.href = "/login";
+        }
+      }
+      return Promise.reject(error);
+    }
+
+    if (error.response?.status !== 401 || originalRequest?._retry) {
       return Promise.reject(error);
     }
     if (isRefreshing) {
