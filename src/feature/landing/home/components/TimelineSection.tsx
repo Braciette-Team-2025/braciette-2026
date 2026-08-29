@@ -20,7 +20,7 @@ export default function TimelineSection() {
           Road to Awarding
         </h2>
       </div>
-      <div className="flex gap-10 md:gap-16 xl:gap-25 overflow-x-scroll w-full px-6 md:px-12 xl:px-25">
+      <div className="flex gap-10 md:gap-16 xl:gap-25 overflow-x-auto overflow-y-hidden pb-6 w-full px-6 md:px-12 xl:px-25 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-yellow-500/10 [&::-webkit-scrollbar-thumb]:rounded-full">
         {TIMELINE_DATA.map((data, index) => {
           const isEven = index % 2 === 0;
           const isLast = index === TIMELINE_DATA.length - 1;
