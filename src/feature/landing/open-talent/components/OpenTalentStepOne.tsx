@@ -17,7 +17,7 @@ interface OpenTalentStepOneProps {
     value: string,
   ) => void;
   onNext: () => void;
-  isValid: boolean;
+  fieldErrors: Partial<Record<keyof OpenTalentFormValues, string>>;
   resultHref: string;
 }
 
@@ -26,7 +26,7 @@ export function OpenTalentStepOne({
   values,
   onFieldChange,
   onNext,
-  isValid,
+  fieldErrors,
   resultHref,
 }: OpenTalentStepOneProps) {
   const isViewMode = mode === "view";
@@ -46,6 +46,7 @@ export function OpenTalentStepOne({
             value={values.leaderName}
             placeholder="Nama Lengkap Ketua"
             readOnly={isViewMode}
+            error={fieldErrors.leaderName}
             onChange={(value) => onFieldChange("leaderName", value)}
           />
           <OpenTalentField
@@ -53,6 +54,7 @@ export function OpenTalentStepOne({
             value={values.faculty}
             placeholder="Asal Fakultas Ketua"
             readOnly={isViewMode}
+            error={fieldErrors.faculty}
             onChange={(value) => onFieldChange("faculty", value)}
           />
           <OpenTalentField
@@ -60,6 +62,8 @@ export function OpenTalentStepOne({
             value={values.leaderContact}
             placeholder="Kontak Ketua"
             readOnly={isViewMode}
+            maxLength={20}
+            error={fieldErrors.leaderContact}
             onChange={(value) => onFieldChange("leaderContact", value)}
           />
         </div>
@@ -69,12 +73,7 @@ export function OpenTalentStepOne({
         {isViewMode ? (
           <OpenTalentButton label="Hasil Open Talent" href={resultHref} />
         ) : (
-          <OpenTalentButton
-            label="Next"
-            icon={ArrowRight}
-            onClick={onNext}
-            disabled={!isValid}
-          />
+          <OpenTalentButton label="Next" icon={ArrowRight} onClick={onNext} />
         )}
       </div>
     </div>

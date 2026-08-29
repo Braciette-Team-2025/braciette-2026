@@ -11,6 +11,7 @@ interface OpenTalentFieldProps {
   type?: string;
   error?: string | null;
   className?: string;
+  maxLength?: number;
 }
 
 export function OpenTalentField({
@@ -22,6 +23,7 @@ export function OpenTalentField({
   type = "text",
   error,
   className,
+  maxLength,
 }: OpenTalentFieldProps) {
   return (
     <div
@@ -39,6 +41,7 @@ export function OpenTalentField({
         value={value}
         placeholder={placeholder ?? label}
         readOnly={readOnly}
+        maxLength={maxLength}
         onChange={(event) => onChange?.(event.target.value)}
         aria-invalid={Boolean(error)}
         className={cn(
