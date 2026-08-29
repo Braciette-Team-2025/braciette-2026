@@ -1,4 +1,4 @@
-import { FaqItem, TimelineItem } from "../types/types";
+import { FaqItem, TimelineItem, VotingGuideItem } from "../types/types";
 
 export const FAQ_DATA: FaqItem[] = [
   {
@@ -53,5 +53,20 @@ export const TIMELINE_DATA: TimelineItem[] = [
     title: "Awarding Braciate 2026",
     date: "30 Okt 2026",
     desc: "Periode voting dimulai dari tanggal 1 Oktober hingga 27 Oktober 2025.",
+  },
+];
+
+export const VOTE_GUIDE_DATA: VotingGuideItem[] = [
+  {
+    id: 1,
+    desc: "Sign in using your official Universitas Brawijaya Email via Google OAuth",
+  },
+  {
+    id: 2,
+    desc: "Navigate to your preferred organization category: BEM, DPM, HIMA, or UKM.",
+  },
+  {
+    id: 3,
+    desc: "Select the most deserving candidate and cast your one-time digital vote.",
   },
 ];

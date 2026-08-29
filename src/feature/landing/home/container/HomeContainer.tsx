@@ -3,6 +3,7 @@ import FaqSection from "../components/FaqSection";
 import HeroSection from "../components/HeroSection";
 import PhotoSection from "../components/PhotoSection";
 import TimelineSection from "../components/TimelineSection";
+import VotingGuideSection from "../components/VotingGuideSection";
 
 export default function HomeContainer() {
   return (
@@ -12,6 +13,7 @@ export default function HomeContainer() {
         <AboutSection />
         <PhotoSection />
         <TimelineSection />
+        <VotingGuideSection />
         <FaqSection />
       </div>
     </main>
