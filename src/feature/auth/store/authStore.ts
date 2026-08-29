@@ -1,6 +1,13 @@
 import { create } from "zustand";
 
-import { getCurrentUser, refreshAccessToken } from "../services/authApi";
+import {
+  getCurrentUser,
+  refreshAccessToken,
+  loginOrmawa,
+  logout as apiLogout,
+} from "../services/authApi";
+import type { LoginOrmawaRequest } from "../types/auth.type";
+import { setAccessToken } from "@/src/lib/auth/acces-token";
 
 interface User {
   id: string;
@@ -19,6 +26,8 @@ interface AuthState {
   setAuth: (accessToken: string, user: User) => void;
   clearAuth: () => void;
   initialize: () => Promise<void>;
+  loginOrmawa: (credentials: LoginOrmawaRequest) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -76,6 +85,44 @@ export const useAuthStore = create<AuthState>((set) => ({
     } catch (error) {
       console.error("[AuthStore] initialize failed", error);
 
+      set({
+        accessToken: null,
+        user: null,
+        isAuthenticated: false,
+        isInitialized: true,
+        isLoading: false,
+      });
+    }
+  },
+
+  loginOrmawa: async (credentials) => {
+    set({ isLoading: true });
+    try {
+      const response = await loginOrmawa(credentials);
+      const { access_token, user } = response.data;
+
+      setAccessToken(access_token);
+
+      set({
+        accessToken: access_token,
+        user: { ...user, id: user.id || "0" },
+        isAuthenticated: true,
+        isInitialized: true,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({ isLoading: false });
+      throw error;
+    }
+  },
+
+  logout: async () => {
+    set({ isLoading: true });
+    try {
+      await apiLogout();
+    } catch (error) {
+      console.error("[AuthStore] Logout API failed", error);
+    } finally {
       set({
         accessToken: null,
         user: null,
