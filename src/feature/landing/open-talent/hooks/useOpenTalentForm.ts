@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   openTalentFormService,
   OpenTalentSubmitError,
@@ -16,6 +17,7 @@ interface UseOpenTalentFormOptions {
 export function useOpenTalentForm({
   initialValues,
 }: UseOpenTalentFormOptions = {}) {
+  const router = useRouter();
   const [step, setStep] = useState<1 | 2>(1);
   const [values, setValues] = useState<OpenTalentFormValues>(
     initialValues ?? EMPTY_OPEN_TALENT_FORM_VALUES,
@@ -24,6 +26,9 @@ export function useOpenTalentForm({
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<
+    Partial<Record<keyof OpenTalentFormValues, string>>
+  >({});
 
   const setField = <K extends keyof OpenTalentFormValues>(
     field: K,
@@ -39,41 +44,71 @@ export function useOpenTalentForm({
       return next;
     });
 
-    // Ubah field apapun setelah submit gagal -> bersihkan pesan error lama,
-    // supaya tidak nyangkut nampilin error basi begitu user mulai benerin.
+    // Bersihkan error field yang sedang diedit
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+
     if (submitError) setSubmitError(null);
   };
 
-  const isStepOneValid = Boolean(
-    values.leaderName.trim() &&
-    values.faculty.trim() &&
-    values.leaderContact.trim(),
-  );
-
   const isDriveLinkValid = isValidDriveLink(values.driveLink);
 
-  // Pesan error di bawah field Link Drive — cuma tampil kalau user SUDAH
-  // isi sesuatu tapi formatnya salah, bukan begitu field masih kosong.
   const driveLinkError =
     values.driveLink.trim().length > 0 && !isDriveLinkValid
       ? "Link harus diawali https://drive.google.com/"
       : null;
 
-  const isStepTwoValid = Boolean(
-    values.talent.trim() &&
-    values.performanceType &&
-    values.driveLink.trim() &&
-    isDriveLinkValid,
-  );
-
   const goToStepTwo = () => {
-    if (isStepOneValid) setStep(2);
+    const errors: Partial<Record<keyof OpenTalentFormValues, string>> = {};
+
+    if (!values.leaderName.trim()) {
+      errors.leaderName = "Nama lengkap ketua wajib diisi";
+    }
+    if (!values.faculty.trim()) {
+      errors.faculty = "Asal fakultas wajib diisi";
+    }
+    if (!values.leaderContact.trim()) {
+      errors.leaderContact = "Kontak ketua wajib diisi";
+    } else if (!values.leaderContact.startsWith("08")) {
+      errors.leaderContact = "Nomor HP harus diawali dengan 08";
+    } else if (values.leaderContact.trim().length < 10) {
+      errors.leaderContact = "Nomor HP minimal 10 digit";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    setFieldErrors({});
+    setStep(2);
   };
 
-  const goToStepOne = () => setStep(1);
+  const goToStepOne = () => {
+    setFieldErrors({});
+    setStep(1);
+  };
 
   const submit = async () => {
-    if (!isStepTwoValid) return;
+    const errors: Partial<Record<keyof OpenTalentFormValues, string>> = {};
+
+    if (!values.talent.trim()) {
+      errors.talent = "Talent yang ditampilkan wajib diisi";
+    }
+    if (!values.driveLink.trim()) {
+      errors.driveLink = "Link Drive wajib diisi";
+    } else if (!isDriveLinkValid) {
+      errors.driveLink = "Link harus diawali https://drive.google.com/";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -95,14 +130,14 @@ export function useOpenTalentForm({
   const closeSuccessModal = () => {
     setIsSuccessModalOpen(false);
     setHasSubmitted(true);
+    router.push("/profile/open-talent");
   };
 
   return {
     step,
     values,
     setField,
-    isStepOneValid,
-    isStepTwoValid,
+    fieldErrors,
     driveLinkError,
     goToStepTwo,
     goToStepOne,
