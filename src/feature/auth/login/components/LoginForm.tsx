@@ -1,9 +1,31 @@
+"use client";
+
 import { Input } from "../../components/AuthInput";
 import { Button } from "../../components/AuthButton";
+import { useLoginForm } from "../hooks/useLoginForm";
 
 export default function LoginForm() {
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    error,
+    isLoading,
+    handleSubmit,
+  } = useLoginForm();
+
   return (
-    <form className="flex flex-col gap-5 md:gap-4 w-full sm:w-[516px]">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-5 md:gap-4 w-full sm:w-[516px]"
+    >
+      {error && (
+        <div className="bg-red-500/10 border border-red-500 text-red-500 text-sm p-3 rounded-md">
+          {error}
+        </div>
+      )}
+
       <div className="flex flex-col gap-2">
         <label
           htmlFor="username"
@@ -13,7 +35,12 @@ export default function LoginForm() {
         </label>
         <Input
           id="username"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="Masukkan Username / Email kamu disini"
+          disabled={isLoading}
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -26,11 +53,17 @@ export default function LoginForm() {
         <Input
           id="password"
           type="password"
-          placeholder="Masukkan NIM kamu disini"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Masukkan Password kamu disini"
+          disabled={isLoading}
         />
       </div>
       <div className="w-full flex justify-center mt-4">
-        <Button className="w-fit">Konfirmasi</Button>
+        <Button type="submit" className="w-fit" disabled={isLoading}>
+          {isLoading ? "Memproses..." : "Konfirmasi"}
+        </Button>
       </div>
     </form>
   );

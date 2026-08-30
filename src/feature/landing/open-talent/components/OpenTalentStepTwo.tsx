@@ -24,8 +24,10 @@ interface OpenTalentStepTwoProps {
   ) => void;
   onBack: () => void;
   onSubmit: () => void;
-  isValid: boolean;
   isSubmitting: boolean;
+  fieldErrors: Partial<Record<string, string>>;
+  driveLinkError?: string | null;
+  submitError?: string | null;
   resultHref: string;
 }
 
@@ -35,8 +37,10 @@ export function OpenTalentStepTwo({
   onFieldChange,
   onBack,
   onSubmit,
-  isValid,
   isSubmitting,
+  fieldErrors,
+  driveLinkError,
+  submitError,
   resultHref,
 }: OpenTalentStepTwoProps) {
   const isViewMode = mode === "view";
@@ -57,6 +61,7 @@ export function OpenTalentStepTwo({
             value={values.talent}
             placeholder="Talent yang Ditampilkan"
             readOnly={isViewMode}
+            error={fieldErrors.talent}
             onChange={(value) => onFieldChange("talent", value)}
           />
 
@@ -71,12 +76,14 @@ export function OpenTalentStepTwo({
             }
           />
 
-          <OpenTalentMemberStepper
-            label="Jumlah Anggota"
-            value={values.memberCount}
-            disabled={isIndividual || isViewMode}
-            onChange={(value) => onFieldChange("memberCount", value)}
-          />
+          {!isIndividual && (
+            <OpenTalentMemberStepper
+              label="Jumlah Anggota"
+              value={values.memberCount}
+              disabled={isViewMode}
+              onChange={(value) => onFieldChange("memberCount", value)}
+            />
+          )}
 
           <div
             className="flex flex-col"
@@ -87,17 +94,33 @@ export function OpenTalentStepTwo({
               value={values.driveLink}
               placeholder={isViewMode ? "Link Google Drive" : "Link Drive"}
               readOnly={isViewMode}
+              error={
+                isViewMode ? null : (fieldErrors.driveLink ?? driveLinkError)
+              }
               onChange={(value) => onFieldChange("driveLink", value)}
             />
-            {!isViewMode && (
+            {!isViewMode && !driveLinkError && (
               <p
                 className="text-blue-100/70"
                 style={{ fontSize: "clamp(0.7rem, 0.85vw, 0.8rem)" }}
               >
-                Pastikan link sudah diberikan akses &quot;anyone can view&quot;
+                Pastikan link diawali https://drive.google.com/ dan sudah
+                diberikan akses &quot;anyone can view&quot;
               </p>
             )}
           </div>
+
+          {submitError && (
+            <p
+              className="rounded-lg border border-red-400/60 bg-red-500/10 text-red-300"
+              style={{
+                fontSize: "clamp(0.75rem, 0.9vw, 0.85rem)",
+                padding: "clamp(0.6rem, 1vw, 0.75rem)",
+              }}
+            >
+              {submitError}
+            </p>
+          )}
         </div>
       </OpenTalentFormCard>
 
@@ -115,7 +138,7 @@ export function OpenTalentStepTwo({
           <OpenTalentButton
             label={isSubmitting ? "Mengirim..." : "Confirm"}
             onClick={onSubmit}
-            disabled={!isValid || isSubmitting}
+            disabled={isSubmitting}
           />
         )}
       </div>

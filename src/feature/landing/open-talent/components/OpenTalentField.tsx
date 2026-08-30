@@ -9,7 +9,9 @@ interface OpenTalentFieldProps {
   onChange?: (value: string) => void;
   readOnly?: boolean;
   type?: string;
+  error?: string | null;
   className?: string;
+  maxLength?: number;
 }
 
 export function OpenTalentField({
@@ -19,7 +21,9 @@ export function OpenTalentField({
   onChange,
   readOnly,
   type = "text",
+  error,
   className,
+  maxLength,
 }: OpenTalentFieldProps) {
   return (
     <div
@@ -37,13 +41,26 @@ export function OpenTalentField({
         value={value}
         placeholder={placeholder ?? label}
         readOnly={readOnly}
+        maxLength={maxLength}
         onChange={(event) => onChange?.(event.target.value)}
-        className="w-full rounded-lg border-2 border-yellow-500/80 bg-blue-50 text-blue-900 outline-none transition-shadow placeholder:text-blue-300/70 focus:shadow-[0_0_0_3px_rgba(201,162,39,0.35)] read-only:cursor-default"
+        aria-invalid={Boolean(error)}
+        className={cn(
+          "w-full rounded-lg border-2 bg-blue-50 text-blue-900 outline-none transition-shadow placeholder:text-blue-300/70 focus:shadow-[0_0_0_3px_rgba(201,162,39,0.35)] read-only:cursor-default",
+          error ? "border-red-400" : "border-yellow-500/80",
+        )}
         style={{
           fontSize: "clamp(0.85rem, 1.05vw, 1rem)",
           padding: "clamp(0.65rem, 1vw, 0.9rem) clamp(0.9rem, 1.4vw, 1.1rem)",
         }}
       />
+      {error && (
+        <p
+          className="text-red-300"
+          style={{ fontSize: "clamp(0.7rem, 0.85vw, 0.8rem)" }}
+        >
+          {error}
+        </p>
+      )}
     </div>
   );
 }

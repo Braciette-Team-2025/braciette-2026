@@ -13,7 +13,7 @@ export const EMPTY_OPEN_TALENT_FORM_VALUES: OpenTalentFormValues = {
   faculty: "",
   leaderContact: "",
   talent: "",
-  performanceType: "",
+  performanceType: "Individu",
   memberCount: 1,
   driveLink: "",
 };

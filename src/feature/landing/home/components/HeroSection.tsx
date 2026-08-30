@@ -1,10 +1,12 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { LandingButton } from "./ui/LandingButton";
 import { useRef } from "react";
 import { useHeroAnimation } from "../hooks/animation/useHeroAnimation";
 
 export default function HeroSection() {
+  const router = useRouter();
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
 
@@ -27,7 +29,6 @@ export default function HeroSection() {
       ref={sectionRef}
       className="relative w-full  md:min-h-[calc(100vh-106px)] flex flex-col items-center justify-center gap-4 md:gap-8 lg:gap-14"
     >
-      {/* Background Stars */}
       <div
         ref={starsRef}
         className="absolute inset-0 overflow-hidden pointer-events-none"
@@ -89,10 +90,17 @@ export default function HeroSection() {
         </p>
       </div>
       <div ref={ctaRef} className="flex gap-4 md:gap-6 lg:gap-10">
-        <LandingButton className="min-w-24.5 md:min-w-36 lg:min-w-55">
+     
+        <LandingButton
+          className="min-w-24.5 md:min-w-36 lg:min-w-55"
+          onClick={() => router.push("/open-talent")}
+        >
           Open Talent
         </LandingButton>
-        <LandingButton className="min-w-24.5 md:min-w-36 lg:min-w-55">
+        <LandingButton
+          className="min-w-24.5 md:min-w-36 lg:min-w-55"
+          onClick={() => router.push("/voting")}
+        >
           Voting
         </LandingButton>
       </div>
