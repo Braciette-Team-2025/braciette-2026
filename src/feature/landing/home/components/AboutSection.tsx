@@ -1,15 +1,48 @@
+"use client";
 import Image from "next/image";
 import LogoTransition from "./LogoTransition";
+import { useRef } from "react";
+import { useAboutAnimation } from "../hooks/animation/useAboutAnimation";
 
 export default function AboutSection() {
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const rayLeftRef = useRef<HTMLDivElement>(null);
+  const rayRightRef = useRef<HTMLDivElement>(null);
+  const discLeftRef = useRef<HTMLDivElement>(null);
+  const discRightRef = useRef<HTMLDivElement>(null);
+
+  useAboutAnimation({
+    sectionRef,
+    logoRef,
+    headingRef,
+    descRef,
+    rayLeftRef,
+    rayRightRef,
+    discLeftRef,
+    discRightRef,
+  });
+
   return (
-    <section className="w-full items-center flex flex-col gap-4 md: lg:gap-8 md:min-h-screen justify-center xl">
-      <LogoTransition />
+    <section
+      ref={sectionRef}
+      className="w-full items-center flex flex-col gap-4 md: lg:gap-8 md:min-h-screen justify-center xl"
+    >
+      <LogoTransition
+        logoRef={logoRef}
+        rayLeftRef={rayLeftRef}
+        rayRightRef={rayRightRef}
+      />
       <div className="w-full flex justify-between relative py-4 md:py-6 lg:py-8">
-        <div className="w-22 md:w-46 xl:w-74 relative -left-4 md:-left-12 lg:-left-20">
+        <div
+          ref={discLeftRef}
+          className="w-22 md:w-46 xl:w-74 relative -left-4 md:-left-12 lg:-left-20"
+        >
           <Image
             className="-scale-x-100"
             src="/images/disc/disc-jockey.svg"
@@ -18,7 +51,10 @@ export default function AboutSection() {
             alt="Disc Jockey"
           />
         </div>
-        <h1 className="font-the-seasons text-[24px] md:text-[40px] xl:text-[80px] leading-[0.55] text-right flex flex-col justify-center">
+        <h1
+          ref={headingRef}
+          className="font-the-seasons text-[24px] md:text-[40px] xl:text-[80px] leading-[0.55] text-right flex flex-col justify-center"
+        >
           <span className="block text-blue-100 drop-shadow-[0_0_20px_rgba(132,98,255,0.6)]">
             <span className={highlightClass}>A</span>bout
           </span>
@@ -26,7 +62,10 @@ export default function AboutSection() {
             <span className={highlightClass}>U</span>s
           </span>
         </h1>
-        <div className="w-22 md:w-46 xl:w-74 relative -right-4 md:-right-12 lg:-right-20">
+        <div
+          ref={discRightRef}
+          className="w-22 md:w-46 xl:w-74 relative -right-4 md:-right-12 lg:-right-20"
+        >
           <Image
             className=""
             src="/images/disc/disc-jockey.svg"
@@ -37,7 +76,10 @@ export default function AboutSection() {
         </div>
       </div>
       <div className="w-full px-[16%]">
-        <p className="text-center text-yellow-100 text-[8px] md:text-md xl:text-2xl font-semibold">
+        <p
+          ref={descRef}
+          className="text-center text-yellow-100 text-[8px] md:text-md xl:text-2xl font-semibold"
+        >
           Brawijaya Appreciate merupakan program kerja dari Kementerian Dalam
           Negeri Eksekutif Mahasiswa Universitas Brawijaya yang berbentuk malam
           penghargaan dengan tujuan sebagai bentuk kolaborasi, harmonisasi, dan

@@ -10,3 +10,8 @@ export type TimelineItem = {
   date: string;
   desc: string;
 };
+
+export type VotingGuideItem = {
+  id: number;
+  desc: string;
+};
