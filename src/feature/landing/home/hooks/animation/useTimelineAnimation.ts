@@ -51,10 +51,12 @@ export function useTimelineAnimation(refs: TimelineAnimationRefs) {
 
         const getEndX = () => container.clientWidth - track.scrollWidth;
 
+        const NAVBAR_OFFSET = 50;
+
         const mainTl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: "top top",
+            start: `top ${NAVBAR_OFFSET}`,
             end: () => `+=${track.scrollWidth}`,
             pin: true,
             scrub: 1,
