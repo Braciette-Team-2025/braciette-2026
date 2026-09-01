@@ -13,7 +13,7 @@ import SubmissionDetailModalExternal from "./modal/SubmissionDetailModalExternal
 import ConfirmationDialog from "./modal/ConfirmationDialog";
 
 import { useExternalSubmissionState } from "../../hooks/useExternalSubmissionState";
-import { externalCards } from "../../constants/statistics";
+import { generateStatisticCards } from "../../constants/statistics";
 
 export default function ExternalSubmissionContent() {
   const router = useRouter();
@@ -53,7 +53,11 @@ export default function ExternalSubmissionContent() {
     deleteLoading,
     handleDelete,
     confirmDelete,
+    statsCounts,
+    statsTotal,
   } = useExternalSubmissionState();
+
+  const cards = generateStatisticCards(statsTotal, statsCounts);
 
   const handleAddPage = () => {
     router.push("/admin/submission/external-create");
@@ -61,7 +65,7 @@ export default function ExternalSubmissionContent() {
 
   return (
     <div className="font-inter flex flex-col gap-8">
-      <Statistic cards={externalCards} />
+      <Statistic cards={cards} />
 
       <AddOrmawaButton onClick={handleAddPage} />
 

@@ -11,7 +11,7 @@ import Statistic from "./Statistic";
 import SubmissionTable from "./table/SubmissionTable";
 
 import { useSubmissionList } from "../../hooks/useSubmissionList";
-import { externalCards, internalCards } from "../../constants/statistics";
+import { generateStatisticCards } from "../../constants/statistics";
 import type { SubmissionContentProps } from "../../types/ormawa";
 
 export default function SubmissionContent({
@@ -38,9 +38,11 @@ export default function SubmissionContent({
     setSortBy,
     order,
     setOrder,
+    statsCounts,
+    totalCount,
   } = useSubmissionList(type);
 
-  const cards = type === "internal" ? internalCards : externalCards;
+  const cards = generateStatisticCards(totalCount, statsCounts);
 
   const handleAddPage = () => {
     router.push(`/admin/submission/${type}-create`);
