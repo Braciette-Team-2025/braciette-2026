@@ -34,7 +34,7 @@ export default function StepTwoForm({
   );
   const [driveLink, setDriveLink] = useState(initialValues?.driveLink ?? "");
 
-  const isUkm = UKM_TYPES.includes(type);
+  const isUkm = UKM_TYPES.includes(type as string);
 
   const handleToggleNomination = (id: string) => {
     setSelectedNominations((prev) =>
