@@ -27,10 +27,6 @@ export default function FilterJenis({
         <SelectItem value="dpm">DPM</SelectItem>
         <SelectItem value="hima">HIMA</SelectItem>
         <SelectItem value="ukm">UKM</SelectItem>
-        <SelectItem value="ukm-penalaran">UKM Penalaran</SelectItem>
-        <SelectItem value="ukm-olahraga">UKM Olahraga</SelectItem>
-        <SelectItem value="ukm-kesenian">UKM Kesenian</SelectItem>
-        <SelectItem value="ukm-kerohanian">UKM Kerohanian</SelectItem>
       </SelectContent>
     </Select>
   );

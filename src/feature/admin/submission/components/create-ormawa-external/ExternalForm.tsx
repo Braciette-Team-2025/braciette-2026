@@ -2,41 +2,39 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import * as z from "zod/v4";
 import { Upload } from "lucide-react";
 import ConfirmationDialog from "../create-ormawa-internal/dialog/ConfirmationDialog";
 import { useState } from "react";
 import { ORMAWA_TYPES } from "../../constants/nominations";
+import { useCreateExternalSubmission } from "../../hooks/useCreateExternalSubmission";
 
-const ORMAWA_ENUM = [
-  "BEM",
-  "DPM",
-  "HIMA",
-  "UKM PENALARAN",
-  "UKM OLAHRAGA",
-  "UKM KESENIAN",
-  "UKM KEROHANIAN",
-] as const;
+const ORMAWA_ENUM = ["BEM", "DPM", "HIMA", "UKM"] as const;
 
 const formSchema = z.object({
   ormawaType: z.enum(ORMAWA_ENUM),
 
-  namaOrmawa: z.string(),
+  namaOrmawa: z.string().min(1, "Nama ormawa wajib diisi"),
 
   logo: z
     .any()
     .refine((files) => files?.length > 0, "Logo wajib diunggah")
-    .refine((files) => files?.[0]?.size <= 5000000, "Ukuran file maksimal 5 MB")
+    .refine((files) => files?.[0]?.size <= 2000000, "Ukuran file maksimal 2 MB")
     .refine(
-      (files) => files?.[0]?.type === "application/pdf",
-      "Hanya menerima format PDF",
+      (files) =>
+        ["image/png", "image/jpeg", "image/jpg"].includes(files?.[0]?.type),
+      "Hanya menerima format PNG atau JPG",
     ),
 });
+
 type FormValues = z.infer<typeof formSchema>;
 
 export default function ExternalForm() {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [pendingData, setPendingData] = useState<FormValues | null>(null);
+
+  const { mutate: createSubmission, isPending } = useCreateExternalSubmission();
+
   const {
     register,
     handleSubmit,
@@ -49,29 +47,35 @@ export default function ExternalForm() {
     },
   });
 
+  // Untuk menampilkan nama file yang sudah dipilih
+  const selectedFile = watch("logo")?.[0];
+
   const onSubmit = (data: FormValues) => {
     setPendingData(data);
     setOpenConfirm(true);
   };
 
-  const handleFinalSubmit = async () => {
+  const handleFinalSubmit = () => {
     if (!pendingData) return;
 
-    try {
-      console.log("Mengirim data final ke database:", pendingData);
+    const formData = new FormData();
+    formData.append("type", pendingData.ormawaType);
+    formData.append("name", pendingData.namaOrmawa);
+    formData.append("logo", pendingData.logo[0]);
 
-      setOpenConfirm(false);
-    } catch (error) {
-      console.error("Terjadi kesalahan:", error);
-    }
+    createSubmission(formData, {
+      onSuccess: () => setOpenConfirm(false),
+      onError: () => setOpenConfirm(false),
+    });
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Jenis Ormawa */}
         <div className="space-y-2">
           <label
-            htmlFor="jenisOrmawa"
+            htmlFor="ormawaType"
             className="block text-sm font-semibold text-gray-700"
           >
             Jenis Ormawa
@@ -85,9 +89,9 @@ export default function ExternalForm() {
               <option value="" disabled className="text-gray-400">
                 Pilih Jenis Ormawa
               </option>
-              {ORMAWA_TYPES.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
+              {ORMAWA_ENUM.map((item) => (
+                <option key={item} value={item}>
+                  {item}
                 </option>
               ))}
             </select>
@@ -112,6 +116,7 @@ export default function ExternalForm() {
           )}
         </div>
 
+        {/* Nama Ormawa */}
         <div className="space-y-2">
           <label
             htmlFor="namaOrmawa"
@@ -131,12 +136,13 @@ export default function ExternalForm() {
           )}
         </div>
 
+        {/* Logo */}
         <div className="space-y-2">
           <label className="block text-sm font-semibold text-gray-700">
             Logo
           </label>
 
-          <div>
+          <div className="flex items-center gap-3">
             <label
               htmlFor="logoUpload"
               className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-gray-500 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
@@ -147,13 +153,21 @@ export default function ExternalForm() {
             <input
               id="logoUpload"
               type="file"
-              accept=".pdf"
+              accept=".png,.jpg,.jpeg"
               className="hidden"
               {...register("logo")}
             />
+            {/* Tampilkan nama file yang dipilih */}
+            {selectedFile && (
+              <span className="text-sm text-gray-600 truncate max-w-[200px]">
+                {selectedFile.name}
+              </span>
+            )}
           </div>
 
-          <p className="text-xs text-gray-500">Unggah file PDF (maks. 5 MB)</p>
+          <p className="text-xs text-gray-500">
+            Unggah file PNG atau JPG (maks. 2 MB)
+          </p>
           {errors.logo && (
             <p className="text-sm text-red-500">
               {errors.logo?.message as string}
@@ -161,21 +175,25 @@ export default function ExternalForm() {
           )}
         </div>
 
+        {/* Submit */}
         <div className="pt-4">
           <button
             type="submit"
-            className="w-full rounded-lg bg-[#5e5e5e] px-4 py-4 text-sm font-semibold text-white transition-colors hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            disabled={isPending}
+            className="w-full rounded-lg bg-[#5e5e5e] px-4 py-4 text-sm font-semibold text-white transition-colors hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Selanjutnya
+            {isPending ? "Menyimpan..." : "Selanjutnya"}
           </button>
         </div>
       </form>
+
       <ConfirmationDialog
         open={openConfirm}
         onOpenChange={setOpenConfirm}
         title="Konfirmasi data"
         description="Pastikan seluruh data yang dimasukkan sudah benar sebelum disimpan"
-        confirmText="Konfirmasi"
+        confirmText={isPending ? "Menyimpan..." : "Konfirmasi"}
+        loading={isPending}
         onConfirm={handleFinalSubmit}
       />
     </div>

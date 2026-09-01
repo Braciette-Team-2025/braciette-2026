@@ -8,12 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-interface SortButtonProps {
-  value: "name" | "created_at";
-  onChange: (value: "name" | "created_at") => void;
+interface OrderButtonProps {
+  value: "asc" | "desc";
+  onChange: (value: "asc" | "desc") => void;
 }
 
-export default function SortButton({ value, onChange }: SortButtonProps) {
+export default function OrderButton({ value, onChange }: OrderButtonProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,18 +21,18 @@ export default function SortButton({ value, onChange }: SortButtonProps) {
           variant="outline"
           className="h-12 w-[148px] justify-between border-[#AFAFAF]"
         >
-          {value === "name" ? "Nama" : "Tanggal"}
+          {value === "asc" ? "Ascended" : "Descended"}
           <ArrowUpDown className="h-4 w-4 text-gray-500" />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className="w-[180px]">
-        <DropdownMenuItem onClick={() => onChange("name")}>
-          Nama
+        <DropdownMenuItem onClick={() => onChange("asc")}>
+          Ascended
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={() => onChange("created_at")}>
-          Tanggal
+        <DropdownMenuItem onClick={() => onChange("desc")}>
+          Descended
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -6,11 +6,12 @@ import FilterStatus from "./FilterStatus";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
 import SortButton from "./SortButton";
+import OrderButton from "./OrderButton";
 import Statistic from "./Statistic";
 import SubmissionTable from "./table/SubmissionTable";
 
 import { useSubmissionList } from "../../hooks/useSubmissionList";
-import { externalCards, internalCards } from "../../constants/statistics";
+import { generateStatisticCards } from "../../constants/statistics";
 import type { SubmissionContentProps } from "../../types/ormawa";
 
 export default function SubmissionContent({
@@ -35,9 +36,13 @@ export default function SubmissionContent({
     setStatusFilter,
     sortBy,
     setSortBy,
+    order,
+    setOrder,
+    statsCounts,
+    totalCount,
   } = useSubmissionList(type);
 
-  const cards = type === "internal" ? internalCards : externalCards;
+  const cards = generateStatisticCards(totalCount, statsCounts);
 
   const handleAddPage = () => {
     router.push(`/admin/submission/${type}-create`);
@@ -61,6 +66,7 @@ export default function SubmissionContent({
         )}
 
         <SortButton value={sortBy} onChange={setSortBy} />
+        <OrderButton value={order} onChange={setOrder} />
       </div>
 
       <SubmissionTable

@@ -15,7 +15,8 @@ export function useSubmissionList(type: "internal" | "external") {
   const [search, setSearch] = useState("");
   const [jenisFilter, setJenisFilter] = useState("semua");
   const [statusFilter, setStatusFilter] = useState("semua");
-  const [sortBy, setSortBy] = useState<"az" | "za">("az");
+  const [sortBy, setSortBy] = useState<"name" | "created_at">("name");
+  const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [currentPage, setCurrentPage] = useState(1);
 
   function resetPage() {
@@ -39,11 +40,10 @@ export function useSubmissionList(type: "internal" | "external") {
       data = data.filter((item) => item.status === statusFilter);
     }
 
-    data.sort((a, b) =>
-      sortBy === "az"
-        ? a.namaOrmawa.localeCompare(b.namaOrmawa)
-        : b.namaOrmawa.localeCompare(a.namaOrmawa),
-    );
+    data.sort((a, b) => {
+      const comparison = a.namaOrmawa.localeCompare(b.namaOrmawa);
+      return order === "asc" ? comparison : -comparison;
+    });
 
     return data;
   }, [submissions, search, jenisFilter, statusFilter, sortBy, type]);
@@ -59,6 +59,18 @@ export function useSubmissionList(type: "internal" | "external") {
   );
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const statsCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const item of submissions) {
+      const typeStr = item.jenisOrmawa as string;
+      const typeCategory = typeStr.startsWith("UKM") ? "UKM" : typeStr;
+      counts[typeCategory] = (counts[typeCategory] || 0) + 1;
+    }
+    return counts;
+  }, [submissions]);
+
+  const totalCount = submissions.length;
 
   return {
     paginatedData,
@@ -82,9 +94,16 @@ export function useSubmissionList(type: "internal" | "external") {
       resetPage();
     },
     sortBy,
-    setSortBy: (value: "az" | "za") => {
+    setSortBy: (value: "name" | "created_at") => {
       setSortBy(value);
       resetPage();
     },
+    order,
+    setOrder: (value: "asc" | "desc") => {
+      setOrder(value);
+      resetPage();
+    },
+    statsCounts,
+    totalCount,
   };
 }

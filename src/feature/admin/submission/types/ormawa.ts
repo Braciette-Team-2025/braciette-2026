@@ -118,3 +118,53 @@ export interface BaseModalProps {
   children: React.ReactNode;
   widthClassName?: string;
 }
+
+export interface ExternalSubmissionItem {
+  id: string;
+  type: OrmawaType;
+  name: string;
+  logo_url: string;
+  vote_count: number;
+}
+
+export interface ExternalSubmissionDetail extends ExternalSubmissionItem {
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ExternalSubmissionListResponse {
+  success: boolean;
+  message: string;
+  data: {
+    data: ExternalSubmissionItem[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}
+
+export interface ExternalSubmissionDetailResponse {
+  success: boolean;
+  message: string;
+  data: ExternalSubmissionDetail;
+}
+
+export interface ExternalSubmissionDeleteResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface ExternalSubmissionParams {
+  search?: string;
+  type?: string;
+  page?: number;
+  limit?: number;
+  sort_by?: "name" | "created_at";
+  order?: "asc" | "desc";
+}
+
+export interface ExternalSubmissionDetailModalProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  data: ExternalSubmissionDetail;
+}

@@ -1,17 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SubmissionContent from "../components/submission/SubmissionContent";
+import ExternalSubmissionContent from "../components/submission/ExternalSubmissionContent";
 import SubmissionDetailModalInternal from "../components/submission/modal/SubmissionDetailModalInternal";
-import SubmissionDetailModalExternal from "../components/submission/modal/SubmissionDetailModalExternal";
 import ConfirmationDialog from "../components/submission/modal/ConfirmationDialog";
 import { useSubmissionDetail } from "../hooks/useSubmissionDetail";
 
 export default function SubmissionContainer() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const initialTab =
+    searchParams.get("tab") === "external" ? "external" : "internal";
+
   const [activeTab, setActiveTab] = useState<"internal" | "external">(
-    "internal",
+    initialTab,
   );
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value as "internal" | "external");
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", value);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   const {
     detailOpen,
@@ -24,12 +40,7 @@ export default function SubmissionContainer() {
     handleEdit,
     handleDelete,
     confirmDelete,
-  } = useSubmissionDetail(activeTab);
-
-  const DetailModal =
-    activeTab === "internal"
-      ? SubmissionDetailModalInternal
-      : SubmissionDetailModalExternal;
+  } = useSubmissionDetail("internal");
 
   return (
     <div className="py-15 pl-6 pr-[100px] bg-white space-y-4">
@@ -39,16 +50,16 @@ export default function SubmissionContainer() {
       </div>
 
       <Tabs
-        defaultValue="internal"
+        defaultValue={initialTab}
         value={activeTab}
-        onValueChange={(value) =>
-          setActiveTab(value as "internal" | "external")
-        }
+        onValueChange={handleTabChange}
       >
         <TabsList>
           <TabsTrigger value="internal">Internal</TabsTrigger>
           <TabsTrigger value="external">Eksternal</TabsTrigger>
         </TabsList>
+
+        {/* Tab Internal — data dummy, belum terhubung ke API */}
         <TabsContent value="internal">
           <SubmissionContent
             type="internal"
@@ -57,18 +68,16 @@ export default function SubmissionContainer() {
             onDelete={handleDelete}
           />
         </TabsContent>
+
+        {/* Tab External — terhubung ke real API */}
         <TabsContent value="external">
-          <SubmissionContent
-            type="external"
-            onDetail={handleDetail}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
+          <ExternalSubmissionContent />
         </TabsContent>
       </Tabs>
 
+      {/* Modal internal */}
       {detailData && (
-        <DetailModal
+        <SubmissionDetailModalInternal
           open={detailOpen}
           onOpenChange={setDetailOpen}
           data={detailData}
