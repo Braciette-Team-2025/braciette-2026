@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useExternalSubmissionList } from "./useExternalSubmissionList";
+import { useState, useMemo } from "react";
+import {
+  useExternalSubmissionList,
+  useExternalStatistics,
+} from "./useExternalSubmissionList";
 import { useDeleteExternalSubmission } from "./useDeleteExternalSubmission";
 import { getExternalSubmissionById } from "../services/submissionExternalService";
 import type {
@@ -60,6 +63,24 @@ export function useExternalSubmissionState() {
   const totalItems = listResponse?.data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const { data: statsData } = useExternalStatistics();
+
+  const { statsCounts, statsTotal } = useMemo(() => {
+    const counts: Record<string, number> = {};
+    const allItems = statsData?.data?.data || [];
+
+    for (const item of allItems) {
+      const typeStr = item.type as string;
+      const typeCategory = typeStr.startsWith("UKM") ? "UKM" : typeStr;
+      counts[typeCategory] = (counts[typeCategory] || 0) + 1;
+    }
+
+    return {
+      statsCounts: counts,
+      statsTotal: statsData?.data?.total ?? 0,
+    };
+  }, [statsData]);
 
   const { mutate: deleteItem, isPending: deleteLoading } =
     useDeleteExternalSubmission();
@@ -133,5 +154,8 @@ export function useExternalSubmissionState() {
     deleteLoading,
     handleDelete,
     confirmDelete,
+
+    statsCounts,
+    statsTotal,
   };
 }

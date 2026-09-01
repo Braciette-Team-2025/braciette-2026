@@ -60,6 +60,18 @@ export function useSubmissionList(type: "internal" | "external") {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
+  const statsCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const item of submissions) {
+      const typeStr = item.jenisOrmawa as string;
+      const typeCategory = typeStr.startsWith("UKM") ? "UKM" : typeStr;
+      counts[typeCategory] = (counts[typeCategory] || 0) + 1;
+    }
+    return counts;
+  }, [submissions]);
+
+  const totalCount = submissions.length;
+
   return {
     paginatedData,
     startIndex,
@@ -91,5 +103,7 @@ export function useSubmissionList(type: "internal" | "external") {
       setOrder(value);
       resetPage();
     },
+    statsCounts,
+    totalCount,
   };
 }

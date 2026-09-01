@@ -21,3 +21,11 @@ export function useExternalSubmissionList(params: ExternalSubmissionParams) {
     gcTime: 5 * 60 * 1000,
   });
 }
+
+export function useExternalStatistics() {
+  return useQuery({
+    queryKey: [...externalSubmissionKeys.all, "statistics"] as const,
+    queryFn: () => getExternalSubmissions({ limit: 10000 }),
+    staleTime: 60 * 1000,
+  });
+}
