@@ -10,3 +10,10 @@ export const ORMAWA_ENUM = [
   "UKM KESENIAN",
   "UKM KEROHANIAN",
 ] as const;
+
+export const UKM_TYPES = [
+  "UKM PENALARAN",
+  "UKM OLAHRAGA",
+  "UKM KESENIAN",
+  "UKM KEROHANIAN",
+];

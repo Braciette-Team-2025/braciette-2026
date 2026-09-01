@@ -6,6 +6,7 @@ import FilterStatus from "./FilterStatus";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
 import SortButton from "./SortButton";
+import OrderButton from "./OrderButton";
 import Statistic from "./Statistic";
 import SubmissionTable from "./table/SubmissionTable";
 
@@ -35,6 +36,8 @@ export default function SubmissionContent({
     setStatusFilter,
     sortBy,
     setSortBy,
+    order,
+    setOrder,
   } = useSubmissionList(type);
 
   const cards = type === "internal" ? internalCards : externalCards;
@@ -61,6 +64,7 @@ export default function SubmissionContent({
         )}
 
         <SortButton value={sortBy} onChange={setSortBy} />
+        <OrderButton value={order} onChange={setOrder} />
       </div>
 
       <SubmissionTable
