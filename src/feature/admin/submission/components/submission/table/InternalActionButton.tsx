@@ -1,32 +1,27 @@
 import { Button } from "@/components/ui/button";
-import type { ExternalSubmissionItem } from "../../../types/ormawa";
-import { Loader2 } from "lucide-react";
+import { InternalSubmissionItem } from "../../../types/ormawa";
 
-interface ExternalActionButtonsProps {
-  data: ExternalSubmissionItem;
-  onDetail: (data: ExternalSubmissionItem) => void;
-  onDelete: (data: ExternalSubmissionItem) => void;
+interface InternalActionButtonsProps {
+  onDetail: (data: InternalSubmissionItem) => void;
+  onDelete: (id: string) => void;
+  onEdit: (data: InternalSubmissionItem) => void;
+  data: InternalSubmissionItem;
   isEditing?: boolean;
-  onEdit?: (data: ExternalSubmissionItem) => void;
+  isSaving?: boolean;
   onSave?: () => void;
   onCancel?: () => void;
-  isSaving?: boolean;
 }
 
-/**
- * Tombol aksi untuk baris tabel submission external.
- * Ditambahkan tombol Edit (inline edit) dan Simpan/Batal saat proses edit.
- */
-export function ExternalActionButtons({
-  data,
+export function InternalActionButtons({
   onDetail,
   onDelete,
-  isEditing,
   onEdit,
+  data,
+  isEditing,
+  isSaving,
   onSave,
   onCancel,
-  isSaving,
-}: ExternalActionButtonsProps) {
+}: InternalActionButtonsProps) {
   if (isEditing) {
     return (
       <div className="flex gap-2 justify-center">
@@ -37,13 +32,8 @@ export function ExternalActionButtons({
           className="border border-[#BEC8CF] bg-white text-green-600 rounded-lg px-2 flex items-center justify-center min-w-[32px] w-8 h-8"
           disabled={isSaving}
         >
-          {isSaving ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            <span className="text-xl">✓</span>
-          )}
+          {isSaving ? "..." : <span className="text-xl">✓</span>}
         </Button>
-
         <Button
           onClick={onCancel}
           size="xs"
@@ -69,7 +59,7 @@ export function ExternalActionButtons({
       </Button>
 
       <Button
-        onClick={() => onEdit?.(data)}
+        onClick={() => onEdit(data)}
         size="xs"
         variant="secondary"
         className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"
@@ -78,7 +68,7 @@ export function ExternalActionButtons({
       </Button>
 
       <Button
-        onClick={() => onDelete(data)}
+        onClick={() => onDelete(data.id)}
         size="xs"
         variant="secondary"
         className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"

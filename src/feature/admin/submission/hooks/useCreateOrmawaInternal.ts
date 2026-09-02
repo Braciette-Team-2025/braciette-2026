@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { StepOneValues, StepTwoValues } from "../types/ormawa";
+import type { StepOneValues } from "../types/ormawa";
 
 export function useCreateOrmawaInternal() {
   const [currentStep, setCurrentStep] = useState<1 | 2>(1);
@@ -17,7 +17,7 @@ export function useCreateOrmawaInternal() {
     setCurrentStep(1);
   };
 
-  const handleStepTwoSubmit = (_data: StepTwoValues) => {
+  const handleStepTwoSubmit = () => {
     setOpenConfirm(true);
   };
 

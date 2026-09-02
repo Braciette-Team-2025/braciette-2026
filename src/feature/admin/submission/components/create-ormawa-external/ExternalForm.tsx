@@ -6,8 +6,7 @@ import * as z from "zod/v4";
 import { Upload } from "lucide-react";
 import ConfirmationDialog from "../create-ormawa-internal/dialog/ConfirmationDialog";
 import { useState } from "react";
-import { ORMAWA_TYPES } from "../../constants/nominations";
-import { useCreateExternalSubmission } from "../../hooks/useCreateExternalSubmission";
+import { useCreateExternalSubmission } from "../../hooks/eksternal/useCreateExternalSubmission";
 
 const ORMAWA_ENUM = ["BEM", "DPM", "HIMA", "UKM"] as const;
 
@@ -48,6 +47,7 @@ export default function ExternalForm() {
   });
 
   // Untuk menampilkan nama file yang sudah dipilih
+  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedFile = watch("logo")?.[0];
 
   const onSubmit = (data: FormValues) => {

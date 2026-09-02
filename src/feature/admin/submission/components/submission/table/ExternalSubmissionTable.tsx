@@ -19,8 +19,12 @@ import {
 } from "@/components/ui/select";
 import { ExternalActionButtons } from "./ExternalActionButtons";
 import EmptyTable from "./EmptyTable";
-import type { ExternalSubmissionItem, OrmawaType } from "../../../types/ormawa";
-import { useUpdateExternalSubmission } from "../../../hooks/useUpdateExternalSubmission";
+import type {
+  ExternalSubmissionItem,
+  ExternalOrmawaType,
+} from "../../../types/ormawa";
+import { useUpdateExternalSubmission } from "../../../hooks/eksternal/useUpdateExternalSubmission";
+import { EXTERNAL_ORMAWA_ENUM } from "../../../constants/ormawa";
 
 interface ExternalSubmissionTableProps {
   submissionList: ExternalSubmissionItem[];
@@ -37,7 +41,7 @@ export default function ExternalSubmissionTable({
 }: ExternalSubmissionTableProps) {
   const [editingId, setEditingId] = useState<number | string | null>(null);
   const [editName, setEditName] = useState("");
-  const [editType, setEditType] = useState<OrmawaType | "">("");
+  const [editType, setEditType] = useState<ExternalOrmawaType | "">("");
 
   const updateMutation = useUpdateExternalSubmission();
 
@@ -119,16 +123,19 @@ export default function ExternalSubmissionTable({
                     {isEditing ? (
                       <Select
                         value={editType}
-                        onValueChange={(val) => setEditType(val as OrmawaType)}
+                        onValueChange={(val) =>
+                          setEditType(val as ExternalOrmawaType)
+                        }
                       >
                         <SelectTrigger className="h-8 w-full text-center flex justify-center">
                           <SelectValue placeholder="Pilih Jenis" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="BEM">BEM</SelectItem>
-                          <SelectItem value="DPM">DPM</SelectItem>
-                          <SelectItem value="HIMA">HIMA</SelectItem>
-                          <SelectItem value="UKM">UKM</SelectItem>
+                          {EXTERNAL_ORMAWA_ENUM.map((type) => (
+                            <SelectItem key={type} value={type}>
+                              {type}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     ) : (

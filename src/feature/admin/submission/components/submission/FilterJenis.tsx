@@ -5,28 +5,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  INTERNAL_ORMAWA_ENUM,
+  EXTERNAL_ORMAWA_ENUM,
+} from "../../constants/ormawa";
 
 interface FilterJenisProps {
   value: string;
   onValueChange: (value: string) => void;
+  type?: "internal" | "external";
 }
 
 export default function FilterJenis({
   value,
   onValueChange,
+  type = "external",
 }: FilterJenisProps) {
+  const options =
+    type === "internal" ? INTERNAL_ORMAWA_ENUM : EXTERNAL_ORMAWA_ENUM;
+
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="h-12! w-[148px] border-[#AFAFAF]">
-        <SelectValue placeholder="Filter Jenis" />
+      <SelectTrigger className="h-12! w-[180px] border-[#AFAFAF]">
+        <div className="flex items-center gap-1 truncate">
+          <span className="text-gray-500">Jenis:</span>
+          <SelectValue placeholder="Semua" />
+        </div>
       </SelectTrigger>
 
       <SelectContent>
         <SelectItem value="semua">Semua</SelectItem>
-        <SelectItem value="bem">BEM</SelectItem>
-        <SelectItem value="dpm">DPM</SelectItem>
-        <SelectItem value="hima">HIMA</SelectItem>
-        <SelectItem value="ukm">UKM</SelectItem>
+        {options.map((opt) => (
+          <SelectItem key={opt} value={opt}>
+            {opt}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );

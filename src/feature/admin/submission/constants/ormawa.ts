@@ -1,19 +1,11 @@
-import { OrmawaType } from "../types/ormawa";
-
-export const ORMAWA_ENUM = [
+export const INTERNAL_ORMAWA_ENUM = [
   "BEM",
   "DPM",
   "HIMA",
-  "UKM",
-  "UKM PENALARAN",
-  "UKM OLAHRAGA",
-  "UKM KESENIAN",
-  "UKM KEROHANIAN",
+  "UKM Penalaran",
+  "UKM Olahraga",
+  "UKM Seni",
+  "UKM Kerohanian",
 ] as const;
 
-export const UKM_TYPES = [
-  "UKM PENALARAN",
-  "UKM OLAHRAGA",
-  "UKM KESENIAN",
-  "UKM KEROHANIAN",
-];
+export const EXTERNAL_ORMAWA_ENUM = ["BEM", "DPM", "HIMA", "UKM"] as const;

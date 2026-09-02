@@ -1,26 +1,70 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import {
   useExternalSubmissionList,
   useExternalStatistics,
 } from "./useExternalSubmissionList";
 import { useDeleteExternalSubmission } from "./useDeleteExternalSubmission";
-import { getExternalSubmissionById } from "../services/submissionExternalService";
+import { getExternalSubmissionById } from "../../services/submissionExternalService";
 import type {
   ExternalSubmissionDetail,
   ExternalSubmissionItem,
-} from "../types/ormawa";
+} from "../../types/ormawa";
 
 const ITEMS_PER_PAGE = 15;
 
 export function useExternalSubmissionState() {
-  const [search, setSearch] = useState("");
-  const [jenisFilter, setJenisFilter] = useState("semua");
-  const [sortBy, setSortBy] = useState<"name" | "created_at">("created_at");
-  const [order, setOrder] = useState<"asc" | "desc">("desc");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [jenisFilter, setJenisFilter] = useState(
+    searchParams.get("type") || "semua",
+  );
+  const [sortBy, setSortBy] = useState<"name" | "created_at">(
+    (searchParams.get("sort_by") as "name" | "created_at") || "created_at",
+  );
+  const [order, setOrder] = useState<"asc" | "desc">(
+    (searchParams.get("order") as "asc" | "desc") || "desc",
+  );
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("page")) || 1,
+  );
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (search) params.set("search", search);
+    else params.delete("search");
+
+    if (jenisFilter !== "semua") params.set("type", jenisFilter);
+    else params.delete("type");
+
+    if (sortBy !== "created_at") params.set("sort_by", sortBy);
+    else params.delete("sort_by");
+
+    if (order !== "desc") params.set("order", order);
+    else params.delete("order");
+
+    if (currentPage > 1) params.set("page", currentPage.toString());
+    else params.delete("page");
+
+    const queryString = params.toString().replace(/\+/g, "%20");
+    router.replace(`${pathname}?${queryString}`, { scroll: false });
+  }, [
+    search,
+    jenisFilter,
+    sortBy,
+    order,
+    currentPage,
+    pathname,
+    router,
+    searchParams,
+  ]);
 
   const resetPage = () => {
     setCurrentPage(1);
@@ -35,17 +79,9 @@ export function useExternalSubmissionState() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
-  const typeMap: Record<string, string> = {
-    bem: "BEM",
-    dpm: "DPM",
-    hima: "HIMA",
-    ukm: "UKM",
-  };
-
   const apiParams = {
     search: search || undefined,
-    type:
-      jenisFilter !== "semua" ? typeMap[jenisFilter] || jenisFilter : undefined,
+    type: jenisFilter !== "semua" ? jenisFilter : undefined,
     page: currentPage,
     limit: ITEMS_PER_PAGE,
     sort_by: sortBy,
