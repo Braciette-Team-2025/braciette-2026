@@ -1,12 +1,13 @@
-export type OrmawaType =
+export type InternalOrmawaType =
   | "BEM"
   | "DPM"
   | "HIMA"
-  | "UKM"
-  | "UKM PENALARAN"
-  | "UKM OLAHRAGA"
-  | "UKM KESENIAN"
-  | "UKM KEROHANIAN";
+  | "UKM Penalaran"
+  | "UKM Olahraga"
+  | "UKM Seni"
+  | "UKM Kerohanian";
+
+export type ExternalOrmawaType = "BEM" | "DPM" | "HIMA" | "UKM";
 
 export interface ConfirmationDialogProps {
   open: boolean;
@@ -36,7 +37,7 @@ export interface CompetitionItem {
 }
 
 export interface StepOneValues {
-  jenisOrmawa: OrmawaType | "";
+  jenisOrmawa: InternalOrmawaType | "";
   namaOrmawa: string;
   namaKabinet: string;
   pic: string;
@@ -51,64 +52,10 @@ export interface StepTwoValues {
   driveLink: string;
 }
 
-export interface OrmawaTable {
-  id: number;
-  tanggalPendaftaran: string;
-  terakhirDiedit: string;
-  pic: string;
-  kontakPic: string;
-  namaOrmawa: string;
-  jenisOrmawa: OrmawaType;
-  namaKabinet: string;
-  nominasi: string[];
-  programKerjaUnggulan: string;
-  status: "approved" | "pending" | "rejected";
-  deskripsiSingkat: string;
-  linkDrive: string;
-
-  subKategori?: string;
-  lombaDimenangkan?: string[];
-}
-
-export interface SubmissionActionHandlers {
-  onDelete: (id: number) => void;
-  onEdit: (data: OrmawaTable) => void;
-  onDetail: (data: OrmawaTable) => void;
-}
-
-export interface SubmissionProps extends SubmissionActionHandlers {
-  submissionList: OrmawaTable[];
-  type: "internal" | "external";
-  startIndex: number;
-}
-
-export interface SubmissionContentProps extends SubmissionActionHandlers {
-  type: "internal" | "external";
-}
-
-export interface SubmissionDetailData {
-  id: number;
-  tanggalPendaftaran: string;
-  terakhirDiedit: string;
-  pic: string;
-  kontakPic: string;
-  namaOrmawa: string;
-  jenisOrmawa: OrmawaType;
-  namaKabinet: string;
-  nominasi: string[];
-  programKerjaUnggulan: string;
-  status: "approved" | "pending" | "rejected";
-  deskripsiSingkat: string;
-  linkDrive: string;
-
-  subKategori?: string;
-  lombaDimenangkan?: string[];
-}
-
 export interface SubmissionDetailModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  data: SubmissionDetailData;
+  data: InternalSubmissionDetail;
 }
 
 export interface BaseModalProps {
@@ -121,7 +68,7 @@ export interface BaseModalProps {
 
 export interface ExternalSubmissionItem {
   id: string;
-  type: OrmawaType;
+  type: ExternalOrmawaType;
   name: string;
   logo_url: string;
   vote_count: number;
@@ -167,4 +114,61 @@ export interface ExternalSubmissionDetailModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   data: ExternalSubmissionDetail;
+}
+
+export interface InternalSubmissionItem {
+  id: string;
+  name: string;
+  type: InternalOrmawaType;
+  pic: string;
+  pic_contact: string;
+  status: "accepted" | "pending" | "rejected";
+}
+
+export interface InternalSubmissionDetail extends InternalSubmissionItem {
+  logo_url: string;
+  created_at: string;
+  updated_at: string;
+  cabinet_name: string;
+  nominations: string[];
+  major_program: string;
+  mission: string;
+  drive_link: string;
+  social_medias: { platform: string; url: string }[];
+}
+
+export interface InternalSubmissionStats {
+  total: number;
+  bem: number;
+  dpm: number;
+  hima: number;
+  ukm: number;
+}
+
+export interface InternalSubmissionListResponse {
+  success: boolean;
+  message: string;
+  data: {
+    stats: InternalSubmissionStats;
+    data: InternalSubmissionItem[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}
+
+export interface InternalSubmissionDetailResponse {
+  success: boolean;
+  message: string;
+  data: InternalSubmissionDetail;
+}
+
+export interface InternalSubmissionParams {
+  search?: string;
+  type?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+  sort_by?: "name" | "created_at";
+  order?: "asc" | "desc";
 }

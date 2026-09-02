@@ -19,9 +19,12 @@ export default function SortButton({ value, onChange }: SortButtonProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-12 w-[148px] justify-between border-[#AFAFAF]"
+          className="h-12 w-[170px] justify-between border-[#AFAFAF]"
         >
-          {value === "name" ? "Nama" : "Tanggal"}
+          <div className="flex items-center gap-1">
+            <span className="text-gray-500">Sort By:</span>
+            <span>{value === "name" ? "Nama" : "Tanggal"}</span>
+          </div>
           <ArrowUpDown className="h-4 w-4 text-gray-500" />
         </Button>
       </DropdownMenuTrigger>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteExternalSubmission } from "../services/submissionExternalService";
+import { deleteExternalSubmission } from "../../services/submissionExternalService";
 import { externalSubmissionKeys } from "./useExternalSubmissionList";
 
 export function useDeleteExternalSubmission() {

@@ -1,58 +1,57 @@
-"use client";
-
 import { useRouter } from "next/navigation";
+
 import AddOrmawaButton from "./AddOrmawaButton";
 import FilterJenis from "./FilterJenis";
+import FilterStatus from "./FilterStatus";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
 import SortButton from "./SortButton";
 import OrderButton from "./OrderButton";
 import Statistic from "./Statistic";
-import ExternalSubmissionTable from "./table/ExternalSubmissionTable";
-import SubmissionDetailModalExternal from "./modal/SubmissionDetailModalExternal";
+import InternalSubmissionTable from "./table/InternalSubmissionTable";
+import SubmissionDetailModalInternal from "./modal/SubmissionDetailModalInternal";
 import ConfirmationDialog from "./modal/ConfirmationDialog";
 
-import { useExternalSubmissionState } from "../../hooks/eksternal/useExternalSubmissionState";
+import { useInternalSubmissionState } from "../../hooks/internal/useInternalSubmissionState";
 import { generateStatisticCards } from "../../constants/statistics";
 
-export default function ExternalSubmissionContent() {
+export default function InternalSubmissionContent() {
   const router = useRouter();
 
   const {
     submissionList,
     startIndex,
     totalPages,
-    isLoading,
-    isError,
-    isFetching,
+    currentPage,
+    setCurrentPage,
     search,
     setSearch,
     jenisFilter,
     setJenisFilter,
+    statusFilter,
+    setStatusFilter,
     sortBy,
     setSortBy,
     order,
     setOrder,
-    currentPage,
-    setCurrentPage,
+    statsCounts,
+    statsTotal,
+
+    handleDetail,
+    handleDelete,
     detailOpen,
     setDetailOpen,
     detailData,
-    detailLoading,
-    handleDetail,
     deleteOpen,
     setDeleteOpen,
     deleteLoading,
-    handleDelete,
     confirmDelete,
-    statsCounts,
-    statsTotal,
-  } = useExternalSubmissionState();
+  } = useInternalSubmissionState();
 
   const cards = generateStatisticCards(statsTotal, statsCounts);
 
   const handleAddPage = () => {
-    router.push("/admin/submission/external-create");
+    router.push(`/admin/submission/internal-create`);
   };
 
   return (
@@ -66,60 +65,37 @@ export default function ExternalSubmissionContent() {
           <SearchBar value={search} onChange={setSearch} />
         </div>
 
-        <FilterJenis value={jenisFilter} onValueChange={setJenisFilter} />
+        <FilterJenis
+          value={jenisFilter}
+          onValueChange={setJenisFilter}
+          type="internal"
+        />
+
+        <FilterStatus value={statusFilter} onValueChange={setStatusFilter} />
 
         <SortButton value={sortBy} onChange={setSortBy} />
-
         <OrderButton value={order} onChange={setOrder} />
       </div>
 
-      {isLoading && (
-        <div className="py-10 text-center text-sm text-[#7F7F7F]">
-          Memuat data...
-        </div>
-      )}
+      <InternalSubmissionTable
+        submissionList={submissionList}
+        onDelete={handleDelete}
+        onDetail={handleDetail}
+        startIndex={startIndex}
+      />
 
-      {isError && !isLoading && (
-        <div className="py-10 text-center text-sm text-red-500">
-          Gagal memuat data. Silakan coba lagi.
-        </div>
-      )}
-
-      {!isLoading && !isError && (
-        <>
-          {isFetching && (
-            <p className="text-xs text-[#A0A0A0] -mb-6">Memperbarui...</p>
-          )}
-
-          <ExternalSubmissionTable
-            submissionList={submissionList}
-            startIndex={startIndex}
-            onDetail={handleDetail}
-            onDelete={handleDelete}
-          />
-
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </>
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
 
       {detailData && (
-        <SubmissionDetailModalExternal
+        <SubmissionDetailModalInternal
           open={detailOpen}
           onOpenChange={setDetailOpen}
           data={detailData}
         />
-      )}
-
-      {detailLoading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
-          <div className="rounded-xl bg-white px-8 py-6 text-sm text-[#7F7F7F] shadow-lg">
-            Memuat detail...
-          </div>
-        </div>
       )}
 
       <ConfirmationDialog

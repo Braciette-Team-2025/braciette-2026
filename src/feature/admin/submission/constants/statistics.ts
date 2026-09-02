@@ -1,6 +1,5 @@
 import { Users } from "lucide-react";
 import { PerformanceCard } from "../types/statistic";
-import type { OrmawaType } from "../types/ormawa";
 
 export function generateStatisticCards(
   total: number,

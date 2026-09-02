@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getExternalSubmissions } from "../services/submissionExternalService";
-import type { ExternalSubmissionParams } from "../types/ormawa";
+import { getExternalSubmissions } from "../../services/submissionExternalService";
+import type { ExternalSubmissionParams } from "../../types/ormawa";
 
 export const externalSubmissionKeys = {
   all: ["submission", "external"] as const,

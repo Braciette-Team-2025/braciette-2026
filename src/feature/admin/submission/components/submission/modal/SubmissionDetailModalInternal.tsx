@@ -11,67 +11,66 @@ export default function SubmissionDetailModalInternal({
   onOpenChange,
   data,
 }: SubmissionDetailModalProps) {
-  const isUkm = data.jenisOrmawa === "UKM";
+  const isUkm = data.type.startsWith("UKM");
 
   return (
-    <BaseModal open={open} onOpenChange={onOpenChange} title={data.namaOrmawa}>
+    <BaseModal open={open} onOpenChange={onOpenChange} title={data.name}>
       <div className="grid grid-cols-2 gap-x-8 gap-y-5">
         <DetailField
           label="Tanggal Pendaftaran"
-          value={data.tanggalPendaftaran}
+          value={new Date(data.created_at).toLocaleDateString("id-ID")}
         />
-        <DetailField label="Terakhir diedit" value={data.terakhirDiedit} />
+        <DetailField
+          label="Terakhir diedit"
+          value={new Date(data.updated_at).toLocaleDateString("id-ID")}
+        />
 
         <DetailField label="PIC" value={data.pic} />
-        <DetailField label="Kontak PIC" value={data.kontakPic} />
+        <DetailField label="Kontak PIC" value={data.pic_contact} />
 
-        <DetailField label="Nama Ormawa" value={data.namaOrmawa} />
-        <DetailField label="Jenis Ormawa" value={data.jenisOrmawa} />
+        <DetailField label="Nama Ormawa" value={data.name} />
+        <DetailField label="Jenis Ormawa" value={data.type} />
 
         {isUkm ? (
           <>
-            <DetailField label="Sub-Kategori" value={data.subKategori} />
-            <DetailField label="Nama Kabinet" value={data.namaKabinet} />
-
-            <DetailField label="Nominasi" value={data.nominasi} />
+            <DetailField label="Nama Kabinet" value={data.cabinet_name} />
             <DetailField
-              label="Lomba yang Dimenangkan"
-              value={data.lombaDimenangkan}
+              label="Nominasi"
+              value={data.nominations?.join(", ")}
             />
           </>
         ) : (
           <>
-            <DetailField label="Nama Kabinet" value={data.namaKabinet} />
-            <DetailField label="Nominasi" value={data.nominasi} />
+            <DetailField label="Nama Kabinet" value={data.cabinet_name} />
+            <DetailField
+              label="Nominasi"
+              value={data.nominations?.join(", ")}
+            />
           </>
         )}
 
         <DetailField
           label="Program Kerja Unggulan"
-          value={data.programKerjaUnggulan}
+          value={data.major_program}
         />
         <div>
           <p className="mb-1 text-sm font-semibold text-[#4B4B4B]">Status</p>
           <StatusBadge status={data.status} />
         </div>
 
-        <DetailField
-          label="Deskripsi Singkat"
-          value={data.deskripsiSingkat}
-          fullWidth
-        />
+        <DetailField label="Deskripsi Singkat" value={data.mission} fullWidth />
 
         <DetailField
           label="Link Drive"
           fullWidth
           value={
             <a
-              href={data.linkDrive}
+              href={data.drive_link}
               target="_blank"
               rel="noopener noreferrer"
               className="break-all text-[#8A8A8A] underline hover:text-[#6D6D6D]"
             >
-              {data.linkDrive}
+              {data.drive_link}
             </a>
           }
         />

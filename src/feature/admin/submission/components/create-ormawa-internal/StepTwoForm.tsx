@@ -2,17 +2,16 @@
 
 import { useState } from "react";
 import type {
-  OrmawaType,
+  InternalOrmawaType,
   StepTwoValues,
   CompetitionItem,
 } from "../../types/ormawa";
 import NominationList from "./NominationList";
 import DynamicCompetition from "./DynamicCompetition";
 import DriveInput from "./DriveInput";
-import { UKM_TYPES } from "../../constants/ormawa";
 
 interface StepTwoFormProps {
-  type: OrmawaType;
+  type: InternalOrmawaType;
   initialValues?: Partial<StepTwoValues>;
   onSubmit: (data: StepTwoValues) => void;
 }
@@ -33,8 +32,7 @@ export default function StepTwoForm({
     initialValues?.competitions ?? DEFAULT_COMPETITION,
   );
   const [driveLink, setDriveLink] = useState(initialValues?.driveLink ?? "");
-
-  const isUkm = UKM_TYPES.includes(type as string);
+  const isUkm = type.startsWith("UKM");
 
   const handleToggleNomination = (id: string) => {
     setSelectedNominations((prev) =>

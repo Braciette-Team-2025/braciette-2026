@@ -1,6 +1,6 @@
 "use client";
 
-import type { OrmawaType } from "@/src/feature/admin/submission/types/ormawa";
+import type { InternalOrmawaType } from "@/src/feature/admin/submission/types/ormawa";
 import CreateHeader from "@/src/feature/admin/submission/components/create-ormawa-internal/CreateHeader";
 import StepOneForm from "@/src/feature/admin/submission/components/create-ormawa-internal/StepOneForm";
 import StepTwoForm from "@/src/feature/admin/submission/components/create-ormawa-internal/StepTwoForm";
@@ -40,7 +40,7 @@ export default function CreateOrmawaInternalContainer() {
         {currentStep === 2 && stepOneData && (
           <>
             <StepTwoForm
-              type={stepOneData.jenisOrmawa as OrmawaType}
+              type={stepOneData.jenisOrmawa as InternalOrmawaType}
               onSubmit={handleStepTwoSubmit}
             />
             <ConfirmationDialog

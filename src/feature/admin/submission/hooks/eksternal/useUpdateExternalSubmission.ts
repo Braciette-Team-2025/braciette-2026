@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateExternalSubmission } from "../services/submissionExternalService";
+import { updateExternalSubmission } from "../../services/submissionExternalService";
 import { externalSubmissionKeys } from "./useExternalSubmissionList";
 
 export function useUpdateExternalSubmission() {

@@ -1,6 +1,6 @@
 "use client";
 
-import type { OrmawaType } from "../../types/ormawa";
+import type { InternalOrmawaType } from "../../types/ormawa";
 import {
   BEM_NOMINATIONS,
   DPM_NOMINATIONS,
@@ -10,31 +10,29 @@ import {
 import NominationItem from "./NominationItem";
 
 interface NominationListProps {
-  type: OrmawaType;
+  type: InternalOrmawaType;
   selected: string[];
   onToggle: (id: string) => void;
 }
 
-const NOMINATIONS_MAP: Record<OrmawaType, typeof BEM_NOMINATIONS> = {
+const NOMINATIONS_MAP: Record<InternalOrmawaType, typeof BEM_NOMINATIONS> = {
   BEM: BEM_NOMINATIONS,
   DPM: DPM_NOMINATIONS,
   HIMA: HIMA_NOMINATIONS,
-  UKM: UKM_NOMINATIONS,
-  "UKM PENALARAN": UKM_NOMINATIONS,
-  "UKM OLAHRAGA": UKM_NOMINATIONS,
-  "UKM KESENIAN": UKM_NOMINATIONS,
-  "UKM KEROHANIAN": UKM_NOMINATIONS,
+  "UKM Penalaran": UKM_NOMINATIONS,
+  "UKM Olahraga": UKM_NOMINATIONS,
+  "UKM Seni": UKM_NOMINATIONS,
+  "UKM Kerohanian": UKM_NOMINATIONS,
 };
 
-const LABEL_MAP: Record<OrmawaType, string> = {
+const LABEL_MAP: Record<InternalOrmawaType, string> = {
   BEM: "Nominasi BEM",
   DPM: "Nominasi DPM",
   HIMA: "Nominasi HIMA",
-  UKM: "Nominasi UKM",
-  "UKM PENALARAN": "Nominasi UKM Penalaran",
-  "UKM OLAHRAGA": "Nominasi UKM Olahraga",
-  "UKM KESENIAN": "Nominasi UKM Kesenian",
-  "UKM KEROHANIAN": "Nominasi UKM Kerohanian",
+  "UKM Penalaran": "Nominasi UKM Penalaran",
+  "UKM Olahraga": "Nominasi UKM Olahraga",
+  "UKM Seni": "Nominasi UKM Seni",
+  "UKM Kerohanian": "Nominasi UKM Kerohanian",
 };
 
 export default function NominationList({
