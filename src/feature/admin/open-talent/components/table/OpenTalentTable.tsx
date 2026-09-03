@@ -36,7 +36,7 @@ export default function OpenTalentTable({
 
   return (
     <>
-      <div className="overflow-hidden rounded-xl border-2 border-[#BEC8CF] w-full">
+      <div className="overflow-hidden rounded-xl border-2 border-yellow-500 w-full">
         <Table className="w-full table-fixed border-separate border-spacing-0 text-[14px]">
           <colgroup>
             <col style={{ width: "5%" }} />
@@ -47,52 +47,52 @@ export default function OpenTalentTable({
             <col style={{ width: "25%" }} />
           </colgroup>
           <TableHeader>
-            <TableRow className="bg-[#7F7F7F] font-inter font-semibold text-white hover:bg-[#7F7F7F]">
-              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+            <TableRow className="bg-yellow-500 font-inter font-semibold text-blue-900 hover:bg-yellow-400">
+              <TableHead className="border-r-2 border-yellow-500 text-center text-yellow-50">
                 No
               </TableHead>
-              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+              <TableHead className="border-r-2 border-yellow-500 text-center text-yellow-50">
                 Nama Lengkap Ketua
               </TableHead>
-              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+              <TableHead className="border-r-2 border-yellow-500 text-center text-yellow-50">
                 Kontak Ketua
               </TableHead>
-              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+              <TableHead className="border-r-2 border-yellow-500 text-center text-yellow-50">
                 Jenis Penampilan
               </TableHead>
-              <TableHead className="border-r-2 border-[#BEC8CF] text-center text-white">
+              <TableHead className="border-r-2 border-yellow-500 text-center text-yellow-50">
                 Status
               </TableHead>
-              <TableHead className="text-center text-white">Aksi</TableHead>
+              <TableHead className="text-center text-yellow-50">Aksi</TableHead>
             </TableRow>
           </TableHeader>
 
-          <TableBody className="text-[#757575]">
+          <TableBody className="text-blue-900">
             {data.length === 0 ? (
               <EmptyTable colSpan={6} />
             ) : (
               data.map((item, index) => (
                 <TableRow
                   key={item.id}
-                  className="text-center bg-white hover:bg-white"
+                  className="text-center bg-yellow-100 hover:bg-yellow-50"
                 >
-                  <TableCell className="border-r-2 border-[#BEC8CF] py-4">
+                  <TableCell className="border-r-2 border-yellow-500 py-4">
                     {startIndex + index + 1}
                   </TableCell>
 
-                  <TableCell className="border-r-2 border-[#BEC8CF] py-4 break-words whitespace-normal">
+                  <TableCell className="border-r-2 border-yellow-500 py-4 break-words whitespace-normal">
                     {item.namaKetua}
                   </TableCell>
 
-                  <TableCell className="border-r-2 border-[#BEC8CF] py-4">
+                  <TableCell className="border-r-2 border-yellow-500 py-4">
                     {item.kontakKetua}
                   </TableCell>
 
-                  <TableCell className="border-r-2 border-[#BEC8CF] py-4">
+                  <TableCell className="border-r-2 border-yellow-500 py-4">
                     {item.jenisPenampilan}
                   </TableCell>
 
-                  <TableCell className="border-r-2 border-[#BEC8CF] py-4 px-4">
+                  <TableCell className="border-r-2 border-yellow-500 py-4 px-4">
                     <StatusBadge status={item.status} />
                   </TableCell>
 

@@ -75,26 +75,26 @@ export default function ExternalSubmissionTable({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border-2 border-[#BEC8CF]">
+    <div className="overflow-hidden rounded-xl border-2 border-yellow-500">
       <Table className="border-separate border-spacing-0 text-[14px] table-fixed w-full">
         <TableHeader>
-          <TableRow className="bg-[#7F7F7F] font-inter font-semibold text-white hover:bg-[#7F7F7F]">
-            <TableHead className="w-[10%] border-r-2 border-[#BEC8CF] text-center text-white">
+          <TableRow className="bg-yellow-500 font-inter font-semibold text-blue-900 hover:bg-yellow-100">
+            <TableHead className="w-[10%] border-r-2 border-yellow-500 text-center text-yellow-50">
               No
             </TableHead>
-            <TableHead className="w-[40%] border-r-2 border-[#BEC8CF] text-center text-white">
+            <TableHead className="w-[40%] border-r-2 border-yellow-500 text-center text-yellow-50">
               Nama Ormawa
             </TableHead>
-            <TableHead className="w-[16%] border-r-2 border-[#BEC8CF] text-center text-white">
+            <TableHead className="w-[16%] border-r-2 border-yellow-500 text-center text-yellow-50">
               Jenis Ormawa
             </TableHead>
-            <TableHead className="w-[40%] text-center text-white">
+            <TableHead className="w-[40%] text-center text-yellow-50">
               Aksi
             </TableHead>
           </TableRow>
         </TableHeader>
 
-        <TableBody className="text-[#757575]">
+        <TableBody className="text-blue-900">
           {submissionList.length === 0 ? (
             <EmptyTable colSpan={4} />
           ) : (
@@ -102,12 +102,15 @@ export default function ExternalSubmissionTable({
               const isEditing = editingId === data.id;
 
               return (
-                <TableRow key={data.id} className="text-center">
-                  <TableCell className="border-r-2 border-[#BEC8CF]">
+                <TableRow
+                  key={data.id}
+                  className="text-center bg-yellow-100 hover:bg-yellow-50"
+                >
+                  <TableCell className="border-r-2 border-yellow-500">
                     {startIndex + index + 1}
                   </TableCell>
 
-                  <TableCell className="border-r-2 border-[#BEC8CF]">
+                  <TableCell className="border-r-2 border-yellow-500">
                     {isEditing ? (
                       <Input
                         value={editName}
@@ -119,7 +122,7 @@ export default function ExternalSubmissionTable({
                     )}
                   </TableCell>
 
-                  <TableCell className="border-r-2 border-[#BEC8CF]">
+                  <TableCell className="border-r-2 border-yellow-500">
                     {isEditing ? (
                       <Select
                         value={editType}

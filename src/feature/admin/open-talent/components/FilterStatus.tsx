@@ -17,10 +17,10 @@ export default function FilterStatus({
 }: FilterStatusProps) {
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="h-12! w-[148px] border-[#AFAFAF]">
+      <SelectTrigger className="h-12! w-[148px] border-2 border-yellow-500 bg-yellow-100 text-blue-900">
         <SelectValue placeholder="Filter Status" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-yellow-100 text-blue-900 border-yellow-500">
         <SelectItem value="semua">Semua</SelectItem>
         <SelectItem value="approved">Disetujui</SelectItem>
         <SelectItem value="pending">Menunggu</SelectItem>

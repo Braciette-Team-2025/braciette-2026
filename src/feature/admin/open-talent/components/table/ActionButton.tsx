@@ -20,7 +20,7 @@ export function ActionButtons({
         onClick={() => onDetail(data)}
         size="xs"
         variant="secondary"
-        className="flex-1 border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-0"
+        className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-yellow-50 text-[14px] font-bold rounded-[8px] px-0"
       >
         Detail
       </Button>
@@ -29,7 +29,7 @@ export function ActionButtons({
         onClick={() => onEdit(data)}
         size="xs"
         variant="secondary"
-        className="flex-1 border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-0"
+        className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-yellow-50 text-[14px] font-bold rounded-[8px] px-0"
       >
         Edit
       </Button>
@@ -38,7 +38,7 @@ export function ActionButtons({
         onClick={() => onDelete(data.id)}
         size="xs"
         variant="secondary"
-        className="flex-1 border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-0"
+        className="flex-1 bg-red-500 hover:bg-red-400 text-yellow-50 text-[14px] font-bold rounded-[8px] px-0"
       >
         Hapus
       </Button>

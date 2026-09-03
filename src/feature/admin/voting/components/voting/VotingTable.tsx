@@ -35,7 +35,7 @@ export function VotingTable({
   const maxVote = Math.max(...items.map((item) => item.totalVote));
 
   return (
-    <div className="overflow-x-auto rounded-xl border">
+    <div className="overflow-x-auto rounded-xl border-2 border-yellow-500">
       <Table className="min-w-[480px]">
         <VotingTableHeader
           nameColumnLabel={nameColumnLabel}

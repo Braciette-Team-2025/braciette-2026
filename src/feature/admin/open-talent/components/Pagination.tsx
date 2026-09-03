@@ -23,9 +23,9 @@ export default function Pagination({
         size="icon"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="h-9 w-9 rounded-lg bg-[#F3F3F3] hover:bg-[#E5E5E5]"
+        className="h-9 w-9 rounded-lg bg-yellow-100 hover:bg-yellow-200"
       >
-        <ChevronLeft className="h-5 w-5 text-[#757575]" />
+        <ChevronLeft className="h-5 w-5 text-blue-900" />
       </Button>
 
       {pages.map((page) => (
@@ -36,8 +36,8 @@ export default function Pagination({
           className={`h-9 w-9 rounded-lg font-medium transition
             ${
               currentPage === page
-                ? "bg-[#D9D9D9] text-[#4B4B4B]"
-                : "bg-[#F3F3F3] text-[#9B9B9B] hover:bg-[#E8E8E8]"
+                ? "bg-yellow-500 text-yellow-50 font-bold"
+                : "bg-yellow-100 text-blue-900 hover:bg-yellow-200"
             }`}
         >
           {page}
@@ -49,9 +49,9 @@ export default function Pagination({
         size="icon"
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="h-9 w-9 rounded-lg bg-[#F3F3F3] hover:bg-[#E5E5E5]"
+        className="h-9 w-9 rounded-lg bg-yellow-100 hover:bg-yellow-200"
       >
-        <ChevronRight className="h-5 w-5 text-[#757575]" />
+        <ChevronRight className="h-5 w-5 text-blue-900" />
       </Button>
     </div>
   );

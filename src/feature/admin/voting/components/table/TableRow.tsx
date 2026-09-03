@@ -9,11 +9,13 @@ export interface VotingTableRowProps {
 
 export function VotingTableRow({ item, maxVote }: VotingTableRowProps) {
   return (
-    <UiTableRow>
-      <TableCell className="text-center text-sm text-muted-foreground">
+    <UiTableRow className="bg-yellow-100 hover:bg-yellow-50 text-blue-900">
+      <TableCell className="text-center text-sm font-bold border-r-2 border-yellow-500">
         {item.rank}
       </TableCell>
-      <TableCell className="font-medium">{item.name}</TableCell>
+      <TableCell className="font-medium border-r-2 border-yellow-500">
+        {item.name}
+      </TableCell>
       <TableCell>
         <ProgressBar value={item.totalVote} max={maxVote} />
       </TableCell>

@@ -29,7 +29,7 @@ export function InternalActionButtons({
           onClick={onSave}
           size="xs"
           variant="secondary"
-          className="border border-[#BEC8CF] bg-white text-green-600 rounded-lg px-2 flex items-center justify-center min-w-[32px] w-8 h-8"
+          className="bg-yellow-500 hover:bg-yellow-400 text-yellow-50 rounded-[8px] px-2 flex items-center justify-center min-w-[32px] w-8 h-8"
           disabled={isSaving}
         >
           {isSaving ? "..." : <span className="text-xl">✓</span>}
@@ -38,7 +38,7 @@ export function InternalActionButtons({
           onClick={onCancel}
           size="xs"
           variant="secondary"
-          className="border border-[#BEC8CF] bg-white text-red-600 rounded-lg px-2 flex items-center justify-center min-w-[32px] w-8 h-8"
+          className="bg-yellow-500 hover:bg-yellow-400 text-yellow-50 rounded-[8px] px-2 flex items-center justify-center min-w-[32px] w-8 h-8"
           disabled={isSaving}
         >
           <span className="text-xl">✕</span>
@@ -53,7 +53,7 @@ export function InternalActionButtons({
         onClick={() => onDetail(data)}
         size="xs"
         variant="secondary"
-        className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"
+        className="bg-yellow-500 hover:bg-yellow-400 text-yellow-50 text-[14px] font-bold rounded-[8px] px-4"
       >
         Detail
       </Button>
@@ -62,7 +62,7 @@ export function InternalActionButtons({
         onClick={() => onEdit(data)}
         size="xs"
         variant="secondary"
-        className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"
+        className="bg-yellow-500 hover:bg-yellow-400 text-yellow-50 text-[14px] font-bold rounded-[8px] px-4"
       >
         Edit
       </Button>
@@ -71,7 +71,7 @@ export function InternalActionButtons({
         onClick={() => onDelete(data.id)}
         size="xs"
         variant="secondary"
-        className="border border-[#BEC8CF] bg-[#7F7F7F] text-white text-[14px] font-normal rounded-lg px-4"
+        className="bg-red-500 hover:bg-red-400 text-red-50 text-[14px] font-bold rounded-[8px] px-4"
       >
         Hapus
       </Button>

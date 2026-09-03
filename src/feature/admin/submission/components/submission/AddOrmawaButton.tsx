@@ -9,7 +9,7 @@ export default function AddOrmawaButton({ onClick }: AddOrmawaButtonProps) {
     <div className="w-fit">
       <button
         onClick={() => onClick()}
-        className="flex bg-[#858585] text-white p-3 space-x-15 rounded-[8px]"
+        className="flex bg-yellow-500 hover:bg-yellow-400 text-yellow-50 p-3 space-x-15 rounded-[8px]"
       >
         <h1 className="font-bold text-[16px]">Daftar Ormawa</h1>
         <CircleArrowRight className="text-[24px]" />
