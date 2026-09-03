@@ -55,8 +55,8 @@ export function VotingContainer() {
   return (
     <div className="mx-auto w-full px-4 py-6 sm:px-6 sm:py-8">
       <header>
-        <h1 className="text-[32px] font-bold">Voting</h1>
-        <p className="text-[20px] font-semibold">
+        <h1 className="text-[32px] font-bold text-blue-900">Voting</h1>
+        <p className="text-[20px] font-semibold text-blue-900/80">
           Hasil Voting {activeCategory?.label}
         </p>
       </header>

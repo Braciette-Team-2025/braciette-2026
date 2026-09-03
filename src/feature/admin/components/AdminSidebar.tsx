@@ -41,8 +41,8 @@ export function AdminSidebar() {
     { id: 3, title: "Open Talent", href: "/admin/open-talent", icon: BookOpen },
   ];
   return (
-    <Sidebar className="font-inter text-[#808080] h-full border-r border-[#A4A4A4]">
-      <SidebarHeader className="py-6 px-8 border-b border-[#A4A4A4] bg-[#F7F7F3]">
+    <Sidebar className="font-inter text-yellow-500 h-full border-r border-blue-400">
+      <SidebarHeader className="py-6 px-8 border-b border-blue-400 bg-blue-900">
         <div>
           <h1 className="text-h5 font-black">Admin Panel</h1>
           <p className="text-body font-bold">
@@ -50,7 +50,7 @@ export function AdminSidebar() {
           </p>
         </div>
       </SidebarHeader>
-      <SidebarContent className="p-8 border-b border-[#A4A4A4] bg-[#F7F7F3]">
+      <SidebarContent className="p-8 border-b border-blue-400 bg-blue-900">
         <SidebarGroup />
         <SidebarMenu className="gap-2">
           <p className="px-4 text-s1 font-semibold">OVERVIEW</p>
@@ -62,8 +62,8 @@ export function AdminSidebar() {
                   isActive={pathname.startsWith(item.href)}
                   className="
                   px-4 py-6 text-body! font-medium
-                   data-[active=true]:bg-[#4848481A]
-                   data-[active=true]:text-inherit
+                   data-[active=true]:bg-blue-600
+                   data-[active=true]:text-inherit hover:bg-blue-600 hover:text-yellow-500
                    "
                   asChild
                 >
@@ -78,21 +78,21 @@ export function AdminSidebar() {
         </SidebarMenu>
         <SidebarGroup />
       </SidebarContent>
-      <SidebarFooter className="bg-[#E7E7ED] p-4">
+      <SidebarFooter className="bg-blue-800 p-4">
         <div className="flex flex-col gap-4">
           <div className="flex gap-3 items-center">
-            <div className="bg-gray-500 rounded-full p-2 w-fit h-fit flex  justify-center">
-              <UserRound className="h-8 w-8 text-white" />
+            <div className="bg-yellow-500 rounded-full p-2 w-fit h-fit flex  justify-center">
+              <UserRound className="h-8 w-8 text-yellow-100" />
             </div>
             <div>
-              <p className="font-medium text-[#111C2C] text-body">
+              <p className="font-medium text-yellow-500 text-body">
                 Admin Utama
               </p>
-              <p className="text-xs text-[#5D5D5D]">Administrator</p>
+              <p className="text-xs text-yellow-300">Administrator</p>
             </div>
           </div>
           <div className="flex justify-center">
-            <Button className="flex gap-1 bg-inherit text-gray-600">
+            <Button className="flex gap-1 bg-inherit text-yellow-500 hover:bg-blue-500">
               <LogOut className="h-4 w-4" />
               <p>Keluar</p>
             </Button>

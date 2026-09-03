@@ -21,7 +21,7 @@ export function ProgressBar({
     <div className={cn("flex items-center gap-3", className)}>
       <Progress value={percentage} className="h-2.5 flex-1" />
       {showValue && (
-        <span className="w-10 shrink-0 text-right text-sm font-medium text-muted-foreground">
+        <span className="w-10 shrink-0 text-right text-sm font-bold text-blue-900">
           {value}
         </span>
       )}

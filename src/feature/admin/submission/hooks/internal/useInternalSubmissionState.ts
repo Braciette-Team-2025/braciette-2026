@@ -67,7 +67,6 @@ export function useInternalSubmissionState() {
     currentPage,
     pathname,
     router,
-    searchParams,
   ]);
 
   const resetPage = () => {

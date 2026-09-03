@@ -6,21 +6,24 @@ export function StatusBadge({ status }: Props) {
   const config = {
     accepted: {
       label: "Disetujui",
-      bg: "bg-[#7F7F7F]",
-      circle: "bg-[#D9D9D9]",
-      text: "text-white",
+      bg: "bg-green-100",
+      circle: "bg-green-500",
+      text: "text-green-700",
+      border: "border-green-500",
     },
     pending: {
       label: "Menunggu",
-      bg: "bg-[#D9D9D9]",
-      circle: "bg-[#7F7F7F]",
-      text: "text-[#7F7F7F]",
+      bg: "bg-yellow-300",
+      circle: "bg-yellow-500",
+      text: "text-yellow-800",
+      border: "border-yellow-500",
     },
     rejected: {
       label: "Ditolak",
-      bg: "bg-[#9B9B9B]",
-      circle: "bg-[#D3D3D3]",
-      text: "text-[#D3D3D3]",
+      bg: "bg-red-100",
+      circle: "bg-red-500",
+      text: "text-red-700",
+      border: "border-red-500",
     },
   };
 
@@ -28,7 +31,7 @@ export function StatusBadge({ status }: Props) {
 
   return (
     <div
-      className={`flex items-center justify-between rounded-full w-full ${current.bg} px-2 text-[14px] border border-[#BEC8CF]`}
+      className={`flex items-center justify-between rounded-full w-full ${current.bg} px-2 py-1 text-[14px] font-semibold border-2 ${current.border}`}
     >
       <span className={`${current.text}`}>{current.label}</span>
       <div className={`h-2 w-2 rounded-full ${current.circle}`} />

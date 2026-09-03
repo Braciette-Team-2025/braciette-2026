@@ -27,10 +27,14 @@ export default function SubmissionContainer() {
   };
 
   return (
-    <div className="py-15 pl-6 pr-[100px] bg-white space-y-4">
-      <div className="space-y-2 text-[#7F7F7F]">
-        <h1 className="text-[32px] font-extrabold">Statistik Pendaftaran</h1>
-        <p className="text-[20px] font-bold">Hasil pendaftaran ormawa</p>
+    <div className="py-15 pl-6 pr-25 bg-white space-y-4">
+      <div className="space-y-2">
+        <h1 className="text-[32px] font-extrabold text-blue-900">
+          Statistik Pendaftaran
+        </h1>
+        <p className="text-[20px] font-bold text-blue-900/80">
+          Hasil pendaftaran ormawa
+        </p>
       </div>
 
       <Tabs
@@ -43,12 +47,10 @@ export default function SubmissionContainer() {
           <TabsTrigger value="external">Eksternal</TabsTrigger>
         </TabsList>
 
-        {/* Tab Internal — terhubung ke API */}
         <TabsContent value="internal">
           <InternalSubmissionContent />
         </TabsContent>
 
-        {/* Tab External — terhubung ke real API */}
         <TabsContent value="external">
           <ExternalSubmissionContent />
         </TabsContent>

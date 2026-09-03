@@ -27,9 +27,13 @@ export default function OpenTalentContainer() {
 
   return (
     <div className="py-15 pl-6 pr-[100px] bg-white min-h-screen space-y-6">
-      <div className="space-y-2 text-[#7F7F7F]">
-        <h1 className="text-[32px] font-extrabold">Open Talent</h1>
-        <p className="text-[20px] font-bold">Hasil pendaftaran open talent</p>
+      <div className="space-y-2">
+        <h1 className="text-[32px] font-extrabold text-blue-900">
+          Open Talent
+        </h1>
+        <p className="text-[20px] font-bold text-blue-900/80">
+          Hasil pendaftaran open talent
+        </p>
       </div>
 
       <div className="flex justify-between gap-4">

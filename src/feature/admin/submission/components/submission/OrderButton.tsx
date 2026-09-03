@@ -19,17 +19,17 @@ export default function OrderButton({ value, onChange }: OrderButtonProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="h-12 w-[170px] justify-between border-[#AFAFAF]"
+          className="h-12 w-42.5 justify-between border-2 border-yellow-500 bg-yellow-100 text-blue-900 hover:bg-yellow-200 hover:text-blue-900"
         >
           <div className="flex items-center gap-1">
-            <span className="text-gray-500">Order By:</span>
+            <span className="text-blue-300">Order By:</span>
             <span>{value === "asc" ? "Asc" : "Desc"}</span>
           </div>
-          <ArrowUpDown className="h-4 w-4 text-gray-500" />
+          <ArrowUpDown className="h-4 w-4 text-blue-300" />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="w-[180px]">
+      <DropdownMenuContent className="w-45 bg-yellow-100 text-blue-900 border-yellow-500">
         <DropdownMenuItem onClick={() => onChange("asc")}>
           Ascended
         </DropdownMenuItem>
