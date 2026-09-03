@@ -3,6 +3,7 @@ import { create } from "zustand";
 import {
   getCurrentUser,
   refreshAccessToken,
+  login as apiLogin,
   loginOrmawa,
   logout as apiLogout,
 } from "../services/authApi";
@@ -26,6 +27,7 @@ interface AuthState {
   setAuth: (accessToken: string, user: User) => void;
   clearAuth: () => void;
   initialize: () => Promise<void>;
+  login: (credentials: LoginOrmawaRequest) => Promise<void>;
   loginOrmawa: (credentials: LoginOrmawaRequest) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -58,21 +60,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   initialize: async () => {
-    console.log("[AuthStore] initialize");
-
-    set({
-      isLoading: true,
-    });
+    set({ isLoading: true });
 
     try {
-      console.log("[AuthStore] refreshing token");
-
-      const tokenResponse = await refreshAccessToken();
-
-      console.log("[AuthStore] refresh success", tokenResponse);
-
-      const accessToken = tokenResponse;
-
+      const accessToken = await refreshAccessToken();
       const userResponse = await getCurrentUser();
 
       set({
@@ -82,9 +73,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         isInitialized: true,
         isLoading: false,
       });
-    } catch (error) {
-      console.error("[AuthStore] initialize failed", error);
-
+    } catch {
       set({
         accessToken: null,
         user: null,
@@ -92,6 +81,27 @@ export const useAuthStore = create<AuthState>((set) => ({
         isInitialized: true,
         isLoading: false,
       });
+    }
+  },
+
+  login: async (credentials) => {
+    set({ isLoading: true });
+    try {
+      const response = await apiLogin(credentials);
+      const { access_token, user } = response.data;
+
+      setAccessToken(access_token);
+
+      set({
+        accessToken: access_token,
+        user: { ...user, id: user.id || "0" },
+        isAuthenticated: true,
+        isInitialized: true,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({ isLoading: false });
+      throw error;
     }
   },
 

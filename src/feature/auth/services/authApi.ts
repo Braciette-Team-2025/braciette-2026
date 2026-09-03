@@ -43,6 +43,42 @@ export interface CurrentUserResponse {
   };
 }
 
+export interface GoogleCallbackResponse {
+  success: boolean;
+  message: string;
+  data: {
+    access_token: string;
+    expires_in: number;
+    token_type: string;
+    user: {
+      name: string;
+      email: string;
+      photo_url: string;
+    };
+  };
+}
+
+export interface RefreshTokenResponse {
+  success: boolean;
+  message: string;
+  data: {
+    access_token: string;
+    expires_in: number;
+    token_type: string;
+  };
+}
+
+export interface CurrentUserResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    name: string;
+    email: string;
+    photo_url: string;
+  };
+}
+
 export function redirectToGoogleLogin() {
   if (!API_BASE_URL) {
     throw new Error("NEXT_PUBLIC_API_BASE_URL is not configured");
@@ -81,4 +117,14 @@ export async function logout(): Promise<void> {
   await api.post("/v1/auth/logout");
 
   setAccessToken(null);
+}
+
+export async function login(
+  credentials: LoginOrmawaRequest,
+): Promise<LoginOrmawaResponse> {
+  const response = await api.post<LoginOrmawaResponse>(
+    "/v1/auth/login",
+    credentials,
+  );
+  return response.data;
 }

@@ -46,6 +46,24 @@ function processQueue(error: unknown, token: string | null = null) {
   failedQueue = [];
 }
 
+function isLoginPage() {
+  return (
+    typeof window !== "undefined" &&
+    window.location.pathname.startsWith("/login")
+  );
+}
+
+function redirectToLogin() {
+  if (typeof window === "undefined" || isLoginPage()) return;
+
+  const router = getRouter();
+  if (router) {
+    router.replace("/login");
+  } else {
+    window.location.replace("/login");
+  }
+}
+
 api.interceptors.response.use(
   (response) => response,
   async (error: unknown) => {
@@ -54,32 +72,31 @@ api.interceptors.response.use(
     const originalRequest = error.config as typeof error.config & {
       _retry?: boolean;
     };
+    const requestUrl = originalRequest?.url ?? "";
+    const status = error.response?.status;
 
-    const isRefreshEndpoint = originalRequest?.url?.includes("/auth/refresh");
+    const isRefreshEndpoint = requestUrl.includes("/auth/refresh");
+    const isLoginEndpoint = requestUrl.includes("/auth/login");
+    const isLogoutEndpoint = requestUrl.includes("/auth/logout");
 
-    // Jika endpoint refresh itu sendiri yang 401 → session expired, redirect ke login
-    if (isRefreshEndpoint && error.response?.status === 401) {
+    if (isLoginEndpoint || isLogoutEndpoint) {
+      return Promise.reject(error);
+    }
+
+    if (isRefreshEndpoint && status === 401) {
       setAccessToken(null);
-      const isAuthPage =
-        typeof window !== "undefined" &&
-        (window.location.pathname.startsWith("/login") ||
-          window.location.pathname.startsWith("/oauth"));
-      if (!isAuthPage) {
-        console.warn("[axios] Refresh token expired — redirecting to /login");
-        const router = getRouter();
-        if (router) {
-          router.push("/login");
-        } else {
-          // Fallback sebelum router singleton tersedia (rare case)
-          window.location.href = "/login";
-        }
+      redirectToLogin();
+      return Promise.reject(error);
+    }
+
+    if (status !== 401 || originalRequest?._retry) {
+      if (status === 401) {
+        setAccessToken(null);
+        redirectToLogin();
       }
       return Promise.reject(error);
     }
 
-    if (error.response?.status !== 401 || originalRequest?._retry) {
-      return Promise.reject(error);
-    }
     if (isRefreshing) {
       return new Promise<string>((resolve, reject) => {
         failedQueue.push({ resolve, reject });
@@ -98,8 +115,6 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      console.log("[axios] 401 detected — refreshing access token...");
-
       const refreshResponse = await api.post<{
         data: { access_token: string };
       }>("/v1/auth/refresh");
@@ -116,6 +131,7 @@ api.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError, null);
       setAccessToken(null);
+      redirectToLogin();
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
