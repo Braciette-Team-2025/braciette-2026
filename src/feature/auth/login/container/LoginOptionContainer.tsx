@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 import AuthCard from "../../components/AuthCard";
 import LoginOptions from "../components/LoginOptions";
+import LoginAuthGuard from "../components/LoginAuthGuard";
 
 export default function LoginOptionContainer() {
   return (
-    <>
+    <LoginAuthGuard>
       <AuthCard
         title={
           <>
@@ -40,6 +41,6 @@ export default function LoginOptionContainer() {
       >
         <LoginOptions />
       </AuthCard>
-    </>
+    </LoginAuthGuard>
   );
 }
