@@ -15,8 +15,11 @@ export function ProfileContainer() {
   const user = useAuthStore((state) => state.user);
   const isLoading = useAuthStore((state) => state.isLoading);
 
-  const handleLogout = () => {
-    router.push("/login");
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = async () => {
+    await logout();
+    router.replace("/login");
   };
 
   if (isLoading) {
