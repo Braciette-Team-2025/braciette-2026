@@ -54,7 +54,9 @@ export function useExternalSubmissionState() {
     else params.delete("page");
 
     const queryString = params.toString().replace(/\+/g, "%20");
-    router.replace(`${pathname}?${queryString}`, { scroll: false });
+    if (queryString !== searchParams.toString()) {
+      router.replace(`${pathname}?${queryString}`, { scroll: false });
+    }
   }, [
     search,
     jenisFilter,
