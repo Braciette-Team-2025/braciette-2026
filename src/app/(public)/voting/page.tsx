@@ -3,7 +3,7 @@ import { VotingContainer } from "@/src/feature/landing/voting/container/VotingCo
 
 export default function page() {
   return (
-    <ProtectedRoute>
+    <ProtectedRoute allowedRoles={["User"]}>
       <VotingContainer />
     </ProtectedRoute>
   );

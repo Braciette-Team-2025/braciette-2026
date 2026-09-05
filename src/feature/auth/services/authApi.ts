@@ -1,6 +1,7 @@
 import { setAccessToken } from "@/src/lib/auth/acces-token";
 import { api } from "@/src/lib/axios";
 import type {
+  AuthUser,
   LoginOrmawaRequest,
   LoginOrmawaResponse,
 } from "../types/auth.type";
@@ -35,48 +36,7 @@ export interface RefreshTokenResponse {
 export interface CurrentUserResponse {
   success: boolean;
   message: string;
-  data: {
-    id: string;
-    name: string;
-    email: string;
-    photo_url: string;
-  };
-}
-
-export interface GoogleCallbackResponse {
-  success: boolean;
-  message: string;
-  data: {
-    access_token: string;
-    expires_in: number;
-    token_type: string;
-    user: {
-      name: string;
-      email: string;
-      photo_url: string;
-    };
-  };
-}
-
-export interface RefreshTokenResponse {
-  success: boolean;
-  message: string;
-  data: {
-    access_token: string;
-    expires_in: number;
-    token_type: string;
-  };
-}
-
-export interface CurrentUserResponse {
-  success: boolean;
-  message: string;
-  data: {
-    id: string;
-    name: string;
-    email: string;
-    photo_url: string;
-  };
+  data: AuthUser;
 }
 
 export function redirectToGoogleLogin() {
@@ -94,6 +54,7 @@ export async function loginOrmawa(
     "/v1/auth/login",
     credentials,
   );
+
   return response.data;
 }
 
@@ -126,5 +87,6 @@ export async function login(
     "/v1/auth/login",
     credentials,
   );
+
   return response.data;
 }

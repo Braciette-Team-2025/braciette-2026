@@ -172,3 +172,52 @@ export interface InternalSubmissionParams {
   sort_by?: "name" | "created_at";
   order?: "asc" | "desc";
 }
+
+export interface ExternalSubmissionItem {
+  id: string;
+  type: ExternalOrmawaType;
+  name: string;
+  logo_url: string;
+  pic?: string;
+  pic_contact?: string;
+  status?: string;
+}
+
+export interface ExternalSubmissionListResponse {
+  success: boolean;
+  message: string;
+  data: {
+    data: ExternalSubmissionItem[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}
+
+export interface ExternalHomeStats {
+  total: number;
+  bem: number;
+  dpm: number;
+  hima: number;
+  ukm: number;
+}
+
+export interface ExternalHomeItem {
+  id: string;
+  type: ExternalOrmawaType;
+  name: string;
+  logo_url: string;
+  vote_count: number;
+}
+
+export interface ExternalHomeResponse {
+  success: boolean;
+  message: string;
+  data: {
+    stats: ExternalHomeStats;
+    data: ExternalHomeItem[];
+    total: number;
+    page: number;
+    limit: number;
+  };
+}

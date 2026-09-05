@@ -1,5 +1,7 @@
 "use client";
 
+import { useAuthStore } from "@/src/feature/auth/store/authStore";
+
 import { useCategory } from "../hooks/useCategory";
 import { useOrganization } from "../hooks/useOrganization";
 import { useVote } from "../hooks/useVote";
@@ -13,6 +15,8 @@ import { CategoryButton } from "../components/(category)/CategoryButton";
 import { OrganizationGrid } from "../components/(organization)/OrganizationGrid";
 
 export function VotingContainer() {
+  const user = useAuthStore((state) => state.user);
+
   const { categories, selectedCategory, selectCategory, resetCategory } =
     useCategory();
 
@@ -32,7 +36,16 @@ export function VotingContainer() {
     closeSuccessModal,
   } = useVote();
 
-  const hasVotedThisRound = false;
+  const hasVotedByCategory: Record<string, boolean> = {
+    BEM: user?.has_voted_bem ?? false,
+    DPM: user?.has_voted_dpm ?? false,
+    HIMA: user?.has_voted_hima ?? false,
+    UKM: user?.has_voted_ukm ?? false,
+  };
+
+  const hasVotedThisCategory = selectedCategory
+    ? (hasVotedByCategory[selectedCategory.code] ?? false)
+    : false;
 
   return (
     <section className="relative flex w-full flex-col items-center gap-10 overflow-hidden px-4 py-16 md:py-24">
@@ -40,7 +53,11 @@ export function VotingContainer() {
         <>
           <VotingHero variant="category" />
 
-          <CategoryGrid categories={categories} onSelect={selectCategory} />
+          <CategoryGrid
+            categories={categories}
+            onSelect={selectCategory}
+            hasVotedByCategory={hasVotedByCategory}
+          />
         </>
       ) : (
         <>
@@ -52,8 +69,8 @@ export function VotingContainer() {
             value={searchQuery}
             onChange={setSearchQuery}
             statusMessage={
-              hasVotedThisRound
-                ? undefined
+              hasVotedThisCategory
+                ? `Kamu sudah melakukan voting ${selectedCategory.code}.`
                 : "You haven't voted for your favorite student organization yet. Vote now!"
             }
           />
@@ -64,10 +81,11 @@ export function VotingContainer() {
             searchQuery={searchQuery}
             selectedOrganizationId={selectedOrganizationId}
             onSelect={selectOrganization}
+            disabled={hasVotedThisCategory}
           />
 
           <VotingConfirmButton
-            disabled={!selectedOrganizationId}
+            disabled={!selectedOrganizationId || hasVotedThisCategory}
             isSubmitting={isSubmitting}
             onConfirm={() => confirmVote(selectedCategory.id)}
           />

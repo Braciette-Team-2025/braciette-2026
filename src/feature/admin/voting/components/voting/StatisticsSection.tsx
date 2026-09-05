@@ -6,11 +6,13 @@ import type { VotingStatistic } from "../../types/voting";
 export interface StatisticSectionProps {
   statistic?: VotingStatistic;
   isLoading?: boolean;
+  bestCandidateLabel?: string;
 }
 
 export function StatisticSection({
   statistic,
   isLoading,
+  bestCandidateLabel = "Ormawa Terbaik",
 }: StatisticSectionProps) {
   if (isLoading) {
     return (
@@ -27,8 +29,9 @@ export function StatisticSection({
         label={STATISTIC_LABELS.totalVoting}
         value={(statistic?.totalVoting ?? 0).toLocaleString("id-ID")}
       />
+
       <StatisticCard
-        label={STATISTIC_LABELS.bestCandidate}
+        label={bestCandidateLabel}
         value={statistic?.bestCandidateName ?? "-"}
       />
     </div>

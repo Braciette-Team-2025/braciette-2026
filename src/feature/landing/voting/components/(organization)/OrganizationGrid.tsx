@@ -15,6 +15,7 @@ interface OrganizationGridProps {
   searchQuery: string;
   selectedOrganizationId: string | null;
   onSelect: (organizationId: string) => void;
+  disabled?: boolean;
 }
 
 const ROW_GAP_PX = 16;
@@ -25,23 +26,39 @@ export function OrganizationGrid({
   searchQuery,
   selectedOrganizationId,
   onSelect,
+  disabled = false,
 }: OrganizationGridProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [thumb, setThumb] = useState({ heightPercent: 100, topPercent: 0 });
+
+  const [thumb, setThumb] = useState({
+    heightPercent: 100,
+    topPercent: 0,
+  });
+
   const [canScrollDown, setCanScrollDown] = useState(false);
 
   const measure = () => {
     const el = scrollRef.current;
-    if (!el) return;
+
+    if (!el) {
+      return;
+    }
 
     const { scrollTop, scrollHeight, clientHeight } = el;
+
     const heightPercent = Math.min(100, (clientHeight / scrollHeight) * 100);
+
     const maxScrollTop = scrollHeight - clientHeight;
+
     const topPercent =
       maxScrollTop > 0 ? (scrollTop / maxScrollTop) * (100 - heightPercent) : 0;
 
-    setThumb({ heightPercent, topPercent });
+    setThumb({
+      heightPercent,
+      topPercent,
+    });
+
     setCanScrollDown(maxScrollTop > 0 && scrollTop < maxScrollTop - 1);
   };
 
@@ -49,21 +66,38 @@ export function OrganizationGrid({
     measure();
 
     const contentEl = contentRef.current;
-    if (!contentEl || typeof ResizeObserver === "undefined") return;
+
+    if (!contentEl || typeof ResizeObserver === "undefined") {
+      return;
+    }
 
     const observer = new ResizeObserver(measure);
+
     observer.observe(contentEl);
+
     return () => observer.disconnect();
   }, [organizations]);
 
   const scrollOneRow = () => {
+    if (disabled) {
+      return;
+    }
+
     const el = scrollRef.current;
+
     const firstCard = contentRef.current
       ?.firstElementChild as HTMLElement | null;
-    const rowHeight = firstCard?.offsetHeight ?? 0;
-    if (!el || rowHeight === 0) return;
 
-    el.scrollBy({ top: rowHeight + ROW_GAP_PX, behavior: "smooth" });
+    const rowHeight = firstCard?.offsetHeight ?? 0;
+
+    if (!el || rowHeight === 0) {
+      return;
+    }
+
+    el.scrollBy({
+      top: rowHeight + ROW_GAP_PX,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -85,7 +119,7 @@ export function OrganizationGrid({
             >
               <div
                 ref={contentRef}
-                className="grid py-2 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                className="grid grid-cols-1 gap-4 py-2 sm:grid-cols-2 lg:grid-cols-3"
               >
                 {organizations.map((organization) => (
                   <OrganizationCard
@@ -93,6 +127,7 @@ export function OrganizationGrid({
                     organization={organization}
                     isSelected={selectedOrganizationId === organization.id}
                     onSelect={onSelect}
+                    disabled={disabled}
                   />
                 ))}
               </div>
@@ -107,14 +142,15 @@ export function OrganizationGrid({
           <button
             type="button"
             onClick={scrollOneRow}
+            disabled={disabled}
             aria-label="Show more organizations"
             className={cn(
               "mx-auto mt-4 flex h-9 w-9 items-center justify-center rounded-full text-yellow-500",
               "transition-[opacity,transform] duration-300 hover:scale-110",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-900",
-              canScrollDown
-                ? "opacity-100 pointer-events-auto"
-                : "opacity-0 pointer-events-none",
+              canScrollDown && !disabled
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0",
             )}
           >
             <ArrowDown className="h-6 w-6 animate-bounce" />
