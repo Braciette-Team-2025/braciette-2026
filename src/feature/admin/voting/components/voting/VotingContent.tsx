@@ -24,6 +24,8 @@ interface VotingContentProps {
 
   nameColumnLabel?: string;
 
+  bestCandidateLabel?: string;
+
   pagination?: React.ReactNode;
 }
 
@@ -35,11 +37,16 @@ export function VotingContent({
   items,
   isLoading,
   nameColumnLabel,
+  bestCandidateLabel,
   pagination,
 }: VotingContentProps) {
   return (
     <div className="space-y-6">
-      <StatisticSection statistic={statistic} isLoading={isLoading} />
+      <StatisticSection
+        statistic={statistic}
+        isLoading={isLoading}
+        bestCandidateLabel={bestCandidateLabel}
+      />
 
       <div className="flex flex-col gap-6 lg:flex-row">
         <VotingSidebar
