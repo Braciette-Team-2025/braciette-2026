@@ -18,3 +18,15 @@ export interface LoginOrmawaResponse {
     };
   };
 }
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  photo_url: string;
+  role: string;
+  has_voted_bem: boolean;
+  has_voted_dpm: boolean;
+  has_voted_hima: boolean;
+  has_voted_ukm: boolean;
+}
