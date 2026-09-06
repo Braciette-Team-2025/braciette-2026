@@ -4,10 +4,10 @@ import "./globals.css";
 import { AuthProvider } from "../feature/auth/providers/AuthProvider";
 import { ReactQueryProvider } from "../feature/auth/providers/ReactQueryProvider";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  metadataBase: BASE_URL ? new URL(BASE_URL) : undefined,
   title: {
     default: "Braciate",
     template: "%s | Braciate",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Braciate",
     description: "Brawijaya Festival Appreciate 2026",
-    url: BASE_URL,
+    url: BASE_URL ?? "",
     siteName: "Braciate",
     locale: "id_ID",
     type: "website",
