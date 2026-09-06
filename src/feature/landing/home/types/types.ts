@@ -11,7 +11,7 @@ export type TimelineItem = {
   desc: string;
 };
 
-export type VotingGuideItem = {
+export type GuideItem = {
   id: number;
   desc: string;
 };

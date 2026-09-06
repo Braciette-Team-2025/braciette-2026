@@ -1,6 +1,7 @@
 import AboutSection from "../components/AboutSection";
 import FaqSection from "../components/FaqSection";
 import HeroSection from "../components/HeroSection";
+import OpenTalentGuideSection from "../components/OpenTalentGuideSection";
 import PhotoSection from "../components/PhotoSection";
 import TimelineSection from "../components/TimelineSection";
 import VotingGuideSection from "../components/VotingGuideSection";
@@ -14,6 +15,7 @@ export default function HomeContainer() {
         <PhotoSection />
         <TimelineSection />
         <VotingGuideSection />
+        <OpenTalentGuideSection />
         <FaqSection />
       </div>
     </main>
