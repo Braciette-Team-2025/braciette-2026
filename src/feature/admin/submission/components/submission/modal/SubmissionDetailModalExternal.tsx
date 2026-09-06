@@ -48,7 +48,8 @@ export default function SubmissionDetailModalExternal({
                 rel="noopener noreferrer"
                 className="inline-block"
               >
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={data.logo_url}
                   alt={`Logo ${data.name}`}
                   width={64}

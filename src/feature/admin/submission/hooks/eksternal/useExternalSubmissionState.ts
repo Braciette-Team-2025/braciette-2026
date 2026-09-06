@@ -54,19 +54,9 @@ export function useExternalSubmissionState() {
     else params.delete("page");
 
     const queryString = params.toString().replace(/\+/g, "%20");
-    if (queryString !== searchParams.toString()) {
-      router.replace(`${pathname}?${queryString}`, { scroll: false });
-    }
-  }, [
-    search,
-    jenisFilter,
-    sortBy,
-    order,
-    currentPage,
-    pathname,
-    router,
-    searchParams,
-  ]);
+    router.replace(`${pathname}?${queryString}`, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, jenisFilter, sortBy, order, currentPage, pathname, router]);
 
   const resetPage = () => {
     setCurrentPage(1);

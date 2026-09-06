@@ -132,7 +132,7 @@ export interface InternalSubmissionDetail extends InternalSubmissionItem {
   cabinet_name: string;
   nominations: string[];
   major_program: string;
-  mission: string;
+  short_description: string;
   drive_link: string;
   social_medias: { platform: string; url: string }[];
 }

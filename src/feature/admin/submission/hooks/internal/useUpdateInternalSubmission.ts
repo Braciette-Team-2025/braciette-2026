@@ -32,7 +32,10 @@ export function useUpdateInternalSubmission() {
       formData.append("pic_contact", data.pic_contact);
 
       formData.append("cabinet_name", originalData.cabinet_name || "");
-      formData.append("mission", originalData.mission || "");
+      formData.append(
+        "short_description",
+        originalData.short_description || "",
+      );
       formData.append("major_program", originalData.major_program || "");
       formData.append("drive_link", originalData.drive_link || "");
 

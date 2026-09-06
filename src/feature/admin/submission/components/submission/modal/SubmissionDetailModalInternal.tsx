@@ -58,7 +58,11 @@ export default function SubmissionDetailModalInternal({
           <StatusBadge status={data.status} />
         </div>
 
-        <DetailField label="Deskripsi Singkat" value={data.mission} fullWidth />
+        <DetailField
+          label="Deskripsi Singkat"
+          value={data.short_description}
+          fullWidth
+        />
 
         <DetailField
           label="Link Drive"
