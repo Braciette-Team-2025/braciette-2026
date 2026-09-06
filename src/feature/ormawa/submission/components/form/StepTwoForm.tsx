@@ -2,15 +2,20 @@ import StepTwoFormBEM from "./StepTwoFormBEM";
 import StepTwoFormUKM from "./StepTwoFormUKM";
 import { Button } from "../ui/Button";
 import { ArrowLeft } from "lucide-react";
-import type { FormData, SetFormData } from "../../hooks/useSubmissionContainer";
+import type {
+  SubmissionFormData,
+  SetFormData,
+} from "../../hooks/useSubmissionContainer";
+import { buildFormData } from "../../hooks/useSubmissionContainer";
 import StepTwoFormDPM from "./StepTwoFormDPM";
 import StepTwoFormHIMA from "./StepTwoFormHIMA";
 import { useStepTwoForm } from "../../hooks/useStepTwoForm";
+import { useCreateSubmission } from "../../hooks/useCreateSubmission";
 
 interface StepTwoFormProps {
   onBack?: () => void;
   onSubmitSuccess?: () => void;
-  formData: FormData;
+  formData: SubmissionFormData;
   setFormData: SetFormData;
 }
 
@@ -39,14 +44,14 @@ export default function StepTwoForm({
   })();
 
   const { isValid } = useStepTwoForm(formData);
+  const { mutate, isPending } = useCreateSubmission({ onSubmitSuccess });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid) return;
 
-    // TODO: kirim formData ke API
-    console.log("Data Submit:", formData);
-    if (onSubmitSuccess) onSubmitSuccess();
+    const fd = buildFormData(formData);
+    mutate(fd);
   };
 
   return (
@@ -63,10 +68,10 @@ export default function StepTwoForm({
         </Button>
         <Button
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || isPending}
           className="w-full md:w-auto py-3 px-8 rounded-[12px] text-blue-900 font-jakarta font-bold text-base md:text-lg justify-center"
         >
-          Konfirmasi
+          {isPending ? "Mengirim..." : "Konfirmasi"}
         </Button>
       </div>
     </form>

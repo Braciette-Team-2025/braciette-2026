@@ -1,7 +1,7 @@
-import type { FormData } from "./useSubmissionContainer";
+import type { SubmissionFormData } from "./useSubmissionContainer";
 import { JenisOrmawa } from "../constants/submission";
 
-export function useStepTwoForm(formData: FormData) {
+export function useStepTwoForm(formData: SubmissionFormData) {
   const { jenisOrmawa } = formData;
 
   const isValid = (() => {

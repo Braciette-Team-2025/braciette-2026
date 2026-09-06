@@ -3,13 +3,16 @@ import {
   NOMINASI_DPM,
   getRequiredFiles,
 } from "../../constants/submission";
-import type { FormData, SetFormData } from "../../hooks/useSubmissionContainer";
+import type {
+  SubmissionFormData,
+  SetFormData,
+} from "../../hooks/useSubmissionContainer";
 import { NominasiCheckboxGroup } from "../ui/NominasiCheckboxGroup";
 import { DriveLinkInput } from "../ui/DriveLinkInput";
 import { NominasiSummary } from "../ui/NominasiSummary";
 
 interface StepTwoFormDPMProps {
-  formData: FormData;
+  formData: SubmissionFormData;
   setFormData: SetFormData;
 }
 

@@ -7,10 +7,13 @@ import {
   UKM_NOMINATIONS,
   getRequiredFiles,
 } from "../../constants/submission";
-import type { FormData, SetFormData } from "../../hooks/useSubmissionContainer";
+import type {
+  SubmissionFormData,
+  SetFormData,
+} from "../../hooks/useSubmissionContainer";
 
 interface StepTwoFormUKMProps {
-  formData: FormData;
+  formData: SubmissionFormData;
   setFormData: SetFormData;
 }
 

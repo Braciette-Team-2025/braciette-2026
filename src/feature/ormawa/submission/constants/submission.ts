@@ -14,7 +14,7 @@ export const LABEL_ORMAWA: Record<JenisOrmawa, string> = {
   [JenisOrmawa.HIMA]: "HIMA",
   [JenisOrmawa.UKM_PENALARAN]: "UKM Penalaran",
   [JenisOrmawa.UKM_OLAHRAGA]: "UKM Olahraga",
-  [JenisOrmawa.UKM_KESENIAN]: "UKM Kesenian",
+  [JenisOrmawa.UKM_KESENIAN]: "UKM Seni",
   [JenisOrmawa.UKM_KEROHANIAN]: "UKM Kerohanian",
 };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../hooks/useAuth";
 import { getAuthErrorMessage } from "../../utils/authErrorHandler";
+import { useAuthStore } from "../../store/authStore";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -36,7 +37,12 @@ export const useLoginForm = () => {
 
     try {
       await loginOrmawa({ email: normalizedEmail, password });
-      router.replace("/profile");
+      const currentUser = useAuthStore.getState().user;
+      if (currentUser?.role === "Admin") {
+        router.replace("/admin/submission");
+      } else if (currentUser?.role === "Ormawa") {
+        router.replace("/ormawa");
+      }
     } catch (err: unknown) {
       setError(getAuthErrorMessage(err));
     }

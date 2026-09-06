@@ -14,11 +14,19 @@ export function GuestOnly({ children }: GuestOnlyProps) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isInitialized = useAuthStore((state) => state.isInitialized);
 
+  const user = useAuthStore((state) => state.user);
+
   useEffect(() => {
     if (isInitialized && isAuthenticated) {
-      router.replace("/profile");
+      if (user?.role === "Admin") {
+        router.replace("/admin/submission");
+      } else if (user?.role === "Ormawa") {
+        router.replace("/ormawa");
+      } else {
+        router.replace("/profile");
+      }
     }
-  }, [isInitialized, isAuthenticated, router]);
+  }, [isInitialized, isAuthenticated, user, router]);
 
   if (isInitialized && isAuthenticated) {
     return null;

@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import type { SocialMedia } from "../components/ui/MultiSocialMediaInput";
 import type { LombaItem } from "../components/ui/MultiValueInput";
-import { JenisOrmawa } from "../constants/submission";
+import { JenisOrmawa, LABEL_ORMAWA } from "../constants/submission";
 
 type FormState = {
   jenisOrmawa: JenisOrmawa | "";
@@ -16,6 +17,30 @@ type FormState = {
   lomba: LombaItem[];
   mediaSosial: SocialMedia[];
 };
+
+export function buildFormData(form: FormState): globalThis.FormData {
+  const fd = new FormData();
+
+  fd.append("type", LABEL_ORMAWA[form.jenisOrmawa as JenisOrmawa]);
+  fd.append("name", form.namaOrmawa);
+  fd.append("cabinet_name", form.namaKabinet);
+  fd.append("short_description", form.deskripsi);
+  fd.append("major_program", form.proker);
+  fd.append("pic", form.pic);
+  fd.append("pic_contact", form.kontakPic);
+  fd.append("drive_link", form.linkDrive);
+
+  form.selectedNominasi.forEach((n) => fd.append("nominations", n));
+  form.lomba.forEach((l) => fd.append("achievements", l.value));
+  form.mediaSosial.forEach((m) =>
+    fd.append(
+      "social_medias",
+      JSON.stringify({ platform: m.platform, url: m.username }),
+    ),
+  );
+
+  return fd;
+}
 
 const INITIAL_FORM_STATE: FormState = {
   jenisOrmawa: "",
@@ -32,6 +57,7 @@ const INITIAL_FORM_STATE: FormState = {
 };
 
 export function useSubmissionContainer() {
+  const router = useRouter();
   const [step, setStep] = useState<1 | 2>(1);
   const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -54,10 +80,8 @@ export function useSubmissionContainer() {
   };
 
   const handleReset = () => {
-    setStep(1);
-    setFormState(INITIAL_FORM_STATE);
     setIsSuccessModalOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    router.push("/ormawa");
   };
 
   const formData = formState;
@@ -91,5 +115,5 @@ export function useSubmissionContainer() {
 export type SubmissionContainerState = ReturnType<
   typeof useSubmissionContainer
 >;
-export type FormData = SubmissionContainerState["formData"];
+export type SubmissionFormData = SubmissionContainerState["formData"];
 export type SetFormData = SubmissionContainerState["setFormData"];
