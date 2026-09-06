@@ -1,4 +1,4 @@
-import { FaqItem, TimelineItem, VotingGuideItem } from "../types/types";
+import { FaqItem, TimelineItem, GuideItem } from "../types/types";
 
 export const FAQ_DATA: FaqItem[] = [
   {
@@ -53,17 +53,32 @@ export const TIMELINE_DATA: TimelineItem[] = [
   },
 ];
 
-export const VOTE_GUIDE_DATA: VotingGuideItem[] = [
+export const VOTE_GUIDE_DATA: GuideItem[] = [
   {
     id: 1,
-    desc: "Sign in using your official Universitas Brawijaya Email via Google OAuth",
+    desc: "Masuk menggunakan email resmi Universitas Brawijaya melalui Google OAuth.",
   },
   {
     id: 2,
-    desc: "Navigate to your preferred organization category: BEM, DPM, HIMA, or UKM.",
+    desc: "Pilih kategori organisasi yang Anda inginkan: BEM, DPM, HIMA, atau UKM.",
   },
   {
     id: 3,
-    desc: "Select the most deserving candidate and cast your one-time digital vote.",
+    desc: "Pilih kandidat yang paling layak dan berikan satu suara digital Anda.",
+  },
+];
+
+export const SUBMISSION_GUIDE_DATA: GuideItem[] = [
+  {
+    id: 1,
+    desc: "Masuk menggunakan email resmi Universitas Brawijaya melalui Google OAuth.",
+  },
+  {
+    id: 2,
+    desc: "Akses menu Open Talent melalui CTA pada halaman utama.",
+  },
+  {
+    id: 3,
+    desc: "Lengkapi formulir pendaftaran dan tunggu pengumuman dari kami.",
   },
 ];
