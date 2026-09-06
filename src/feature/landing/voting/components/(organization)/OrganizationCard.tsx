@@ -43,7 +43,7 @@ export function OrganizationCard({
         }
       }}
       className={cn(
-        "group relative flex aspect-[353/209] flex-col items-center justify-center gap-2 rounded-xl border px-6 py-8 text-center transition-all duration-300",
+        "group relative flex aspect-[353/209] flex-col items-center justify-center rounded-xl border px-6 py-8 text-center transition-all duration-300",
         disabled
           ? "cursor-not-allowed border-gray-500/40 bg-gray-700/40 opacity-50 shadow-none"
           : [
@@ -57,9 +57,24 @@ export function OrganizationCard({
             ],
       )}
     >
+      {organization.logo_url && (
+        <div className="mb-4 flex h-20 w-full items-center justify-center">
+          <img
+            src={organization.logo_url}
+            alt={`Logo ${organization.name}`}
+            className={cn(
+              "block max-h-20 max-w-28 object-contain",
+              disabled && "grayscale",
+            )}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      )}
+
       <span
         className={cn(
-          "text-2xl font-bold",
+          "max-w-full text-lg font-bold leading-tight md:text-xl",
           disabled ? "text-gray-400" : "text-yellow-300",
         )}
       >
@@ -67,7 +82,7 @@ export function OrganizationCard({
       </span>
 
       {disabled && (
-        <span className="text-xs font-semibold text-gray-400">
+        <span className="mt-2 text-xs font-semibold text-gray-400">
           Sudah memilih
         </span>
       )}

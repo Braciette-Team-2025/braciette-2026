@@ -1,144 +1,117 @@
 import { Organization } from "../types/organization";
 
 export const ORGANIZATIONS: Organization[] = [
+  // =========================
   // BEM
+  // =========================
   {
-    id: "bem-filkom",
+    id: "dummy-bem-filkom",
     categoryId: "bem",
     name: "BEM Fakultas Ilmu Komputer",
+    logo_url: "https://placehold.co/160x160/png?text=BEM+FILKOM",
     status: "accepted",
   },
   {
-    id: "bem-perikanan",
+    id: "dummy-bem-feb",
     categoryId: "bem",
-    name: "BEM Fakultas Perikanan",
+    name: "BEM Fakultas Ekonomi dan Bisnis",
+    logo_url: "https://placehold.co/160x160/png?text=BEM+FEB",
     status: "accepted",
   },
   {
-    id: "bem-fisip",
-    categoryId: "bem",
-    name: "BEM Fakultas Ilmu Politik dan Sosial",
-    status: "accepted",
-  },
-  {
-    id: "bem-hukum",
-    categoryId: "bem",
-    name: "BEM Fakultas Hukum",
-    status: "accepted",
-  },
-  {
-    id: "bem-teknik",
+    id: "dummy-bem-ft",
     categoryId: "bem",
     name: "BEM Fakultas Teknik",
+    logo_url: "https://placehold.co/160x160/png?text=BEM+FT",
     status: "accepted",
   },
   {
-    id: "bem-ilkom-2",
+    id: "dummy-bem-fisip",
     categoryId: "bem",
-    name: "BEM Fakultas Ilmu Komputer",
-    status: "accepted",
-  },
-  {
-    id: "bem-ilkom-3",
-    categoryId: "bem",
-    name: "BEM Fakultas Ilmu Komputer",
-    status: "accepted",
-  },
-  {
-    id: "bem-ilkom-4",
-    categoryId: "bem",
-    name: "BEM Fakultas Ilmu Komputer",
-    status: "accepted",
-  },
-  {
-    id: "bem-ilkom-5",
-    categoryId: "bem",
-    name: "BEM Fakultas Ilmu Komputer",
-    status: "accepted",
-  },
-  {
-    id: "bem-ilkom-6",
-    categoryId: "bem",
-    name: "BEM Fakultas Ilmu Komputer",
-    status: "accepted",
-  },
-  {
-    id: "bem-ilkom-7",
-    categoryId: "bem",
-    name: "BEM Fakultas Ilmu Komputer",
-    status: "accepted",
-  },
-  {
-    id: "bem-ilkom-8",
-    categoryId: "bem",
-    name: "BEM Fakultas Ilmu Komputer",
+    name: "BEM Fakultas Ilmu Sosial dan Ilmu Politik",
+    logo_url: "https://placehold.co/160x160/png?text=BEM+FISIP",
     status: "accepted",
   },
 
+  // =========================
   // DPM
+  // =========================
   {
-    id: "dpm-filkom",
+    id: "dummy-dpm-filkom",
     categoryId: "dpm",
     name: "DPM Fakultas Ilmu Komputer",
+    logo_url: "https://placehold.co/160x160/png?text=DPM+FILKOM",
     status: "accepted",
   },
   {
-    id: "dpm-perikanan",
+    id: "dummy-dpm-feb",
     categoryId: "dpm",
-    name: "DPM Fakultas Perikanan",
+    name: "DPM Fakultas Ekonomi dan Bisnis",
+    logo_url: "https://placehold.co/160x160/png?text=DPM+FEB",
     status: "accepted",
   },
   {
-    id: "dpm-fisip",
+    id: "dummy-dpm-ft",
     categoryId: "dpm",
-    name: "DPM Fakultas Ilmu Politik dan Sosial",
-    status: "accepted",
-  },
-  {
-    id: "dpm-hukum",
-    categoryId: "dpm",
-    name: "DPM Fakultas Hukum",
+    name: "DPM Fakultas Teknik",
+    logo_url: "https://placehold.co/160x160/png?text=DPM+FT",
     status: "accepted",
   },
 
+  // =========================
   // HIMA
+  // =========================
   {
-    id: "hima-ilkom",
+    id: "dummy-hima-ilkom",
     categoryId: "hima",
     name: "Himpunan Mahasiswa Ilmu Komputer",
+    logo_url: "https://placehold.co/160x160/png?text=HIMA+ILKOM",
     status: "accepted",
   },
   {
-    id: "hima-sistem-informasi",
+    id: "dummy-hima-si",
     categoryId: "hima",
     name: "Himpunan Mahasiswa Sistem Informasi",
+    logo_url: "https://placehold.co/160x160/png?text=HIMA+SI",
     status: "accepted",
   },
   {
-    id: "hima-teknik-informatika",
+    id: "dummy-hima-ti",
     categoryId: "hima",
     name: "Himpunan Mahasiswa Teknik Informatika",
+    logo_url: "https://placehold.co/160x160/png?text=HIMA+TI",
     status: "accepted",
   },
 
+  // =========================
   // UKM
+  // =========================
   {
-    id: "ukm-basket",
+    id: "dummy-ukm-basket",
     categoryId: "ukm",
     name: "UKM Bola Basket",
+    logo_url: "https://placehold.co/160x160/png?text=UKM+BASKET",
     status: "accepted",
   },
-  { id: "ukm-musik", categoryId: "ukm", name: "UKM Musik", status: "accepted" },
   {
-    id: "ukm-fotografi",
+    id: "dummy-ukm-musik",
+    categoryId: "ukm",
+    name: "UKM Musik",
+    logo_url: "https://placehold.co/160x160/png?text=UKM+MUSIK",
+    status: "accepted",
+  },
+  {
+    id: "dummy-ukm-fotografi",
     categoryId: "ukm",
     name: "UKM Fotografi",
+    logo_url: "https://placehold.co/160x160/png?text=UKM+FOTO",
     status: "accepted",
   },
   {
-    id: "ukm-pecinta-alam",
+    id: "dummy-ukm-pecinta-alam",
     categoryId: "ukm",
     name: "UKM Pecinta Alam",
+    logo_url: "https://placehold.co/160x160/png?text=UKM+PA",
     status: "accepted",
   },
 ];

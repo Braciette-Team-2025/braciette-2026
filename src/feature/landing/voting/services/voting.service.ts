@@ -1,8 +1,11 @@
 import { api } from "@/src/lib/axios";
 import { CATEGORIES } from "../constants/category";
+import { ORGANIZATIONS } from "../constants/organization";
 import type { Category } from "../types/category";
 import type { Organization } from "../types/organization";
 import type { VoteSubmitPayload, VoteSubmitResult } from "../types/voting";
+
+const USE_DUMMY_ORGANIZATIONS = false;
 
 type OrmawaType = "BEM" | "DPM" | "HIMA" | "UKM";
 
@@ -49,6 +52,14 @@ export const votingService = {
   async getOrganizationsByCategory(
     categoryId: string,
   ): Promise<Organization[]> {
+    if (USE_DUMMY_ORGANIZATIONS) {
+      return ORGANIZATIONS.filter(
+        (organization) =>
+          organization.categoryId.toLowerCase() === categoryId.toLowerCase() &&
+          organization.status === "accepted",
+      );
+    }
+
     const type = categoryIdToType(categoryId);
 
     const response = await api.get<ExternalSubmissionListResponse>(
@@ -56,7 +67,6 @@ export const votingService = {
       {
         params: {
           type,
-          // status: "accepted",
         },
       },
     );
