@@ -85,7 +85,6 @@ api.interceptors.response.use(
 
     if (isRefreshEndpoint && status === 401) {
       setAccessToken(null);
-      redirectToLogin();
       return Promise.reject(error);
     }
 
