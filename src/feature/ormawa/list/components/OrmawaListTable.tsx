@@ -72,8 +72,8 @@ export default function OrmawaListTable({
   const columnCount = 6;
 
   return (
-    <div className="overflow-hidden rounded-xl border-2 border-yellow-500">
-      <Table className="table-fixed w-full border-separate border-spacing-0 text-[14px]">
+    <div className="w-full overflow-x-auto rounded-xl border-2 border-yellow-500">
+      <Table className="w-200 md:w-full border-separate border-spacing-0 text-[14px]">
         <TableHeader>
           <TableRow className="bg-yellow-500 font-inter font-semibold text-blue-900 hover:bg-yellow-400">
             <TableHead className="w-[5%] border-r-2 border-yellow-500 text-center text-yellow-50">

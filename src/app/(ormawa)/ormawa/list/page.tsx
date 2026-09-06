@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import OrmawaListContainer from "@/src/feature/ormawa/list/components/OrmawaListContainer";
+import OrmawaListContainer from "@/src/feature/ormawa/list/container/OrmawaListContainer";
 
 export const metadata = {
   title: "Daftar Ormawa",
