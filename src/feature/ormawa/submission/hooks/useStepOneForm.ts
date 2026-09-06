@@ -1,6 +1,9 @@
-import type { FormData, SetFormData } from "./useSubmissionContainer";
+import type { SubmissionFormData, SetFormData } from "./useSubmissionContainer";
 
-export function useStepOneForm(formData: FormData, setFormData: SetFormData) {
+export function useStepOneForm(
+  formData: SubmissionFormData,
+  setFormData: SetFormData,
+) {
   const {
     jenisOrmawa,
     namaOrmawa,
