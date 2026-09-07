@@ -25,11 +25,7 @@ export function useOrganization(categoryId: string) {
           await votingService.getOrganizationsByCategory(categoryId);
 
         if (!ignore) {
-          const acceptedOrganizations = data.filter(
-            (organization) => organization.status === "accepted",
-          );
-
-          setOrganizations(acceptedOrganizations);
+          setOrganizations(data);
         }
       } catch (error) {
         console.error(

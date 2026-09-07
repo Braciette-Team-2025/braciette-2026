@@ -35,7 +35,7 @@ export default function LoginOptionContainer() {
           <>
             Silakan masuk terlebih dahulu
             <br />
-            menggunakan akun Google Anda.
+            menggunakan akun Student UB Anda.
           </>
         }
       >
