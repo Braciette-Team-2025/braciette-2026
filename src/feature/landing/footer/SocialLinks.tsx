@@ -43,22 +43,22 @@ function WhatsAppIcon() {
 const socialLinks: SocialLinkItem[] = [
   {
     id: "instagram",
-    href: "https://instagram.com/",
+    href: "https://instagram.com/braciate_",
     label: "Instagram",
     icon: <InstagramIcon />,
   },
   {
     id: "tiktok",
-    href: "https://tiktok.com/@",
+    href: "https://tiktok.com/@braciate_",
     label: "TikTok",
     icon: <TikTokIcon />,
   },
-  {
-    id: "whatsapp",
-    href: "https://wa.me/",
-    label: "WhatsApp",
-    icon: <WhatsAppIcon />,
-  },
+  // {
+  //   id: "whatsapp",
+  //   href: "https://wa.me/",
+  //   label: "WhatsApp",
+  //   icon: <WhatsAppIcon />,
+  // },
 ];
 
 export default function SocialLinks() {
