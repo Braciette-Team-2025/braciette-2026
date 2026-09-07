@@ -1,4 +1,4 @@
-import SubmissionBackground from "./SubmissionBackground";
+import SubmissionBackground from "./Background";
 import SubmissionNavbar from "./navbar/SubmissionNavbar";
 
 export default function SubmissionLayout({
@@ -7,7 +7,7 @@ export default function SubmissionLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="font-jakarta relative flex min-h-screen flex-col overflow-hidden text-white">
+    <div className="font-jakarta relative flex min-h-screen flex-col overflow-x-clip text-white">
       <SubmissionBackground />
 
       <SubmissionNavbar />
