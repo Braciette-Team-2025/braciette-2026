@@ -20,11 +20,10 @@ export const LABEL_ORMAWA: Record<JenisOrmawa, string> = {
 
 export enum BemNomination {
   MOST_PRODUCTIVE = "Most Productive BEM",
-  MOST_COLLABORATIVE = "Most Collaborative BEM",
+  MOST_COLLABORATIVE = "Most Collaborative",
   BEST_MEGA_PROKER = "Best Mega Program Kerja",
   BEST_MEDSOS = "Best Media Social",
-  MOST_IMPACT = "Most Impact / BEM Terpengabdian",
-  TERPERGERAKAN = "BEM Terpergerakan",
+  MOST_IMPACT = "Most Impact",
   TERPENGEMBANGAN = "BEM Terpengembangan",
   TERPELAYANAN = "BEM Terpelayanan",
 }
@@ -40,7 +39,6 @@ export const BEM_NOMINATIONS: Record<BemNomination, string[]> = {
     "Setidaknya mengisi pendataan media sosial sekali",
   ],
   [BemNomination.MOST_IMPACT]: ["LPJ", "Grand Design"],
-  [BemNomination.TERPERGERAKAN]: ["LPJ"],
   [BemNomination.TERPENGEMBANGAN]: [
     "LPJ & Jumlah Audiens (Bukti Absensi)",
     "MoU Pemateri",
@@ -73,8 +71,8 @@ export const UKM_NOMINATIONS: Record<UkmNomination, string[]> = {
 export const NOMINASI_UKM = Object.values(UkmNomination);
 
 export enum HimaNomination {
-  MOST_PRODUCTIVE = "Most Productive HIMA",
-  MOST_COLLABORATIVE = "Most Collaborative HIMA",
+  MOST_PRODUCTIVE = "Most Productive",
+  MOST_COLLABORATIVE = "Most Collaborative",
   BEST_EDUCATIONAL = "The Best Educational Development",
   BEST_MEDSOS = "Best Media Social",
 }
@@ -95,7 +93,7 @@ export const NOMINASI_HIMA = Object.values(HimaNomination);
 
 export enum DpmNomination {
   MOST_ASPIRATIVE = "Most Aspirative",
-  BEST_MEDSOS = "Best Media Social",
+  BEST_MEDSOS = "Best Social Media",
 }
 
 export const DPM_NOMINATIONS: Record<DpmNomination, string[]> = {
