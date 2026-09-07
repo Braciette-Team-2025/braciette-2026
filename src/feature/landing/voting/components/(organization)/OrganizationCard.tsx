@@ -57,20 +57,18 @@ export function OrganizationCard({
             ],
       )}
     >
-      {organization.logo_url && (
-        <div className="mb-4 flex h-20 w-full items-center justify-center">
-          <img
-            src={organization.logo_url}
-            alt={`Logo ${organization.name}`}
-            className={cn(
-              "block max-h-20 max-w-28 object-contain",
-              disabled && "grayscale",
-            )}
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      )}
+      <div className="mb-4 flex h-20 w-full items-center justify-center">
+        <img
+          src={organization.logo_url || "/images/logo/braciate-logo.svg"}
+          alt={`Logo ${organization.name}`}
+          className={cn(
+            "block max-h-20 max-w-28 object-contain",
+            disabled && "grayscale",
+          )}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
 
       <span
         className={cn(
