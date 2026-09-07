@@ -44,17 +44,23 @@ export function useHeroAnimation(refs: HeroAnimationRefs) {
         filter: "blur(10px)",
         clipPath: "inset(-50% 100% -50% -50%)",
       });
-      timeline.to(
-        title,
-        {
-          opacity: 1,
-          filter: "blur(0px)",
-          clipPath: "inset(-50% -50% -50% -50%)",
-          duration: 1.5,
-          ease: "power2.out",
+      timeline.to(title, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        clipPath: "inset(-50% -50% -50% -50%)",
+        duration: 2.1,
+        ease: "power2.out",
+        onComplete: () => {
+          gsap.to(title, {
+            opacity: 0.62,
+            duration: 2.1,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true,
+          });
         },
-        0.5,
-      );
+      });
 
       gsap.set([subtitle, cta], { opacity: 0, y: 16 });
       timeline.to(
