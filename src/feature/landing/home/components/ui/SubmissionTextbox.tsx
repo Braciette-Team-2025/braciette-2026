@@ -3,7 +3,7 @@ import { GuideItem } from "../../types/types";
 export default function SubmissionTextbox({ id, desc }: GuideItem) {
   return (
     <div className="group flex flex-col items-center transition-transform duration-300 hover:-translate-y-2">
-      <div className="flex items-center h-full bg-blue-800 p-3 md:p-6 xl:p-9 rounded-lg xl:rounded-[12px] border-b-4 md:border-b-[6px] border-transparent group-hover:border-yellow-500 shadow-[0_0_4px_rgba(178,180,198,1)] md:shadow-[0_0_6px_rgba(178,180,198,1)] xl:shadow-[0_0_12px_rgba(230,231,237,1)] transition-colors duration-300">
+      <div className="flex items-center h-80 bg-blue-800 p-3 md:p-6 xl:p-9 rounded-lg xl:rounded-[12px] border-b-4 md:border-b-[6px] border-transparent group-hover:border-yellow-500 shadow-[0_0_4px_rgba(178,180,198,1)] md:shadow-[0_0_6px_rgba(178,180,198,1)] xl:shadow-[0_0_12px_rgba(230,231,237,1)] transition-colors duration-300">
         <p className="text-center text-yellow-500 text-[8px] md:text-md xl:text-2xl">
           {desc}
         </p>

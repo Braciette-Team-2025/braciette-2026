@@ -7,6 +7,9 @@ import OrmawaFilterJenis from "../components/OrmawaFilterJenis";
 import OrmawaSortButton from "../components/OrmawaSortButton";
 import OrmawaOrderButton from "../components/OrmawaOrderButton";
 import OrmawaPagination from "../components/OrmawaPagination";
+import { ArrowLeft } from "lucide-react";
+import router from "next/router";
+import Link from "next/link";
 
 export default function OrmawaListContainer() {
   const {
@@ -28,6 +31,19 @@ export default function OrmawaListContainer() {
   return (
     <div className="py-6 px-4 md:py-10 md:px-15 lg:py-15 lg:px-25 space-y-4">
       <div className="space-y-2">
+        <Link href="/ormawa">
+          <button
+            className="hover:opacity-80 transition-opacity focus:outline-none mb-8"
+            aria-label="Kembali"
+          >
+            <ArrowLeft
+              height={34}
+              width={34}
+              strokeWidth={2}
+              className="text-yellow-300 cursor-pointer lg:scale-100 scale-80"
+            />
+          </button>
+        </Link>
         <h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500">
           Daftar Ormawa
         </h1>
