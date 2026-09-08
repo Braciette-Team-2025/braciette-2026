@@ -1,4 +1,19 @@
+import { stepOneSchema } from "../schemas/submissionSchema";
 import type { SubmissionFormData, SetFormData } from "./useSubmissionContainer";
+
+export type StepOneFieldErrors = Partial<
+  Record<
+    | "jenisOrmawa"
+    | "namaOrmawa"
+    | "namaKabinet"
+    | "pic"
+    | "kontakPic"
+    | "deskripsi"
+    | "proker"
+    | "mediaSosial",
+    string
+  >
+>;
 
 export function useStepOneForm(
   formData: SubmissionFormData,
@@ -25,19 +40,16 @@ export function useStepOneForm(
     setMediaSosial,
   } = setFormData;
 
-  const isFormValid =
-    jenisOrmawa !== "" &&
-    namaOrmawa.trim() !== "" &&
-    namaKabinet.trim() !== "" &&
-    pic.trim() !== "" &&
-    kontakPic.trim() !== "" &&
-    deskripsi.trim() !== "" &&
-    proker.trim() !== "" &&
-    mediaSosial.length > 0 &&
-    mediaSosial.some(
-      (medsos) =>
-        medsos.platform.trim() !== "" && medsos.username.trim() !== "",
-    );
+  const result = stepOneSchema.safeParse(formData);
+  const isFormValid = result.success;
+
+  const fieldErrors: StepOneFieldErrors = !result.success
+    ? Object.fromEntries(
+        Object.entries(result.error.flatten().fieldErrors).map(
+          ([key, messages]) => [key, messages?.[0]],
+        ),
+      )
+    : {};
 
   const inputFields = [
     {
@@ -47,6 +59,7 @@ export function useStepOneForm(
       onChange: setNamaOrmawa,
       placeholder: "Nama Ormawa",
       maxLength: 100,
+      error: fieldErrors.namaOrmawa,
     },
     {
       id: "kabinet",
@@ -55,6 +68,7 @@ export function useStepOneForm(
       onChange: setNamaKabinet,
       placeholder: "Kabinet Ormawa",
       maxLength: 100,
+      error: fieldErrors.namaKabinet,
     },
     {
       id: "pic",
@@ -63,6 +77,7 @@ export function useStepOneForm(
       onChange: setPic,
       placeholder: "Nama PIC",
       maxLength: 60,
+      error: fieldErrors.pic,
     },
     {
       id: "kontak",
@@ -71,7 +86,8 @@ export function useStepOneForm(
       onChange: setKontakPic,
       placeholder: "08XXXXXXXXXX",
       type: "tel",
-      maxLength: 20,
+      maxLength: 15,
+      error: fieldErrors.kontakPic,
     },
     {
       id: "deskripsi",
@@ -79,6 +95,7 @@ export function useStepOneForm(
       value: deskripsi,
       onChange: setDeskripsi,
       placeholder: "Deskripsi Singkat",
+      error: fieldErrors.deskripsi,
     },
     {
       id: "proker",
@@ -87,6 +104,7 @@ export function useStepOneForm(
       onChange: setProker,
       placeholder: "Program Kerja Unggulan",
       maxLength: 50,
+      error: fieldErrors.proker,
     },
   ];
 
@@ -94,6 +112,7 @@ export function useStepOneForm(
     jenisOrmawa,
     setJenisOrmawa,
     isFormValid,
+    fieldErrors,
     inputFields,
   };
 }

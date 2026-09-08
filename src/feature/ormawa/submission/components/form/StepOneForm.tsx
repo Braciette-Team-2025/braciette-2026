@@ -8,7 +8,6 @@ import type {
   SetFormData,
 } from "../../hooks/useSubmissionContainer";
 import { JenisOrmawa, LABEL_ORMAWA } from "../../constants/submission";
-import ModalThankyou from "../PopupThankyou";
 
 interface StepOneFormProps {
   onNext?: () => void;
@@ -21,7 +20,7 @@ export default function StepOneForm({
   formData,
   setFormData,
 }: StepOneFormProps) {
-  const { jenisOrmawa, setJenisOrmawa, isFormValid, inputFields } =
+  const { jenisOrmawa, setJenisOrmawa, isFormValid, fieldErrors, inputFields } =
     useStepOneForm(formData, setFormData);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -49,6 +48,11 @@ export default function StepOneForm({
               </option>
             ))}
           </Select>
+          {fieldErrors.jenisOrmawa && (
+            <p className="text-red-500 text-xs md:text-sm font-jakarta font-medium">
+              {fieldErrors.jenisOrmawa}
+            </p>
+          )}
         </div>
 
         {inputFields.map((field) => (
@@ -62,7 +66,13 @@ export default function StepOneForm({
               value={field.value}
               onChange={(e) => field.onChange(e.target.value)}
               maxLength={field.maxLength}
+              error={!!field.error && field.value.length > 0}
             />
+            {field.error && field.value.length > 0 && (
+              <p className="text-red-500 text-xs md:text-sm font-jakarta font-medium mt-[-4px]">
+                {field.error}
+              </p>
+            )}
           </div>
         ))}
 
@@ -74,6 +84,11 @@ export default function StepOneForm({
             values={formData.mediaSosial}
             onChange={setFormData.setMediaSosial}
           />
+          {fieldErrors.mediaSosial && formData.mediaSosial.length > 0 && (
+            <p className="text-red-500 text-xs md:text-sm font-jakarta font-medium mt-[-4px]">
+              {fieldErrors.mediaSosial}
+            </p>
+          )}
         </div>
       </div>
 
