@@ -13,8 +13,8 @@ const GLOW_GOLD_TO = "drop-shadow(0 0 34px rgba(218,161,17,1))";
 const GLOW_BLUE_FROM = "drop-shadow(0 0 20px rgba(132,98,255,0.6))";
 const GLOW_BLUE_TO = "drop-shadow(0 0 34px rgba(132,98,255,0.9))";
 
-const GLOW_DURATION = 2.8;
-const GLOW_STAGGER = 0.35;
+const GLOW_DURATION = 1.8;
+const GLOW_STAGGER = 0.5;
 
 const DISC_SPIN_DURATION = 40;
 
@@ -85,8 +85,8 @@ export function useAboutAnimation(refs: AboutAnimationRefs) {
             ease: "power2.out",
             onComplete: () => {
               gsap.to(logo, {
-                y: 8,
-                duration: 2.1,
+                y: 14,
+                duration: 1.8,
                 ease: "power1.inOut",
                 repeat: -1,
                 yoyo: true,

@@ -28,6 +28,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="home"
       ref={sectionRef}
       className="relative w-full  md:min-h-[calc(100vh-106px)] flex flex-col items-center justify-center gap-4 md:gap-8 lg:gap-14"
     >

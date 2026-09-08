@@ -25,7 +25,7 @@ export function ProtectedRoute({
     }
 
     if (!isAuthenticated || !user) {
-      router.replace("/login/ormawa");
+      router.replace("/login");
       return;
     }
 

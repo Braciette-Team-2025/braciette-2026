@@ -16,7 +16,7 @@ const LandingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Appearance & Styling
       "rounded-[4px] lg:rounded-[8px] bg-yellow-500 shadow-[0_0_15.82px_0_rgba(255,203,71,0.8)] md:shadow-[0_0_40px_0_rgba(255,203,71,0.8)] cursor-pointer transition-all",
       // States (Hover, Focus, Disabled)
-      "hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+      "hover:bg-yellow-400 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.97]",
       // Custom Classes Passed via Props
       className,
     );

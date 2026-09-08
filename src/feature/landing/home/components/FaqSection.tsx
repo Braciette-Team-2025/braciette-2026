@@ -9,7 +9,10 @@ export default function FaqSection() {
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
 
   return (
-    <section className="flex flex-col items-center px-4 lg:px-25 gap-6 xl:gap-23 mt-20">
+    <section
+      id="faq"
+      className="scroll-mt-10 flex flex-col items-center px-4 lg:px-25 gap-6 xl:gap-23 mt-20"
+    >
       <h1 className="font-the-seasons text-[24px] md:text-[40px] xl:text-[80px] leading-[0.6] text-center flex flex-col justify-center py-4 md:py-8 xl:py-12">
         <span className="block text-blue-100 drop-shadow-[0_0_20px_rgba(132,98,255,0.6)]">
           <span className={highlightClass}>F</span>requently{" "}
