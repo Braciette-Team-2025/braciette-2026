@@ -12,7 +12,7 @@ export default function CreateHeader({ onBack }: CreateHeaderProps) {
         {onBack ? (
           <button
             onClick={onBack}
-            className="flex items-center text-gray-500 hover:text-gray-700 transition-colors"
+            className="flex items-center text-blue-800 hover:text-blue-600 transition-colors"
             aria-label="Kembali"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -20,7 +20,7 @@ export default function CreateHeader({ onBack }: CreateHeaderProps) {
         ) : (
           <Link
             href="/admin/open-talent"
-            className="flex items-center text-gray-500 hover:text-gray-700 transition-colors"
+            className="flex items-center text-blue-800 hover:text-blue-600 transition-colors"
             aria-label="Kembali ke halaman open talent"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -28,7 +28,7 @@ export default function CreateHeader({ onBack }: CreateHeaderProps) {
         )}
       </div>
 
-      <h1 className="text-center text-[32px] font-extrabold text-[#7F7F7F]">
+      <h1 className="text-center text-[32px] font-extrabold text-blue-800">
         Daftar Open Talent
       </h1>
     </div>

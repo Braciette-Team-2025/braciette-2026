@@ -1,29 +1,51 @@
 "use client";
+
 import AddTalentButton from "../components/AddTalentButton";
 import FilterStatus from "../components/FilterStatus";
+import FilterPerformanceType from "../components/FilterPerformanceType";
 import SearchBar from "../components/SearchBar";
 import SortButton from "../components/SortButton";
+import OrderButton from "../components/OrderButton";
 import OpenTalentTable from "../components/table/OpenTalentTable";
 import Pagination from "../components/Pagination";
+import OpenTalentDetailModal from "../components/modal/OpenTalentDetailModal";
+import ConfirmationDialog from "../components/modal/ConfirmationDialog";
 
 import { useRouter } from "next/navigation";
-import { useOpenTalentList } from "../hooks/useOpenTalentList";
+import { useOpenTalentState } from "../hooks/useOpenTalentState";
 
 export default function OpenTalentContainer() {
   const router = useRouter();
   const {
-    paginatedData,
+    openTalentList,
     startIndex,
     totalPages,
-    currentPage,
-    setCurrentPage,
+    isLoading,
+    isError,
+    isFetching,
     search,
     setSearch,
     statusFilter,
     setStatusFilter,
+    performanceTypeFilter,
+    setPerformanceTypeFilter,
     sortBy,
     setSortBy,
-  } = useOpenTalentList();
+    order,
+    setOrder,
+    currentPage,
+    setCurrentPage,
+    detailOpen,
+    setDetailOpen,
+    detailData,
+    detailLoading,
+    handleDetail,
+    deleteOpen,
+    setDeleteOpen,
+    deleteLoading,
+    handleDelete,
+    confirmDelete,
+  } = useOpenTalentState();
 
   return (
     <div className="py-15 pl-6 pr-[100px] bg-white min-h-screen space-y-6">
@@ -41,8 +63,13 @@ export default function OpenTalentContainer() {
           <SearchBar value={search} onChange={setSearch} />
         </div>
         <div className="flex gap-4">
+          <FilterPerformanceType
+            value={performanceTypeFilter}
+            onValueChange={setPerformanceTypeFilter}
+          />
           <FilterStatus value={statusFilter} onValueChange={setStatusFilter} />
           <SortButton value={sortBy} onChange={setSortBy} />
+          <OrderButton value={order} onChange={setOrder} />
         </div>
       </div>
 
@@ -52,15 +79,64 @@ export default function OpenTalentContainer() {
         />
       </div>
 
-      <OpenTalentTable data={paginatedData} startIndex={startIndex} />
+      {isLoading && (
+        <div className="py-10 text-center text-sm text-[#7F7F7F]">
+          Memuat data...
+        </div>
+      )}
 
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
+      {isError && !isLoading && (
+        <div className="py-10 text-center text-sm text-red-500">
+          Gagal memuat data. Silakan coba lagi.
+        </div>
+      )}
+
+      {!isLoading && !isError && (
+        <>
+          {isFetching && (
+            <p className="text-xs text-[#A0A0A0] -mb-4">Memperbarui...</p>
+          )}
+
+          <OpenTalentTable
+            data={openTalentList}
+            startIndex={startIndex}
+            onDetail={handleDetail}
+            onDelete={handleDelete}
+          />
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      )}
+
+      {detailData && (
+        <OpenTalentDetailModal
+          open={detailOpen}
+          onOpenChange={setDetailOpen}
+          data={detailData}
         />
       )}
+
+      {detailLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
+          <div className="rounded-xl bg-white px-8 py-6 text-sm text-[#7F7F7F] shadow-lg">
+            Memuat detail...
+          </div>
+        </div>
+      )}
+
+      <ConfirmationDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="Hapus Data Open Talent"
+        description="Apakah kamu yakin ingin menghapus data ini? Tindakan ini tidak bisa dibatalkan."
+        confirmText="Hapus"
+        cancelText="Batal"
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 }
