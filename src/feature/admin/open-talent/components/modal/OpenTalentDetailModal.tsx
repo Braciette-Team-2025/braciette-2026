@@ -15,18 +15,21 @@ export default function OpenTalentDetailModal({
       <div className="grid grid-cols-2 gap-x-8 gap-y-5">
         <DetailField
           label="Tanggal Pendaftaran"
-          value={data.tanggalPendaftaran}
+          value={new Date(data.created_at).toLocaleDateString("id-ID")}
         />
-        <DetailField label="Terakhir diedit" value={data.terakhirDiedit} />
-        <DetailField label="Nama Lengkap Ketua" value={data.namaKetua} />
-        <DetailField label="Asal Fakultas" value={data.asalFakultas} />
         <DetailField
-          label="Talent yang Ditampilkan"
-          value={data.talentDitampilkan}
+          label="Terakhir diedit"
+          value={new Date(data.updated_at).toLocaleDateString("id-ID")}
         />
-        <DetailField label="Jenis Penampilan" value={data.jenisPenampilan} />
-        <DetailField label="Jumlah Anggota" value={data.jumlahAnggota} />
-        <DetailField label="Kontak Ketua" value={data.kontakKetua} />
+        <DetailField label="Nama Lengkap Ketua" value={data.leader_name} />
+        <DetailField label="Asal Fakultas" value={data.leader_faculty} />
+        <DetailField label="Talent yang Ditampilkan" value={data.talent_name} />
+        <DetailField label="Jenis Penampilan" value={data.performance_type} />
+        <DetailField
+          label="Jumlah Anggota"
+          value={data.member_count?.toString() || "-"}
+        />
+        <DetailField label="Kontak Ketua" value={data.leader_wa_contact} />
         <div>
           <p className="mb-1 text-sm font-semibold text-[#4B4B4B]">Status</p>
           <StatusBadge status={data.status} />
@@ -37,12 +40,12 @@ export default function OpenTalentDetailModal({
           fullWidth
           value={
             <a
-              href={data.linkDrive}
+              href={data.drive_link}
               target="_blank"
               rel="noopener noreferrer"
               className="break-all text-[#8A8A8A] underline hover:text-[#6D6D6D]"
             >
-              {data.linkDrive}
+              {data.drive_link}
             </a>
           }
         />

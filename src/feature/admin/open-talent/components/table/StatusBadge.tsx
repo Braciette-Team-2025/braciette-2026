@@ -1,10 +1,10 @@
 interface Props {
-  status: "approved" | "pending" | "rejected";
+  status: "pending" | "rejected" | "accepted";
 }
 
 export function StatusBadge({ status }: Props) {
   const config = {
-    approved: {
+    accepted: {
       label: "Disetujui",
       bg: "bg-green-100",
       circle: "bg-green-500",
@@ -31,7 +31,7 @@ export function StatusBadge({ status }: Props) {
 
   return (
     <div
-      className={`flex items-center justify-between rounded-full ${current.bg} px-1 text-[14px] border-2 ${current.border}`}
+      className={`flex items-center justify-between rounded-full w-full ${current.bg} px-2 py-1 text-[14px] font-semibold border-2 ${current.border}`}
     >
       <span className={`${current.text}`}>{current.label}</span>
       <div className={`h-2 w-2 rounded-full ${current.circle}`} />

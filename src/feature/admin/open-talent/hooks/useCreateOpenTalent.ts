@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { createOpenTalent } from "../services/openTalentService";
 
 export function useCreateOpenTalent() {
   const router = useRouter();
@@ -16,27 +18,39 @@ export function useCreateOpenTalent() {
 
   const [stepTwoData, setStepTwoData] = useState({
     talentDitampilkan: "",
-    jenisPenampilan: "individu",
+    jenisPenampilan: "Individu",
     jumlahAnggota: 1,
     linkDrive: "",
   });
 
-  const handleNext = () => {
-    setCurrentStep(2);
-  };
+  const { mutate, isPending } = useMutation({
+    mutationFn: () =>
+      createOpenTalent({
+        leader_name: stepOneData.namaKetua,
+        leader_faculty: stepOneData.asalFakultas,
+        leader_wa_contact: stepOneData.kontakKetua,
+        talent_name: stepTwoData.talentDitampilkan,
+        performance_type: stepTwoData.jenisPenampilan,
+        member_count:
+          stepTwoData.jenisPenampilan !== "Individu"
+            ? stepTwoData.jumlahAnggota
+            : 0,
+        drive_link: stepTwoData.linkDrive,
+      }),
+    onSuccess: () => {
+      setOpenConfirm(false);
+      router.push("/admin/open-talent");
+    },
+    onError: (error) => {
+      console.error("[createOpenTalent] Gagal menyimpan data:", error);
+      setOpenConfirm(false);
+    },
+  });
 
-  const handleBack = () => {
-    setCurrentStep(1);
-  };
-
-  const handleSubmitStepTwo = () => {
-    setOpenConfirm(true);
-  };
-
-  const handleConfirm = () => {
-    setOpenConfirm(false);
-    router.push("/admin/open-talent");
-  };
+  const handleNext = () => setCurrentStep(2);
+  const handleBack = () => setCurrentStep(1);
+  const handleSubmitStepTwo = () => setOpenConfirm(true);
+  const handleConfirm = () => mutate();
 
   return {
     currentStep,
@@ -50,5 +64,6 @@ export function useCreateOpenTalent() {
     handleBack,
     handleSubmitStepTwo,
     handleConfirm,
+    isPending,
   };
 }

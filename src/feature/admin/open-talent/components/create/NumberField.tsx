@@ -33,21 +33,21 @@ export default function NumberField({
 
   return (
     <div className="space-y-2">
-      <label className="block text-[16px] font-semibold text-[#5C5C5C]">
+      <label className="block text-[16px] font-semibold text-blue-800">
         {label}
       </label>
       <div className="flex items-center gap-2">
         <button
           onClick={handleDecrement}
           disabled={value <= min}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] bg-[#B0B0B0] text-white disabled:opacity-50"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] bg-yellow-500 text-yellow-50 disabled:opacity-50"
           type="button"
         >
           <Minus size={20} />
         </button>
         <button
           onClick={handleIncrement}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] bg-[#B0B0B0] text-white"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] bg-yellow-500 text-yellow-50"
           type="button"
         >
           <Plus size={20} />
@@ -56,7 +56,7 @@ export default function NumberField({
           type="number"
           value={value}
           onChange={handleChange}
-          className="h-11 w-full border-[#BEC8CF] text-sm text-[#7F7F7F]"
+          className="h-11 w-full border-yellow-500 text-sm text-blue-800 bg-yellow-100 border-2"
         />
       </div>
     </div>

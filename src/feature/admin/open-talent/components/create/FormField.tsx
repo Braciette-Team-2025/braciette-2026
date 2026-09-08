@@ -23,7 +23,7 @@ export default function FormField({
     <div className="space-y-2">
       <label
         htmlFor={inputId}
-        className="block text-[16px] font-semibold text-[#5C5C5C]"
+        className="block text-[16px] font-semibold text-blue-800"
       >
         {label}
       </label>
@@ -33,7 +33,7 @@ export default function FormField({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-11 w-full border-[#BEC8CF] text-sm text-[#7F7F7F]"
+        className="h-11 w-full border-2 border-yellow-500 text-sm text-blue-800 bg-yellow-100 placeholder:text-blue-300 ring-0!"
       />
     </div>
   );

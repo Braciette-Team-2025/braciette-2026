@@ -19,8 +19,8 @@ interface StepTwoFormProps {
 }
 
 const JENIS_PENAMPILAN_OPTIONS = [
-  { label: "Individu", value: "individu" },
-  { label: "Kelompok", value: "kelompok" },
+  { label: "Individu", value: "Individu" },
+  { label: "Kelompok", value: "Kelompok" },
 ];
 
 export default function StepTwoForm({
@@ -52,7 +52,7 @@ export default function StepTwoForm({
         onValueChange={(val) => onChange({ jenisPenampilan: val })}
       />
 
-      {data.jenisPenampilan !== "individu" && (
+      {data.jenisPenampilan !== "Individu" && (
         <NumberField
           label="Jumlah Anggota"
           value={data.jumlahAnggota}
@@ -79,14 +79,14 @@ export default function StepTwoForm({
         <Button
           onClick={onBack}
           variant="outline"
-          className="bg-[#666666] hover:bg-[#555555] text-white px-6 h-11 text-base font-semibold rounded-[8px] border-0"
+          className="bg-yellow-500 hover:bg-yellow-600! text-yellow-50 px-6 h-11 text-base font-semibold rounded-[8px] border-0 cursor-pointer"
         >
           <ArrowLeft className="mr-2 h-5 w-5" /> Kembali
         </Button>
         <Button
           onClick={onSubmit}
           disabled={!isComplete}
-          className="bg-[#666666] hover:bg-[#555555] text-white px-8 h-11 text-base font-semibold rounded-[8px]"
+          className="bg-yellow-500 hover:bg-yellow-600! text-yellow-50 px-8 h-11 text-base font-semibold rounded-[8px] cursor-pointer"
         >
           Konfirmasi
         </Button>

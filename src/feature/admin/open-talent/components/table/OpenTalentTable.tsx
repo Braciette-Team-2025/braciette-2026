@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Table,
   TableHeader,
@@ -6,33 +9,94 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { StatusBadge } from "./StatusBadge";
 import { ActionButtons } from "./ActionButton";
 import EmptyTable from "./EmptyTable";
-import OpenTalentDetailModal from "../modal/OpenTalentDetailModal";
-import ConfirmationDialog from "../modal/ConfirmationDialog";
-import { OpenTalentData } from "../../types";
-import { useOpenTalentTable } from "../../hooks/useOpenTalentTable";
+import type { OpenTalentListItem, OpenTalentStatus } from "../../types";
+import { useUpdateOpenTalent } from "../../hooks/useUpdateOpenTalent";
+import { useUpdateOpenTalentStatus } from "../../hooks/useUpdateOpenTalentStatus";
+import { getOpenTalentById } from "../../services/openTalentService";
 
 interface OpenTalentTableProps {
-  data: OpenTalentData[];
+  data: OpenTalentListItem[];
   startIndex: number;
+  onDetail: (item: OpenTalentListItem) => void;
+  onDelete: (item: OpenTalentListItem) => void;
 }
 
 export default function OpenTalentTable({
   data,
   startIndex,
+  onDetail,
+  onDelete,
 }: OpenTalentTableProps) {
-  const {
-    detailModalOpen,
-    setDetailModalOpen,
-    selectedData,
-    deleteConfirmOpen,
-    setDeleteConfirmOpen,
-    handleOpenDetail,
-    handleOpenDelete,
-    handleConfirmDelete,
-  } = useOpenTalentTable();
+  // Inline edit state
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editNamaKetua, setEditNamaKetua] = useState("");
+  const [editJenisPenampilan, setEditJenisPenampilan] = useState("");
+  const [isFetchingDetail, setIsFetchingDetail] = useState(false);
+
+  const updateMutation = useUpdateOpenTalent();
+  const statusMutation = useUpdateOpenTalentStatus();
+
+  const handleEditClick = (item: OpenTalentListItem) => {
+    setEditingId(item.id);
+    setEditNamaKetua(item.leader_name);
+    setEditJenisPenampilan(item.performance_type);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditNamaKetua("");
+    setEditJenisPenampilan("");
+  };
+
+  const handleSaveEdit = async (item: OpenTalentListItem) => {
+    if (!editingId) return;
+
+    try {
+      setIsFetchingDetail(true);
+      // Fetch detail dulu agar field yang tidak ada di list tidak ikut terhapus saat PUT
+      const detailRes = await getOpenTalentById(editingId);
+      const detail = detailRes.data;
+
+      updateMutation.mutate(
+        {
+          id: editingId,
+          payload: {
+            leader_name: editNamaKetua,
+            leader_faculty: detail.leader_faculty,
+            talent_name: detail.talent_name,
+            performance_type: editJenisPenampilan,
+            member_count: detail.member_count,
+            leader_wa_contact: detail.leader_wa_contact,
+            drive_link: detail.drive_link,
+          },
+        },
+        {
+          onSuccess: () => {
+            setEditingId(null);
+          },
+        },
+      );
+    } catch (error) {
+      console.error("Gagal mengambil detail untuk inline edit:", error);
+    } finally {
+      setIsFetchingDetail(false);
+    }
+  };
+
+  const handleStatusChange = (id: string, status: OpenTalentStatus) => {
+    statusMutation.mutate({ id, status });
+  };
 
   return (
     <>
@@ -40,10 +104,10 @@ export default function OpenTalentTable({
         <Table className="w-full table-fixed border-separate border-spacing-0 text-[14px]">
           <colgroup>
             <col style={{ width: "5%" }} />
-            <col style={{ width: "25%" }} />
+            <col style={{ width: "22%" }} />
             <col style={{ width: "15%" }} />
-            <col style={{ width: "15%" }} />
-            <col style={{ width: "15%" }} />
+            <col style={{ width: "16%" }} />
+            <col style={{ width: "17%" }} />
             <col style={{ width: "25%" }} />
           </colgroup>
           <TableHeader>
@@ -71,63 +135,96 @@ export default function OpenTalentTable({
             {data.length === 0 ? (
               <EmptyTable colSpan={6} />
             ) : (
-              data.map((item, index) => (
-                <TableRow
-                  key={item.id}
-                  className="text-center bg-yellow-100 hover:bg-yellow-50"
-                >
-                  <TableCell className="border-r-2 border-yellow-500 py-4">
-                    {startIndex + index + 1}
-                  </TableCell>
+              data.map((item, index) => {
+                const isEditing = editingId === item.id;
+                const isSaving =
+                  (updateMutation.isPending && isEditing) || isFetchingDetail;
 
-                  <TableCell className="border-r-2 border-yellow-500 py-4 break-words whitespace-normal">
-                    {item.namaKetua}
-                  </TableCell>
+                return (
+                  <TableRow
+                    key={item.id}
+                    className="text-center bg-yellow-100 hover:bg-yellow-50"
+                  >
+                    <TableCell className="border-r-2 border-yellow-500 py-4">
+                      {startIndex + index + 1}
+                    </TableCell>
 
-                  <TableCell className="border-r-2 border-yellow-500 py-4">
-                    {item.kontakKetua}
-                  </TableCell>
+                    <TableCell className="border-r-2 border-yellow-500 py-2 break-words whitespace-normal">
+                      {isEditing ? (
+                        <Input
+                          value={editNamaKetua}
+                          onChange={(e) => setEditNamaKetua(e.target.value)}
+                          className="h-8 text-center"
+                        />
+                      ) : (
+                        item.leader_name
+                      )}
+                    </TableCell>
 
-                  <TableCell className="border-r-2 border-yellow-500 py-4">
-                    {item.jenisPenampilan}
-                  </TableCell>
+                    <TableCell className="border-r-2 border-yellow-500 py-4">
+                      {item.leader_wa_contact}
+                    </TableCell>
 
-                  <TableCell className="border-r-2 border-yellow-500 py-4 px-4">
-                    <StatusBadge status={item.status} />
-                  </TableCell>
+                    <TableCell className="border-r-2 border-yellow-500 py-2">
+                      {isEditing ? (
+                        <Select
+                          value={editJenisPenampilan}
+                          onValueChange={(val) => setEditJenisPenampilan(val)}
+                        >
+                          <SelectTrigger className="h-8 w-full text-center flex justify-center">
+                            <SelectValue placeholder="Pilih Jenis" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Individu">Individu</SelectItem>
+                            <SelectItem value="Kelompok">Kelompok</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      ) : (
+                        item.performance_type
+                      )}
+                    </TableCell>
 
-                  <TableCell className="py-4">
-                    <ActionButtons
-                      data={item}
-                      onDetail={handleOpenDetail}
-                      onEdit={() => {}}
-                      onDelete={handleOpenDelete}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))
+                    <TableCell className="border-r-2 border-yellow-500 py-4 px-2 flex justify-center items-center h-full">
+                      <Select
+                        value={item.status}
+                        onValueChange={(val: OpenTalentStatus) =>
+                          handleStatusChange(item.id, val)
+                        }
+                        disabled={
+                          statusMutation.isPending &&
+                          statusMutation.variables?.id === item.id
+                        }
+                      >
+                        <SelectTrigger className="h-fit w-full border-0 p-0 shadow-none focus:ring-0 [&>svg]:hidden flex justify-center bg-transparent">
+                          <StatusBadge status={item.status} />
+                        </SelectTrigger>
+                        <SelectContent position="popper" sideOffset={4}>
+                          <SelectItem value="accepted">Disetujui</SelectItem>
+                          <SelectItem value="pending">Menunggu</SelectItem>
+                          <SelectItem value="rejected">Ditolak</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+
+                    <TableCell className="py-4">
+                      <ActionButtons
+                        data={item}
+                        onDetail={onDetail}
+                        onEdit={handleEditClick}
+                        onDelete={onDelete}
+                        isEditing={isEditing}
+                        onSave={() => handleSaveEdit(item)}
+                        onCancel={handleCancelEdit}
+                        isSaving={isSaving}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             )}
           </TableBody>
         </Table>
       </div>
-
-      {selectedData && (
-        <OpenTalentDetailModal
-          open={detailModalOpen}
-          onOpenChange={setDetailModalOpen}
-          data={selectedData}
-        />
-      )}
-
-      <ConfirmationDialog
-        open={deleteConfirmOpen}
-        onOpenChange={setDeleteConfirmOpen}
-        title="Yakin ingin hapus data?"
-        description="Data yang telah dihapus tidak dapat dikembalikan"
-        confirmText="Delete Now"
-        cancelText="Cancel"
-        onConfirm={handleConfirmDelete}
-      />
     </>
   );
 }

@@ -36,17 +36,17 @@ export default function ConfirmationDialog({
       <AlertDialogContent className="w-[520px] max-w-[calc(100%-2rem)] rounded-[20px] border-2 border-[#AFAFAF] bg-white px-10 pt-12 pb-10 shadow-xl flex flex-col gap-8">
         <button
           onClick={() => onOpenChange(false)}
-          className="absolute right-6 top-6 flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#AFAFAF] transition hover:opacity-70"
+          className="absolute right-4 top-4 cursor-pointer flex h-9 w-9 items-center justify-center rounded-full border-2 border-blue-600 transition hover:opacity-70"
         >
-          <X size={20} className="text-[#7F7F7F]" strokeWidth={2.5} />
+          <X size={20} className="text-blue-800" strokeWidth={2.5} />
         </button>
 
         <div className="flex flex-col items-center text-center gap-3">
-          <h2 className="text-[32px] font-extrabold leading-none tracking-[-0.02em] text-[#7F7F7F]">
+          <h2 className="text-[32px] font-extrabold leading-none tracking-[-0.02em] text-yellow-500">
             {title}
           </h2>
 
-          <p className="max-w-[340px] text-[18px] font-medium leading-7 text-[#7F7F7F]">
+          <p className="max-w-[340px] text-[18px] font-medium leading-7 text-blue-800">
             {description}
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function ConfirmationDialog({
             type="button"
             variant="outline"
             onClick={() => onOpenChange(false)}
-            className="h-13 rounded-xl border-[#D4D4D4] bg-[#ECECEC] px-8 py-3 text-lg font-semibold text-[#7F7F7F] hover:bg-[#E3E3E3]"
+            className="h-13 rounded-xl border-2 border-yellow-500 bg-yellow-100 px-8 py-3 text-lg font-semibold text-yellow-600 hover:bg-yellow-200"
           >
             {cancelText}
           </Button>
@@ -65,7 +65,7 @@ export default function ConfirmationDialog({
             type="button"
             disabled={loading}
             onClick={onConfirm}
-            className="h-13 rounded-xl px-10 py-3 text-lg font-semibold bg-[#6D6D6D] hover:bg-[#5B5B5B] text-white"
+            className="h-13 rounded-xl px-10 py-3 text-lg font-semibold bg-yellow-500 hover:bg-yellow-600 text-yellow-50"
           >
             {loading ? "Loading..." : confirmText}
           </Button>

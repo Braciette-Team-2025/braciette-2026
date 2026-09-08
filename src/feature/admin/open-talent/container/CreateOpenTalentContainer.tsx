@@ -19,6 +19,7 @@ export default function CreateOpenTalentContainer() {
     handleBack,
     handleSubmitStepTwo,
     handleConfirm,
+    isPending,
   } = useCreateOpenTalent();
 
   return (
@@ -51,7 +52,7 @@ export default function CreateOpenTalentContainer() {
               onOpenChange={setOpenConfirm}
               title="Konfirmasi data"
               description="Pastikan seluruh data yang dimasukkan sudah benar sebelum disimpan"
-              confirmText="Konfirmasi"
+              confirmText={isPending ? "Menyimpan..." : "Konfirmasi"}
               onConfirm={handleConfirm}
             />
           </>

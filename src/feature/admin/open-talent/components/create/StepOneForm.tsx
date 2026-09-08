@@ -52,7 +52,7 @@ export default function StepOneForm({
         <Button
           onClick={onNext}
           disabled={!isComplete}
-          className="bg-[#666666] hover:bg-[#555555] text-white px-6 h-11 text-base font-semibold rounded-[8px]"
+          className="bg-yellow-500 hover:bg-yellow-600! cursor-pointer text-yellow-50 px-6 h-11 text-base font-semibold rounded-[8px]"
         >
           Selanjutnya <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
