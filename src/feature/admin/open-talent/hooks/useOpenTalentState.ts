@@ -5,7 +5,11 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useOpenTalentListQuery } from "./useOpenTalentListQuery";
 import { useDeleteOpenTalent } from "./useDeleteOpenTalent";
 import { getOpenTalentById } from "../services/openTalentService";
-import type { OpenTalentListItem, OpenTalentDetail } from "../types";
+import type {
+  OpenTalentListItem,
+  OpenTalentDetail,
+  PerformanceType,
+} from "../types";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -70,7 +74,9 @@ export function useOpenTalentState() {
     search: search || undefined,
     status: statusFilter !== "semua" ? statusFilter : undefined,
     performance_type:
-      performanceTypeFilter !== "semua" ? performanceTypeFilter : undefined,
+      performanceTypeFilter !== "semua"
+        ? (performanceTypeFilter as PerformanceType)
+        : undefined,
     sort_by: sortBy,
     order: order,
     page: currentPage,
