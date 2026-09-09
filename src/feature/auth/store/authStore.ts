@@ -5,6 +5,7 @@ import {
   refreshAccessToken,
   login as apiLogin,
   loginOrmawa as apiLoginOrmawa,
+  loginWithGoogle as apiLoginWithGoogle,
   logout as apiLogout,
 } from "../services/authApi";
 import type { AuthUser, LoginOrmawaRequest } from "../types/auth.type";
@@ -23,6 +24,7 @@ interface AuthState {
   initialize: () => Promise<void>;
   login: (credentials: LoginOrmawaRequest) => Promise<void>;
   loginOrmawa: (credentials: LoginOrmawaRequest) => Promise<void>;
+  loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -186,6 +188,29 @@ export const useAuthStore = create<AuthState>((set) => ({
         isLoading: false,
       });
 
+      throw error;
+    }
+  },
+
+  loginGoogle: async () => {
+    set({ isLoading: true });
+
+    try {
+      const response = await apiLoginWithGoogle();
+      const { access_token, user } = response.data;
+
+      // Ambil data lengkap (role, has_voted, dll) dari /auth/me
+      const userResponse = await getCurrentUser();
+
+      set({
+        accessToken: access_token,
+        user: userResponse.data ?? (user as AuthUser),
+        isAuthenticated: true,
+        isInitialized: true,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({ isLoading: false });
       throw error;
     }
   },

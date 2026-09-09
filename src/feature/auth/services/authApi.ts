@@ -1,3 +1,5 @@
+import { signInWithPopup } from "firebase/auth";
+import { getFirebaseAuth, googleProvider } from "@/src/lib/firebase";
 import { setAccessToken } from "@/src/lib/auth/acces-token";
 import { api } from "@/src/lib/axios";
 import type {
@@ -6,9 +8,7 @@ import type {
   LoginOrmawaResponse,
 } from "../types/auth.type";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-export interface GoogleCallbackResponse {
+export interface GoogleLoginResponse {
   success: boolean;
   message: string;
   data: {
@@ -39,12 +39,22 @@ export interface CurrentUserResponse {
   data: AuthUser;
 }
 
-export function redirectToGoogleLogin() {
-  if (!API_BASE_URL) {
-    throw new Error("NEXT_PUBLIC_API_BASE_URL is not configured");
-  }
+export async function loginWithGoogle(): Promise<GoogleLoginResponse> {
+  const firebaseAuth = getFirebaseAuth();
 
-  window.location.href = `${API_BASE_URL}/api/v1/auth/google`;
+  const result = await signInWithPopup(firebaseAuth, googleProvider);
+
+  const idToken = await result.user.getIdToken();
+
+  const response = await api.post<GoogleLoginResponse>("/v1/auth/google", {
+    id_token: idToken,
+  });
+
+  const { access_token } = response.data.data;
+
+  setAccessToken(access_token);
+
+  return response.data;
 }
 
 export async function loginOrmawa(

@@ -1,56 +1,12 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-
-import {
-  refreshAccessToken,
-  getCurrentUser,
-} from "@/src/feature/auth/services/authApi";
-import { useAuthStore } from "@/src/feature/auth/store/authStore";
+/**
+ * Route /oauth/callback tidak lagi digunakan sejak migrasi ke Firebase OAuth.
+ * Flow baru: Firebase popup → id_token → POST /api/v1/auth/google (inline, tanpa redirect).
+ *
+ * Halaman ini dipertahankan untuk kompatibilitas backward dengan link lama,
+ * dan akan redirect ke /login jika ada yang mengaksesnya.
+ */
+import { redirect } from "next/navigation";
 
 export default function OAuthCallbackPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function initializeAuthentication() {
-      try {
-        const status = searchParams.get("status");
-
-        if (status !== "success") {
-          router.replace("/login");
-          return;
-        }
-
-        const accessToken = await refreshAccessToken();
-
-        const userResponse = await getCurrentUser();
-
-        useAuthStore.getState().setAuth(accessToken, userResponse.data);
-
-        router.replace("/");
-      } catch (error) {
-        console.error("OAuth authentication failed:", error);
-
-        if (mounted) {
-          router.replace("/login");
-        }
-      }
-    }
-
-    initializeAuthentication();
-
-    return () => {
-      mounted = false;
-    };
-  }, [router, searchParams]);
-
-  return (
-    <main>
-      <p>Signing you in...</p>
-    </main>
-  );
+  redirect("/login");
 }
