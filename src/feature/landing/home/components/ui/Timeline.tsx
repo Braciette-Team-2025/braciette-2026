@@ -25,30 +25,30 @@ export default function Timeline({
 
   return (
     <div
-      className={`flex items-center justify-between shrink-0 w-40 md:w-72 xl:w-82 h-50 md:h-90 xl:h-132 py-4 md:py-6 xl:py-16 ${isEven ? "flex-col" : "flex-col-reverse"}`}
+      className={`flex items-center justify-between shrink-0 w-40 md:w-72 xl:w-82 h-50 md:h-90 xl:h-96 py-4 md:py-6 xl:py-8 ${isEven ? "flex-col" : "flex-col-reverse"}`}
     >
       <div
         className={`flex flex-1 justify-end items-center w-full ${isEven ? "flex-col" : "flex-col-reverse"}`}
       >
-        <div className="timeline-shape-circle w-6 h-6 md:w-10 md:h-10 xl:w-15 xl:h-15 rounded-full bg-yellow-500 shadow-[0_0_20px_rgba(201,162,39,1)] xl:shadow-[0_0_83px_rgba(201,162,39,1)] shrink-0" />
-        <div className="timeline-shape-line w-px bg-yellow-500 h-12 md:h-24 xl:h-31 shrink-0 origin-bottom" />
+        <div className="timeline-shape-circle size-4 md:size-8 xl:size-12 rounded-full bg-yellow-500 shadow-[0_0_20px_rgba(201,162,39,1)] xl:shadow-[0_0_48px_rgba(201,162,39,1)] shrink-0" />
+        <div className="timeline-shape-line w-px bg-yellow-500 h-12 md:h-20 xl:h-24 shrink-0 origin-bottom" />
       </div>
-      <div className="w-full h-2.5 md:h-6 xl:h-8 relative shrink-0">
+      <div className="w-full h-2.5 md:h-6 relative shrink-0">
         <div
-          className={`timeline-shape-horizontal absolute top-0 left-0 h-4 md:h-6 xl:h-8 bg-blue-100 shadow-[0_0_8px_rgba(178,180,198,1)] xl:shadow-[0_0_16px_rgba(178,180,198,1)] ${lineWidth}`}
+          className={`timeline-shape-horizontal absolute top-0 left-0 h-4 md:h-6 bg-blue-100 shadow-[0_0_8px_rgba(178,180,198,1)] xl:shadow-[0_0_16px_rgba(178,180,198,1)] ${lineWidth}`}
         />
       </div>
       <div
         className={`flex flex-1 items-center justify-end ${isEven ? "flex-col" : "flex-col-reverse"}`}
       >
-        <div className="timeline-text text-center space-y-1 md:space-y-1.5 xl:space-y-2.5">
-          <h1 className="text-xs md:text-xl xl:text-2xl font-bold text-yellow-500">
+        <div className="timeline-text text-center space-y-1 md:space-y-1.5 xl:space-y-1.5">
+          <h1 className="text-xs md:text-lg font-bold text-yellow-500">
             {title}
           </h1>
-          <h2 className="text-[10px] md:text-lg xl:text-xl font-medium text-yellow-100 ">
+          <h2 className="text-[10px] md:text-md font-medium text-yellow-100 ">
             {date}
           </h2>
-          <p className="text-[8px] md:text-md font-medium text-yellow-100">
+          <p className="text-[8px] md:text-sm font-medium text-yellow-100">
             {desc}
           </p>
         </div>

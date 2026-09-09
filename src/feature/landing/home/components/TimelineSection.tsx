@@ -24,7 +24,7 @@ export default function TimelineSection() {
     <div className="w-full">
       <section
         ref={sectionRef}
-        className="min-h-screen flex flex-col justify-center gap-4 md:gap-12 xl:gap-16"
+        className="min-h-screen flex flex-col justify-center gap-4 md:gap-8"
       >
         <div
           ref={headerRef}
