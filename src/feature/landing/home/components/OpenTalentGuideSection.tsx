@@ -43,7 +43,7 @@ export default function OpenTalentGuideSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-16 md:gap-24 xl:gap-48 mt-10 mb-10">
+      <div className="grid grid-cols-3 gap-16 md:gap-24 xl:gap-48 xl:my-10">
         {SUBMISSION_GUIDE_DATA.map((data) => {
           return (
             <div data-ot-item key={data.id} className="will-change-transform">
