@@ -76,7 +76,8 @@ api.interceptors.response.use(
     const status = error.response?.status;
 
     const isRefreshEndpoint = requestUrl.includes("/auth/refresh");
-    const isLoginEndpoint = requestUrl.includes("/auth/login");
+    const isLoginEndpoint =
+      requestUrl.includes("/auth/login") || requestUrl.includes("/auth/google");
     const isLogoutEndpoint = requestUrl.includes("/auth/logout");
 
     if (isLoginEndpoint || isLogoutEndpoint) {
