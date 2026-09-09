@@ -1,5 +1,5 @@
 import { signInWithPopup } from "firebase/auth";
-import { firebaseAuth, googleProvider } from "@/src/lib/firebase";
+import { getFirebaseAuth, googleProvider } from "@/src/lib/firebase";
 import { setAccessToken } from "@/src/lib/auth/acces-token";
 import { api } from "@/src/lib/axios";
 import type {
@@ -39,16 +39,11 @@ export interface CurrentUserResponse {
   data: AuthUser;
 }
 
-/**
- * Login via Google menggunakan Firebase popup.
- * Flow:
- *  1. Buka Google consent popup via Firebase.
- *  2. Ambil ID token dari Firebase credential.
- *  3. POST id_token ke backend POST /api/v1/auth/google.
- *  4. Backend memvalidasi token & mengembalikan access_token + user.
- */
 export async function loginWithGoogle(): Promise<GoogleLoginResponse> {
+  const firebaseAuth = getFirebaseAuth();
+
   const result = await signInWithPopup(firebaseAuth, googleProvider);
+
   const idToken = await result.user.getIdToken();
 
   const response = await api.post<GoogleLoginResponse>("/v1/auth/google", {
@@ -56,6 +51,7 @@ export async function loginWithGoogle(): Promise<GoogleLoginResponse> {
   });
 
   const { access_token } = response.data.data;
+
   setAccessToken(access_token);
 
   return response.data;

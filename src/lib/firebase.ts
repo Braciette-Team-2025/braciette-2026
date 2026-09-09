@@ -1,4 +1,4 @@
-import { initializeApp, getApps } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
@@ -7,8 +7,14 @@ const firebaseConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
 };
 
-const app =
-  getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
-export const firebaseAuth = getAuth(app);
+export function getFirebaseAuth() {
+  if (typeof window === "undefined") {
+    throw new Error("Firebase Auth can only be used in the browser");
+  }
+
+  return getAuth(app);
+}
+
 export const googleProvider = new GoogleAuthProvider();
