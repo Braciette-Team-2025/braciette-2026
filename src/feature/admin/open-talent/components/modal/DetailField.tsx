@@ -15,16 +15,16 @@ export default function DetailField({
 }: DetailFieldProps) {
   return (
     <div className={fullWidth ? "col-span-2" : ""}>
-      <p className="text-sm font-semibold text-[#4B4B4B]">{label}</p>
+      <p className="text-sm font-semibold text-blue-800">{label}</p>
 
       {Array.isArray(value) ? (
-        <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[15px] text-[#8A8A8A]">
+        <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[16px] text-[#8A8A8A]">
           {value.map((item, i) => (
             <li key={i}>{item}</li>
           ))}
         </ul>
       ) : (
-        <div className="mt-1 text-[15px] text-[#8A8A8A] break-words">
+        <div className="mt-1 text-[14px] text-blue-800 wrap-break-word">
           {value}
         </div>
       )}

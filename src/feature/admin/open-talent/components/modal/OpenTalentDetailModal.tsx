@@ -31,7 +31,7 @@ export default function OpenTalentDetailModal({
         />
         <DetailField label="Kontak Ketua" value={data.leader_wa_contact} />
         <div>
-          <p className="mb-1 text-sm font-semibold text-[#4B4B4B]">Status</p>
+          <p className="mb-1 text-[16px] font-semibold text-blue-800">Status</p>
           <StatusBadge status={data.status} />
         </div>
         <div />{" "}
@@ -43,7 +43,7 @@ export default function OpenTalentDetailModal({
               href={data.drive_link}
               target="_blank"
               rel="noopener noreferrer"
-              className="break-all text-[#8A8A8A] underline hover:text-[#6D6D6D]"
+              className="break-all text-blue-800 underline hover:text-blue-400"
             >
               {data.drive_link}
             </a>
