@@ -13,6 +13,7 @@ import { VotingSuccessModal } from "../components/VotingSuccessModal";
 import { CategoryGrid } from "../components/(category)/CategoryGrid";
 import { CategoryButton } from "../components/(category)/CategoryButton";
 import { OrganizationGrid } from "../components/(organization)/OrganizationGrid";
+import { VoteConfirmationModal } from "../components/(modal)/VoteConfirmationModal";
 
 export function VotingContainer() {
   const user = useAuthStore((state) => state.user);
@@ -30,8 +31,11 @@ export function VotingContainer() {
   const {
     selectedOrganizationId,
     selectOrganization,
+    openConfirmModal,
+    closeConfirmModal,
     confirmVote,
     isSubmitting,
+    isConfirmModalOpen,
     isSuccessModalOpen,
     closeSuccessModal,
   } = useVote();
@@ -87,7 +91,16 @@ export function VotingContainer() {
           <VotingConfirmButton
             disabled={!selectedOrganizationId || hasVotedThisCategory}
             isSubmitting={isSubmitting}
-            onConfirm={() => confirmVote(selectedCategory.id)}
+            onConfirm={() => openConfirmModal(selectedCategory.id)}
+          />
+
+          <VoteConfirmationModal
+            open={isConfirmModalOpen}
+            onOpenChange={(open) => {
+              if (!open) closeConfirmModal();
+            }}
+            onConfirm={confirmVote}
+            isSubmitting={isSubmitting}
           />
 
           <VotingSuccessModal
