@@ -10,7 +10,7 @@ import {
   VOTING_CATEGORIES,
 } from "../constants/voting";
 
-import { useVotingHome, useVotingList } from "../hooks/useVoting";
+import { useVotingList } from "../hooks/useVoting";
 
 import type {
   VotingCategoryId,
@@ -19,13 +19,6 @@ import type {
 } from "../types/voting";
 
 const ITEMS_PER_PAGE = 10;
-
-const STAT_KEY_MAP: Record<VotingCategoryId, "bem" | "dpm" | "hima" | "ukm"> = {
-  bem: "bem",
-  dpm: "dpm",
-  hima: "hima",
-  ukm: "ukm",
-};
 
 export function VotingContainer() {
   const [activeCategoryId, setActiveCategoryId] = useState<VotingCategoryId>(
@@ -51,20 +44,9 @@ export function VotingContainer() {
    */
   const {
     data: listResponse,
-    isLoading: isListLoading,
-    isError: isListError,
+    isLoading,
+    isError: hasError,
   } = useVotingList(activeCategoryId);
-
-  /**
-   * Ambil statistik global dari:
-   *
-   * GET /v1/submission/external/home
-   */
-  const {
-    data: homeResponse,
-    isLoading: isHomeLoading,
-    isError: isHomeError,
-  } = useVotingHome();
 
   /**
    * Data hasil voting dari endpoint berdasarkan type.
@@ -83,33 +65,29 @@ export function VotingContainer() {
   }, [listResponse]);
 
   /**
-   * Total voting mengambil stats berdasarkan kategori aktif.
+   * Statistik dihitung manual dari data list (vote_count per ormawa),
+   * bukan dari field `stats` BE yang bisa tidak sinkron.
    *
-   * BEM  -> stats.bem
-   * DPM  -> stats.dpm
-   * HIMA -> stats.hima
-   * UKM  -> stats.ukm
+   * - totalVoting : jumlah seluruh vote_count semua ormawa di kategori ini
+   * - bestCandidateName : ormawa dengan vote_count tertinggi
    */
   const statistic = useMemo<VotingStatistic | undefined>(() => {
-    const stats = homeResponse?.data?.stats;
+    const data = listResponse?.data?.data;
 
-    if (!stats) {
-      return undefined;
-    }
+    if (!data) return undefined;
 
-    const statKey = STAT_KEY_MAP[activeCategoryId];
+    const totalVoting = data.reduce((sum, item) => sum + item.vote_count, 0);
 
-    /**
-     * Endpoint list sudah diurutkan backend dari vote terbanyak.
-     * Jadi data[0] adalah ormawa terbaik.
-     */
-    const bestCandidate = items[0];
+    const best = data.reduce(
+      (top, item) => (item.vote_count > (top?.vote_count ?? -1) ? item : top),
+      data[0],
+    );
 
     return {
-      totalVoting: stats[statKey] ?? 0,
-      bestCandidateName: bestCandidate?.name ?? "-",
+      totalVoting,
+      bestCandidateName: best?.name ?? "-",
     };
-  }, [homeResponse, activeCategoryId, items]);
+  }, [listResponse]);
 
   /**
    * Pagination dilakukan di FE karena endpoint voting
@@ -125,20 +103,8 @@ export function VotingContainer() {
 
   const handleCategoryChange = (id: VotingCategoryId) => {
     setActiveCategoryId(id);
-
-    // Set kembali ke halaman pertama ketika kategori berubah.
     setCurrentPage(1);
   };
-
-  const isLoading = isListLoading || isHomeLoading;
-
-  /**
-   * Saat API error, table akan menjadi empty state.
-   *
-   * Tidak melakukan redirect dari sini.
-   * Auth/401 tetap ditangani oleh mekanisme axios/auth yang sudah kamu buat.
-   */
-  const hasError = isListError || isHomeError;
 
   return (
     <div className="mx-auto w-full px-4 py-6 sm:px-6 sm:py-8">
