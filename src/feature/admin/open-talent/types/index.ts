@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 
 export type OpenTalentStatus = "pending" | "accepted" | "rejected";
+export const PERFORMANCE_TYPES = ["Individu", "Kelompok"] as const;
+export type PerformanceType = (typeof PERFORMANCE_TYPES)[number];
 
 export type OpenTalentListItem = {
   id: string; // di API ini UUID (string)
   leader_name: string;
   leader_wa_contact: string;
-  performance_type: string;
+  performance_type: PerformanceType;
   status: OpenTalentStatus;
 };
 
@@ -50,7 +52,7 @@ export type OpenTalentDetailResponse = {
 export type OpenTalentParams = {
   search?: string;
   status?: string;
-  performance_type?: string;
+  performance_type?: PerformanceType;
   sort_by?: string;
   order?: "asc" | "desc";
   page?: number;

@@ -21,14 +21,14 @@ export default function BaseModal({
       <AlertDialogOverlay className="bg-black/40 backdrop-blur-[2px]" />
 
       <AlertDialogContent
-        className={`${widthClassName} max-w-[calc(100%-2rem)] max-h-[85vh] overflow-hidden rounded-2xl border border-[#E0E0E0] bg-white p-0 shadow-xl flex flex-col`}
+        className={`${widthClassName} max-w-[calc(100%-2rem)] max-h-[85vh] overflow-hidden rounded-2xl border border-yellow-700 bg-yellow-50 p-0 shadow-xl flex flex-col`}
       >
-        <div className="flex items-center justify-between rounded-t-2xl border-b border-[#E4E4E4] bg-[#EDEDED] px-6 py-4">
-          <h2 className="text-[15px] font-semibold text-[#5C5C5C]">{title}</h2>
+        <div className="flex items-center justify-between rounded-t-2xl border-b border-yellow-700 bg-yellow-500 px-6 py-4">
+          <h2 className="text-[15px] font-semibold text-yellow-50">{title}</h2>
 
           <button
             onClick={() => onOpenChange(false)}
-            className="rounded-full p-1 text-[#7F7F7F] transition hover:bg-black/5"
+            className="rounded-full p-1 text-yellow-50 transition hover-bg-yellow-600"
           >
             <X size={18} strokeWidth={2.5} />
           </button>

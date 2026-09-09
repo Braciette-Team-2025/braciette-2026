@@ -4,19 +4,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { createOpenTalent } from "../services/openTalentService";
+import { StepOneData, StepTwoData } from "../schemas/openTalentSchemas";
 
 export function useCreateOpenTalent() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const [stepOneData, setStepOneData] = useState({
+  const [stepOneData, setStepOneData] = useState<StepOneData>({
     namaKetua: "",
     asalFakultas: "",
     kontakKetua: "",
   });
 
-  const [stepTwoData, setStepTwoData] = useState({
+  const [stepTwoData, setStepTwoData] = useState<StepTwoData>({
     talentDitampilkan: "",
     jenisPenampilan: "Individu",
     jumlahAnggota: 1,

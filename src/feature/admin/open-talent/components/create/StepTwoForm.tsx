@@ -1,15 +1,15 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
 import NumberField from "./NumberField";
-
-interface StepTwoData {
-  talentDitampilkan: string;
-  jenisPenampilan: string;
-  jumlahAnggota: number;
-  linkDrive: string;
-}
+import {
+  stepTwoSchema,
+  type StepTwoData,
+} from "../../schemas/openTalentSchemas";
+import { useState } from "react";
 
 interface StepTwoFormProps {
   data: StepTwoData;
@@ -17,6 +17,8 @@ interface StepTwoFormProps {
   onBack: () => void;
   onSubmit: () => void;
 }
+
+type FieldErrors = Partial<Record<keyof StepTwoData, string>>;
 
 const JENIS_PENAMPILAN_OPTIONS = [
   { label: "Individu", value: "Individu" },
@@ -29,11 +31,30 @@ export default function StepTwoForm({
   onBack,
   onSubmit,
 }: StepTwoFormProps) {
-  const isDriveLinkValid = data.linkDrive.includes("https://drive");
+  const [errors, setErrors] = useState<FieldErrors>({});
+
   const isComplete =
     data.talentDitampilkan.trim() !== "" &&
     data.jenisPenampilan.trim() !== "" &&
-    isDriveLinkValid;
+    data.jumlahAnggota &&
+    data.linkDrive.trim() !== "";
+
+  const handleNext = () => {
+    const result = stepTwoSchema.safeParse(data);
+
+    if (!result.success) {
+      const fieldErrors: FieldErrors = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0] as keyof StepTwoData;
+        if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+      }
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setErrors({});
+    onSubmit();
+  };
 
   return (
     <div className="space-y-6">
@@ -42,6 +63,7 @@ export default function StepTwoForm({
         placeholder="Dance"
         value={data.talentDitampilkan}
         onChange={(val) => onChange({ talentDitampilkan: val })}
+        error={errors.talentDitampilkan}
       />
 
       <SelectField
@@ -49,7 +71,9 @@ export default function StepTwoForm({
         placeholder="Individu"
         options={JENIS_PENAMPILAN_OPTIONS}
         value={data.jenisPenampilan}
-        onValueChange={(val) => onChange({ jenisPenampilan: val })}
+        onValueChange={(val) =>
+          onChange({ jenisPenampilan: val as StepTwoData["jenisPenampilan"] })
+        }
       />
 
       {data.jenisPenampilan !== "Individu" && (
@@ -67,12 +91,8 @@ export default function StepTwoForm({
           value={data.linkDrive}
           onChange={(val) => onChange({ linkDrive: val })}
           type="url"
+          error={errors.linkDrive}
         />
-        {data.linkDrive.length > 0 && !isDriveLinkValid && (
-          <p className="text-red-500 text-sm mt-1 font-medium">
-            Link harus diawali dengan https://drive
-          </p>
-        )}
       </div>
 
       <div className="flex justify-between pt-4">
@@ -84,7 +104,7 @@ export default function StepTwoForm({
           <ArrowLeft className="mr-2 h-5 w-5" /> Kembali
         </Button>
         <Button
-          onClick={onSubmit}
+          onClick={handleNext}
           disabled={!isComplete}
           className="bg-yellow-500 hover:bg-yellow-600! text-yellow-50 px-8 h-11 text-base font-semibold rounded-[8px] cursor-pointer"
         >
