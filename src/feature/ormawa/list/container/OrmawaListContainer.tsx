@@ -26,6 +26,8 @@ export default function OrmawaListContainer() {
     setSortBy,
     order,
     setOrder,
+    isLoading,
+    isFetching,
   } = useOrmawaListState();
 
   return (
@@ -69,7 +71,12 @@ export default function OrmawaListContainer() {
           </div>
         </div>
 
-        <OrmawaListTable ormawaList={ormawaList} startIndex={startIndex} />
+        <OrmawaListTable
+          ormawaList={ormawaList}
+          startIndex={startIndex}
+          isLoading={isLoading}
+          isFetching={isFetching}
+        />
 
         <OrmawaPagination
           currentPage={currentPage}

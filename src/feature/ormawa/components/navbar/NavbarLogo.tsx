@@ -1,15 +1,21 @@
+"use client";
+
 import { cn } from "@/src/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { usePageLoading } from "@/src/feature/shared/providers/NavigationLoadingProvider";
 
 interface NavbarLogoProps {
   className?: string;
 }
 
 export default function NavbarLogo({ className }: NavbarLogoProps) {
+  const { startLoading } = usePageLoading();
+
   return (
     <Link
       href="/"
+      onClick={startLoading}
       className={cn("flex shrink-0 items-center gap-1 lg:gap-3", className)}
       aria-label="Braciate Logo"
     >

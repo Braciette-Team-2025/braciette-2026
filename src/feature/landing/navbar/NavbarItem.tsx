@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { NavigationItem } from "./types/navigation";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { usePageLoading } from "@/src/feature/shared/providers/NavigationLoadingProvider";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -34,10 +37,27 @@ export interface NavbarItemProps {
 }
 
 export function NavbarItem({ item, isActive, className }: NavbarItemProps) {
+  const { startLoading } = usePageLoading();
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Jangan trigger loading untuk hash anchor di halaman yang sama —
+    // hash hanya menyebabkan scroll, bukan perubahan pathname,
+    // sehingga NavigationLoadingProvider tidak akan pernah mematikan loading.
+    const [path, hash] = item.href.split("#");
+    const isSamePageAnchor =
+      hash && (!path || path === "/" || path === window.location.pathname);
+
+    if (!isSamePageAnchor) {
+      startLoading();
+    }
+
+    handleHashClick(e, item.href);
+  };
+
   return (
     <Link
       href={item.href}
-      onClick={(e) => handleHashClick(e, item.href)}
+      onClick={handleClick}
       aria-current={isActive ? "page" : undefined}
       className={cn(
         "text-xl body-medium text-yellow-400 transition-colors hover:text-yellow-500",

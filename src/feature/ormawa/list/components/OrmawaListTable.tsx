@@ -10,10 +10,15 @@ import {
 } from "@/components/ui/table";
 import { TableCell as TC, TableRow as TR } from "@/components/ui/table";
 import type { InternalSubmissionItem } from "../types/ormawa";
+import { TableLoadingSkeleton } from "@/src/components/ui/loading";
 
 interface OrmawaListTableProps {
   ormawaList: InternalSubmissionItem[];
   startIndex: number;
+  /** Tampilkan skeleton saat data pertama kali dimuat */
+  isLoading?: boolean;
+  /** Redup tabel saat refetch di background (misal: ganti halaman/filter) */
+  isFetching?: boolean;
 }
 
 function StatusBadge({
@@ -68,11 +73,17 @@ function EmptyTable({ colSpan }: { colSpan: number }) {
 export default function OrmawaListTable({
   ormawaList,
   startIndex,
+  isLoading = false,
+  isFetching = false,
 }: OrmawaListTableProps) {
   const columnCount = 6;
 
   return (
-    <div className="w-full overflow-x-auto rounded-xl border-2 border-yellow-500">
+    <div
+      className={`w-full overflow-x-auto rounded-xl border-2 border-yellow-500 transition-opacity duration-300 ${
+        isFetching && !isLoading ? "opacity-60" : "opacity-100"
+      }`}
+    >
       <Table className="w-200 md:w-full border-separate border-spacing-0 text-[14px]">
         <TableHeader>
           <TableRow className="bg-yellow-500 font-inter font-semibold text-blue-900 hover:bg-yellow-400">
@@ -102,42 +113,46 @@ export default function OrmawaListTable({
           </TableRow>
         </TableHeader>
 
-        <TableBody className="text-blue-900">
-          {ormawaList.length === 0 ? (
-            <EmptyTable colSpan={columnCount} />
-          ) : (
-            ormawaList.map((data, index) => (
-              <TableRow
-                key={data.id}
-                className="text-center bg-yellow-100 hover:bg-yellow-50"
-              >
-                <TableCell className="border-r-2 border-yellow-500">
-                  {startIndex + index + 1}
-                </TableCell>
+        {isLoading ? (
+          <TableLoadingSkeleton columns={columnCount} rows={5} />
+        ) : (
+          <TableBody className="text-blue-900">
+            {ormawaList.length === 0 ? (
+              <EmptyTable colSpan={columnCount} />
+            ) : (
+              ormawaList.map((data, index) => (
+                <TableRow
+                  key={data.id}
+                  className="text-center bg-yellow-100 hover:bg-yellow-50"
+                >
+                  <TableCell className="border-r-2 border-yellow-500">
+                    {startIndex + index + 1}
+                  </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
-                  {data.name}
-                </TableCell>
+                  <TableCell className="border-r-2 border-yellow-500">
+                    {data.name}
+                  </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
-                  {data.type}
-                </TableCell>
+                  <TableCell className="border-r-2 border-yellow-500">
+                    {data.type}
+                  </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
-                  {data.pic}
-                </TableCell>
+                  <TableCell className="border-r-2 border-yellow-500">
+                    {data.pic}
+                  </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
-                  {data.pic_contact}
-                </TableCell>
+                  <TableCell className="border-r-2 border-yellow-500">
+                    {data.pic_contact}
+                  </TableCell>
 
-                <TableCell className="flex justify-center items-center h-full p-2">
-                  <StatusBadge status={data.status} />
-                </TableCell>
-              </TableRow>
-            ))
-          )}
-        </TableBody>
+                  <TableCell className="flex justify-center items-center h-full p-2">
+                    <StatusBadge status={data.status} />
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        )}
       </Table>
     </div>
   );
