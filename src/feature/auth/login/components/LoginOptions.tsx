@@ -23,15 +23,13 @@ export default function LoginOptions() {
     } catch (err: unknown) {
       console.error("Google login failed:", err);
 
-      // Tampilkan pesan yang ramah pengguna
       const msg =
         err instanceof Error ? err.message : "Login Google gagal. Coba lagi.";
 
-      // Popup ditutup user — tidak perlu tampilkan error
       if (msg.includes("popup-closed") || msg.includes("cancelled")) {
         setError(null);
       } else {
-        setError("Login Google gagal. Pastikan email kamu terdaftar.");
+        setError("Login Google gagal. Pastikan menggunakan email UB.");
       }
     } finally {
       setIsLoading(false);
@@ -42,11 +40,8 @@ export default function LoginOptions() {
     <div className="flex flex-col gap-3 md:gap-4 items-center justify-center text-yellow-200 w-full">
       <button
         className={cn(
-          // Mobile (Base)
           "flex items-center justify-center gap-3 text-center py-3 px-6 border-2 border-yellow-500 rounded-[8px] w-fit transition-colors hover:bg-yellow-500/10 disabled:opacity-60 disabled:cursor-not-allowed",
-          // Tablet (md)
           "md:px-12",
-          // Desktop (lg)
           "lg:px-12",
         )}
         onClick={handleGoogleLogin}
@@ -60,11 +55,8 @@ export default function LoginOptions() {
         )}
         <span
           className={cn(
-            // Mobile (Base)
             "font-semibold cursor-pointer text-sm",
-            // Tablet (md)
             "md:text-md",
-            // Desktop (lg)
             "lg:text-md",
           )}
         >
@@ -78,16 +70,7 @@ export default function LoginOptions() {
 
       <div className="flex items-center w-full gap-4">
         <div className="flex-1 h-px bg-yellow-200 opacity-50"></div>
-        <p
-          className={cn(
-            // Mobile (Base)
-            "font-semibold text-xs",
-            // Tablet (md)
-            "md:text-md",
-            // Desktop (lg)
-            "lg:text-md",
-          )}
-        >
+        <p className={cn("font-semibold text-xs", "md:text-md", "lg:text-md")}>
           ATAU
         </p>
         <div className="flex-1 h-px bg-yellow-200 opacity-50"></div>
@@ -95,11 +78,8 @@ export default function LoginOptions() {
       <Link href={"/login/ormawa"}>
         <p
           className={cn(
-            // Mobile (Base)
             "text-sm underline font-semibold hover:text-yellow-300 transition-colors",
-            // Tablet (md)
             "md:text-md",
-            // Desktop (lg)
             "lg:text-md",
           )}
         >
