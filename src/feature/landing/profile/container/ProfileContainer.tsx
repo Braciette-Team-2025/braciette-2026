@@ -9,6 +9,8 @@ import { LogoutButton } from "../components/LogoutButton";
 import { PROFILE_MENU_ITEMS } from "../constants/menu";
 import FloatingNotesWrapper from "@/src/feature/auth/components/FloatingNotesWrapper";
 
+import { ProfileCardSkeleton } from "../components/ProfileCardSkeleton";
+
 export function ProfileContainer() {
   const router = useRouter();
 
@@ -26,9 +28,7 @@ export function ProfileContainer() {
     return (
       <section className="flex w-full justify-center px-4 py-16 sm:py-20 md:py-28 lg:py-32">
         <FloatingNotesWrapper>
-          <div className="relative z-10 mx-auto flex w-[535px] max-w-[calc(100vw-32px)] justify-center">
-            <p className="text-blue-900">Memuat profil...</p>
-          </div>
+          <ProfileCardSkeleton />
         </FloatingNotesWrapper>
       </section>
     );
