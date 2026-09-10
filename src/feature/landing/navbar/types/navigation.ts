@@ -3,4 +3,5 @@ export interface NavigationItem {
   label: string;
   href: string;
   disabled?: boolean;
+  featureFlag?: string;
 }

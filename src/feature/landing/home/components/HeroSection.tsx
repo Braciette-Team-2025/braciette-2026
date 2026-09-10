@@ -1,14 +1,30 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { LandingButton } from "./ui/LandingButton";
 import { useRef } from "react";
 import { useHeroAnimation } from "../hooks/animation/useHeroAnimation";
 import GoldString from "./GoldString";
 import GoldStringLeftPaths from "./Goldstringleftpaths";
 import GoldStringRightPaths from "./Goldstringrightpaths";
+import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
-export default function HeroSection() {
-  const router = useRouter();
+interface HeroSectionProps {
+  votingEnabled?: boolean;
+  openTalentEnabled?: boolean;
+}
+
+export default function HeroSection({
+  votingEnabled = true,
+  openTalentEnabled = true,
+}: HeroSectionProps) {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  const votingHref = !votingEnabled && !isAuthenticated ? "/login" : "/voting";
+  const votingDisabled = !votingEnabled && isAuthenticated;
+
+  const openTalentHref =
+    !openTalentEnabled && !isAuthenticated ? "/login" : "/open-talent";
+  const openTalentDisabled = !openTalentEnabled && isAuthenticated;
+
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
 
@@ -88,13 +104,15 @@ export default function HeroSection() {
       <div ref={ctaRef} className="flex gap-4 md:gap-6 lg:gap-10">
         <LandingButton
           className="min-w-24.5 md:min-w-36 lg:min-w-55"
-          onClick={() => router.push("/open-talent")}
+          href={openTalentHref}
+          disabled={openTalentDisabled}
         >
           Open Talent
         </LandingButton>
         <LandingButton
           className="min-w-24.5 md:min-w-36 lg:min-w-55"
-          onClick={() => router.push("/voting")}
+          href={votingHref}
+          disabled={votingDisabled}
         >
           Voting
         </LandingButton>
