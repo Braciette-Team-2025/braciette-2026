@@ -3,6 +3,8 @@ import { jakarta, inter, sloop, theSeasons } from "@/src/styles/fonts";
 import "./globals.css";
 import { AuthProvider } from "../feature/auth/providers/AuthProvider";
 import { ReactQueryProvider } from "../feature/auth/providers/ReactQueryProvider";
+import { NavigationLoadingProvider } from "../feature/shared/providers/NavigationLoadingProvider";
+import { Suspense } from "react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -47,7 +49,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ReactQueryProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <Suspense>
+              <NavigationLoadingProvider>{children}</NavigationLoadingProvider>
+            </Suspense>
+          </AuthProvider>
         </ReactQueryProvider>
       </body>
     </html>

@@ -204,6 +204,18 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@keyframes page-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
 @keyframes star-twinkle {
   0%,
   100% {
