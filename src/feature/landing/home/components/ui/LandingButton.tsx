@@ -7,7 +7,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const LandingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, children, href, ...props }, ref) => {
+  ({ className, children, href, disabled, ...props }, ref) => {
     const classes = cn(
       // Layout & Spacing
       "flex items-center justify-center gap-3 px-6 py-1.5 lg:px-12.5 lg:py-2",
@@ -21,7 +21,7 @@ const LandingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
     );
 
-    if (href) {
+    if (href && !disabled) {
       return (
         <Link href={href} className={classes}>
           {children}
@@ -29,8 +29,22 @@ const LandingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       );
     }
 
+    if (href && disabled) {
+      return (
+        <span
+          aria-disabled="true"
+          className={cn(
+            classes,
+            "cursor-not-allowed opacity-50 pointer-events-none",
+          )}
+        >
+          {children}
+        </span>
+      );
+    }
+
     return (
-      <button ref={ref} className={classes} {...props}>
+      <button ref={ref} className={classes} disabled={disabled} {...props}>
         {children}
       </button>
     );

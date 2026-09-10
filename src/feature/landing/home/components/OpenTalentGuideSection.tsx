@@ -5,8 +5,20 @@ import { SUBMISSION_GUIDE_DATA } from "../constants/constants";
 import SubmissionTextbox from "./ui/SubmissionTextbox";
 import { useOpenTalentAnimation } from "../hooks/animation/useOpenTalentAnimation";
 import { LandingButton } from "./ui/LandingButton";
+import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
-export default function OpenTalentGuideSection() {
+interface OpenTalentGuideSectionProps {
+  disabled?: boolean;
+}
+
+export default function OpenTalentGuideSection({
+  disabled,
+}: OpenTalentGuideSectionProps) {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  const buttonHref = disabled && !isAuthenticated ? "/login" : "/open-talent";
+  const buttonDisabled = disabled && isAuthenticated;
+
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
 
@@ -54,7 +66,11 @@ export default function OpenTalentGuideSection() {
       </div>
 
       <div data-ot-cta className="w-32 md:w-64 xl:w-100">
-        <LandingButton className="w-full" href="/open-talent">
+        <LandingButton
+          className="w-full"
+          href={buttonHref}
+          disabled={buttonDisabled}
+        >
           Open Talent
         </LandingButton>
       </div>

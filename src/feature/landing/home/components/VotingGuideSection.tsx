@@ -6,8 +6,20 @@ import FloatingNotesWrapper from "./ui/FloatingNotesWrapper";
 import { LandingButton } from "./ui/LandingButton";
 import VotingTextbox from "./ui/VotingTextbox";
 import { useGuideAnimation } from "../hooks/animation/Useguideanimation";
+import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
-export default function VotingGuideSection() {
+interface VotingGuideSectionProps {
+  disabled?: boolean;
+}
+
+export default function VotingGuideSection({
+  disabled,
+}: VotingGuideSectionProps) {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  const buttonHref = disabled && !isAuthenticated ? "/login" : "/voting";
+  const buttonDisabled = disabled && isAuthenticated;
+
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
 
@@ -51,7 +63,11 @@ export default function VotingGuideSection() {
           data-guide-cta
           className="w-32 md:w-64 xl:w-100 mt-4 md:mt-7 xl:mt-10"
         >
-          <LandingButton className="w-full" href="/voting">
+          <LandingButton
+            className="w-full"
+            href={buttonHref}
+            disabled={buttonDisabled}
+          >
             Voting
           </LandingButton>
         </div>
