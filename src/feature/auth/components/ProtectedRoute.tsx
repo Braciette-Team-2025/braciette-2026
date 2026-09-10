@@ -38,6 +38,8 @@ export function ProtectedRoute({
     ) {
       if (user.role.toLowerCase() === "admin") {
         router.replace("/admin/submission");
+      } else if (user.role.toLowerCase() === "ormawa") {
+        router.replace("/ormawa");
       } else {
         router.replace("/profile");
       }
