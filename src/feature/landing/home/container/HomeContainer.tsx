@@ -1,3 +1,4 @@
+"use client";
 import AboutSection from "../components/AboutSection";
 import FaqSection from "../components/FaqSection";
 import HeroSection from "../components/HeroSection";
@@ -5,8 +6,10 @@ import OpenTalentGuideSection from "../components/OpenTalentGuideSection";
 import PhotoSection from "../components/PhotoSection";
 import TimelineSection from "../components/TimelineSection";
 import VotingGuideSection from "../components/VotingGuideSection";
+import { useScrollToHashOnMount } from "../hooks/useScrollToHashOnMount";
 
 export default function HomeContainer() {
+  useScrollToHashOnMount();
   return (
     <main className="w-full flex flex-col gap-12 md:gap-0 pt-12 md:pt-0 pb-12">
       <HeroSection />

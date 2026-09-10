@@ -16,17 +16,24 @@ const handleHashClick = (
   href: string,
 ) => {
   const [path, hash] = href.split("#");
-  // Hanya intercept kalau target ada di halaman yang sedang dibuka.
   if (!hash || (path && path !== "/" && path !== window.location.pathname))
     return;
   const target = document.getElementById(hash);
   if (!target) return;
 
   e.preventDefault();
+  const root = document.documentElement;
+  const prevBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+
+  gsap.killTweensOf(window);
   gsap.to(window, {
     duration: 0.9,
     ease: "power2.inOut",
     scrollTo: { y: target, offsetY: NAV_OFFSET },
+    onComplete: () => {
+      root.style.scrollBehavior = prevBehavior;
+    },
   });
 };
 
@@ -40,14 +47,10 @@ export function NavbarItem({ item, isActive, className }: NavbarItemProps) {
   const { startLoading } = usePageLoading();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Jangan trigger loading untuk hash anchor di halaman yang sama —
-    // hash hanya menyebabkan scroll, bukan perubahan pathname,
-    // sehingga NavigationLoadingProvider tidak akan pernah mematikan loading.
-    const [path, hash] = item.href.split("#");
-    const isSamePageAnchor =
-      hash && (!path || path === "/" || path === window.location.pathname);
+    const [path] = item.href.split("#");
+    const isSamePage = !path || path === window.location.pathname;
 
-    if (!isSamePageAnchor) {
+    if (!isSamePage) {
       startLoading();
     }
 
