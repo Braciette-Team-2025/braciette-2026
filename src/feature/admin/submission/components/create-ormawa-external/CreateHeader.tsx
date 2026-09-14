@@ -3,9 +3,10 @@ import Link from "next/link";
 
 interface CreateHeaderProps {
   onBack?: () => void;
+  title?: string;
 }
 
-export default function CreateHeader({ onBack }: CreateHeaderProps) {
+export default function CreateHeader({ onBack, title }: CreateHeaderProps) {
   return (
     <div className="space-y-6">
       <div>
@@ -29,7 +30,7 @@ export default function CreateHeader({ onBack }: CreateHeaderProps) {
       </div>
 
       <h1 className="text-center text-[32px] font-extrabold">
-        Daftar Organisasi Mahasiswa
+        {title ?? "Daftar Organisasi Mahasiswa"}
       </h1>
     </div>
   );

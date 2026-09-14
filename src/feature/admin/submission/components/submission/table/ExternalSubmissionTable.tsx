@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Table,
   TableHeader,
@@ -9,22 +9,9 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ExternalActionButtons } from "./ExternalActionButtons";
 import EmptyTable from "./EmptyTable";
-import type {
-  ExternalSubmissionItem,
-  ExternalOrmawaType,
-} from "../../../types/ormawa";
-import { useUpdateExternalSubmission } from "../../../hooks/eksternal/useUpdateExternalSubmission";
-import { EXTERNAL_ORMAWA_ENUM } from "../../../constants/ormawa";
+import type { ExternalSubmissionItem } from "../../../types/ormawa";
 
 interface ExternalSubmissionTableProps {
   submissionList: ExternalSubmissionItem[];
@@ -39,39 +26,10 @@ export default function ExternalSubmissionTable({
   onDetail,
   onDelete,
 }: ExternalSubmissionTableProps) {
-  const [editingId, setEditingId] = useState<number | string | null>(null);
-  const [editName, setEditName] = useState("");
-  const [editType, setEditType] = useState<ExternalOrmawaType | "">("");
-
-  const updateMutation = useUpdateExternalSubmission();
+  const router = useRouter();
 
   const handleEditClick = (data: ExternalSubmissionItem) => {
-    setEditingId(data.id);
-    setEditName(data.name);
-    setEditType(data.type);
-  };
-
-  const handleCancelEdit = () => {
-    setEditingId(null);
-    setEditName("");
-    setEditType("");
-  };
-
-  const handleSaveEdit = () => {
-    if (!editingId || !editName || !editType) return;
-
-    const formData = new FormData();
-    formData.append("name", editName);
-    formData.append("type", editType);
-
-    updateMutation.mutate(
-      { id: editingId, formData },
-      {
-        onSuccess: () => {
-          setEditingId(null);
-        },
-      },
-    );
+    router.push(`/admin/submission/external-edit/${data.id}`);
   };
 
   return (
@@ -98,69 +56,33 @@ export default function ExternalSubmissionTable({
           {submissionList.length === 0 ? (
             <EmptyTable colSpan={4} />
           ) : (
-            submissionList.map((data, index) => {
-              const isEditing = editingId === data.id;
+            submissionList.map((data, index) => (
+              <TableRow
+                key={data.id}
+                className="text-center bg-yellow-100 hover:bg-yellow-50"
+              >
+                <TableCell className="border-r-2 border-yellow-500">
+                  {startIndex + index + 1}
+                </TableCell>
 
-              return (
-                <TableRow
-                  key={data.id}
-                  className="text-center bg-yellow-100 hover:bg-yellow-50"
-                >
-                  <TableCell className="border-r-2 border-yellow-500">
-                    {startIndex + index + 1}
-                  </TableCell>
+                <TableCell className="border-r-2 border-yellow-500">
+                  {data.name}
+                </TableCell>
 
-                  <TableCell className="border-r-2 border-yellow-500">
-                    {isEditing ? (
-                      <Input
-                        value={editName}
-                        onChange={(e) => setEditName(e.target.value)}
-                        className="h-8 text-center"
-                      />
-                    ) : (
-                      data.name
-                    )}
-                  </TableCell>
+                <TableCell className="border-r-2 border-yellow-500">
+                  {data.type}
+                </TableCell>
 
-                  <TableCell className="border-r-2 border-yellow-500">
-                    {isEditing ? (
-                      <Select
-                        value={editType}
-                        onValueChange={(val) =>
-                          setEditType(val as ExternalOrmawaType)
-                        }
-                      >
-                        <SelectTrigger className="h-8 w-full text-center flex justify-center">
-                          <SelectValue placeholder="Pilih Jenis" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {EXTERNAL_ORMAWA_ENUM.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      data.type
-                    )}
-                  </TableCell>
-
-                  <TableCell>
-                    <ExternalActionButtons
-                      data={data}
-                      onDetail={onDetail}
-                      onDelete={onDelete}
-                      isEditing={isEditing}
-                      onEdit={handleEditClick}
-                      onSave={handleSaveEdit}
-                      onCancel={handleCancelEdit}
-                      isSaving={updateMutation.isPending && isEditing}
-                    />
-                  </TableCell>
-                </TableRow>
-              );
-            })
+                <TableCell>
+                  <ExternalActionButtons
+                    data={data}
+                    onDetail={onDetail}
+                    onDelete={onDelete}
+                    onEdit={handleEditClick}
+                  />
+                </TableCell>
+              </TableRow>
+            ))
           )}
         </TableBody>
       </Table>

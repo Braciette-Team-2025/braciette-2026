@@ -1,5 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
+
 import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
 import { useCategory } from "../hooks/useCategory";
@@ -16,6 +19,7 @@ import { OrganizationGrid } from "../components/(organization)/OrganizationGrid"
 import { VoteConfirmationModal } from "../components/(modal)/VoteConfirmationModal";
 
 export function VotingContainer() {
+  const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
   const { categories, selectedCategory, selectCategory, resetCategory } =
@@ -53,6 +57,17 @@ export function VotingContainer() {
 
   return (
     <section className="relative flex w-full flex-col items-center gap-10 overflow-hidden px-4 py-16 md:py-24">
+      <div className="pointer-events-none absolute inset-x-0 top-4 z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 md:top-6">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          aria-label="Kembali"
+          className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-yellow-500/70 bg-blue-500/60 text-yellow-500 shadow-[0_0_16px_-6px_rgba(201,162,39,0.5)] transition-colors hover:border-yellow-400 hover:text-yellow-400 sm:h-10 sm:w-10 md:h-11 md:w-11"
+        >
+          <ChevronLeft className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={2.5} />
+        </button>
+      </div>
+
       {!selectedCategory ? (
         <>
           <VotingHero variant="category" />
