@@ -1,132 +1,148 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { useMemo, useState } from "react";
 
-import { useAuthStore } from "@/src/feature/auth/store/authStore";
+import { VotingContent } from "../components/voting/VotingContent";
+import Pagination from "../../submission/components/submission/Pagination";
 
-import { useCategory } from "../hooks/useCategory";
-import { useOrganization } from "../hooks/useOrganization";
-import { useVote } from "../hooks/useVote";
+import {
+  DEFAULT_VOTING_CATEGORY_ID,
+  VOTING_CATEGORIES,
+} from "../constants/voting";
 
-import { VotingHero } from "../components/VotingHero";
-import { VotingSearch } from "../components/VotingSearch";
-import { VotingConfirmButton } from "../components/VotingConfirmButton";
-import { VotingSuccessModal } from "../components/VotingSuccessModal";
-import { CategoryGrid } from "../components/(category)/CategoryGrid";
-import { CategoryButton } from "../components/(category)/CategoryButton";
-import { OrganizationGrid } from "../components/(organization)/OrganizationGrid";
-import { VoteConfirmationModal } from "../components/(modal)/VoteConfirmationModal";
+import { useVotingList } from "../hooks/useVoting";
+
+import type {
+  VotingCategoryId,
+  VotingResultItem,
+  VotingStatistic,
+} from "../types/voting";
+
+const ITEMS_PER_PAGE = 10;
 
 export function VotingContainer() {
-  const router = useRouter();
-  const user = useAuthStore((state) => state.user);
+  const [activeCategoryId, setActiveCategoryId] = useState<VotingCategoryId>(
+    DEFAULT_VOTING_CATEGORY_ID,
+  );
 
-  const { categories, selectedCategory, selectCategory, resetCategory } =
-    useCategory();
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const activeCategory = useMemo(
+    () =>
+      VOTING_CATEGORIES.find((category) => category.id === activeCategoryId),
+    [activeCategoryId],
+  );
+
+  /**
+   * Ambil data berdasarkan kategori yang sedang dipilih.
+   *
+   * Contoh:
+   * BEM  -> /v1/submission/external?type=BEM
+   * DPM  -> /v1/submission/external?type=DPM
+   * HIMA -> /v1/submission/external?type=HIMA
+   * UKM  -> /v1/submission/external?type=UKM
+   */
   const {
-    organizations,
-    searchQuery,
-    setSearchQuery,
-    isLoading: isLoadingOrganizations,
-  } = useOrganization(selectedCategory?.id ?? "");
+    data: listResponse,
+    isLoading,
+    isError: hasError,
+  } = useVotingList(activeCategoryId);
 
-  const {
-    selectedOrganizationId,
-    selectOrganization,
-    openConfirmModal,
-    closeConfirmModal,
-    confirmVote,
-    isSubmitting,
-    isConfirmModalOpen,
-    isSuccessModalOpen,
-    closeSuccessModal,
-  } = useVote();
+  /**
+   * Data hasil voting dari endpoint berdasarkan type.
+   */
+  const items = useMemo<VotingResultItem[]>(() => {
+    const data = listResponse?.data?.data ?? [];
 
-  const hasVotedByCategory: Record<string, boolean> = {
-    BEM: user?.has_voted_bem ?? false,
-    DPM: user?.has_voted_dpm ?? false,
-    HIMA: user?.has_voted_hima ?? false,
-    UKM: user?.has_voted_ukm ?? false,
+    return data.map((item, index) => ({
+      id: item.id,
+      name: item.name,
+      totalVote: item.vote_count,
+
+      // Backend sudah mengurutkan dari vote terbanyak.
+      rank: index + 1,
+    }));
+  }, [listResponse]);
+
+  /**
+   * Statistik dihitung manual dari data list (vote_count per ormawa),
+   * bukan dari field `stats` BE yang bisa tidak sinkron.
+   *
+   * - totalVoting : jumlah seluruh vote_count semua ormawa di kategori ini
+   * - bestCandidateName : ormawa dengan vote_count tertinggi
+   */
+  const statistic = useMemo<VotingStatistic | undefined>(() => {
+    const data = listResponse?.data?.data;
+
+    if (!data) return undefined;
+
+    const totalVoting = data.reduce((sum, item) => sum + item.vote_count, 0);
+
+    const best = data.reduce(
+      (top, item) => (item.vote_count > (top?.vote_count ?? -1) ? item : top),
+      data[0],
+    );
+
+    return {
+      totalVoting,
+      bestCandidateName: best?.name ?? "-",
+    };
+  }, [listResponse]);
+
+  /**
+   * Pagination dilakukan di FE karena endpoint voting
+   * mengembalikan daftar hasil voting.
+   */
+  const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
+
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+
+    return items.slice(start, start + ITEMS_PER_PAGE);
+  }, [items, currentPage]);
+
+  const handleCategoryChange = (id: VotingCategoryId) => {
+    setActiveCategoryId(id);
+    setCurrentPage(1);
   };
 
-  const hasVotedThisCategory = selectedCategory
-    ? (hasVotedByCategory[selectedCategory.code] ?? false)
-    : false;
-
   return (
-    <section className="relative flex w-full flex-col items-center gap-10 overflow-hidden px-4 py-16 md:py-24">
-      <button
-        type="button"
-        onClick={() => router.back()}
-        aria-label="Kembali"
-        className="absolute left-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-yellow-500/70 bg-blue-500/60 text-yellow-500 shadow-[0_0_16px_-6px_rgba(201,162,39,0.5)] transition-colors hover:border-yellow-400 hover:text-yellow-400 sm:h-10 sm:w-10 md:left-6 md:top-6 md:h-11 md:w-11 lg:left-8 lg:top-8"
-      >
-        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.5} />
-      </button>
+    <div className="mx-auto w-full px-4 py-6 sm:px-6 sm:py-8">
+      <header>
+        <h1 className="text-[32px] font-bold">Voting</h1>
 
-      {!selectedCategory ? (
-        <>
-          <VotingHero variant="category" />
+        <p className="text-[20px] font-semibold">
+          Hasil Voting {activeCategory?.label}
+        </p>
+      </header>
 
-          <CategoryGrid
-            categories={categories}
-            onSelect={selectCategory}
-            hasVotedByCategory={hasVotedByCategory}
-          />
-        </>
+      {hasError ? (
+        <div className="mt-6 rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center">
+          <p className="font-medium">Gagal mengambil data voting.</p>
+
+          <p className="mt-1 text-sm text-muted-foreground">
+            Silakan coba refresh halaman.
+          </p>
+        </div>
       ) : (
-        <>
-          <VotingHero variant="organization" />
-
-          <CategoryButton category={selectedCategory} onClick={resetCategory} />
-
-          <VotingSearch
-            value={searchQuery}
-            onChange={setSearchQuery}
-            statusMessage={
-              hasVotedThisCategory
-                ? `Kamu sudah melakukan voting ${selectedCategory.code}.`
-                : "You haven't voted for your favorite student organization yet. Vote now!"
-            }
-          />
-
-          <OrganizationGrid
-            organizations={organizations}
-            isLoading={isLoadingOrganizations}
-            searchQuery={searchQuery}
-            selectedOrganizationId={selectedOrganizationId}
-            onSelect={selectOrganization}
-            disabled={hasVotedThisCategory}
-          />
-
-          <VotingConfirmButton
-            disabled={!selectedOrganizationId || hasVotedThisCategory}
-            isSubmitting={isSubmitting}
-            onConfirm={() => openConfirmModal(selectedCategory.id)}
-          />
-
-          <VoteConfirmationModal
-            open={isConfirmModalOpen}
-            onOpenChange={(open) => {
-              if (!open) closeConfirmModal();
-            }}
-            onConfirm={confirmVote}
-            isSubmitting={isSubmitting}
-          />
-
-          <VotingSuccessModal
-            open={isSuccessModalOpen}
-            onOpenChange={(open) => {
-              if (!open) {
-                closeSuccessModal();
-              }
-            }}
-            onConfirm={closeSuccessModal}
-          />
-        </>
+        <VotingContent
+          categories={VOTING_CATEGORIES}
+          activeCategoryId={activeCategoryId}
+          onCategoryChange={handleCategoryChange}
+          statistic={statistic}
+          items={paginatedItems}
+          isLoading={isLoading}
+          nameColumnLabel={`Nama ${activeCategory?.label ?? ""}`}
+          bestCandidateLabel={`${activeCategory?.label ?? "Ormawa"} Terbaik`}
+          pagination={
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          }
+        />
       )}
-    </section>
+    </div>
   );
 }
