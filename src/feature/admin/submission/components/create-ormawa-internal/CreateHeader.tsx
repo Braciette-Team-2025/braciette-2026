@@ -6,12 +6,14 @@ interface CreateHeaderProps {
   currentStep: number;
   steps: string[];
   onBack?: () => void;
+  title?: string;
 }
 
 export default function CreateHeader({
   currentStep,
   steps,
   onBack,
+  title,
 }: CreateHeaderProps) {
   return (
     <div className="space-y-6">
@@ -36,7 +38,7 @@ export default function CreateHeader({
       </div>
 
       <h1 className="text-center text-[32px] font-extrabold">
-        Daftar Organisasi Mahasiswa
+        {title ?? "Daftar Organisasi Mahasiswa"}
       </h1>
       <Stepper current={currentStep} steps={steps} />
     </div>
