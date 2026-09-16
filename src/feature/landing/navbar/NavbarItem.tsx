@@ -9,7 +9,7 @@ import { usePageLoading } from "@/src/feature/shared/providers/NavigationLoading
 
 gsap.registerPlugin(ScrollToPlugin);
 
-const NAV_OFFSET = 112; // setara scroll-mt-28
+const NAV_OFFSET = 112;
 
 const handleHashClick = (
   e: React.MouseEvent<HTMLAnchorElement>,

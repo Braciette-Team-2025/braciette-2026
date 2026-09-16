@@ -112,7 +112,7 @@ export default function HeroSection({
         <LandingButton
           className="min-w-24.5 md:min-w-36 lg:min-w-55"
           href={votingHref}
-          disabled={votingDisabled}
+          disabled={true}
         >
           Voting
         </LandingButton>

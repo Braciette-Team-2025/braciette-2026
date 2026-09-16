@@ -32,7 +32,7 @@ export default function OrmawaHomeContainer() {
           <h2
             className={`font-semibold text-sm lg:text-md xl:text-2xl text-yellow-200 ${DROP_SHADOW.base}`}
           >
-            Booklet Ormawa
+            Braciate 2026
           </h2>
           <Link
             href={BOOKLET_HREF}

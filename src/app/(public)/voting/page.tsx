@@ -5,8 +5,8 @@ import { getSettings, isFeatureEnabled } from "@/src/lib/settings";
 export default async function VotingPage() {
   const settings = await getSettings();
   if (!isFeatureEnabled(settings, "voting")) {
-    redirect("/");
+    redirect("/exception");
   }
-
+  redirect("/exception");
   return <VotingContainer />;
 }
