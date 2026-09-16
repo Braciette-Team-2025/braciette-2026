@@ -63,11 +63,7 @@ export default function VotingGuideSection({
           data-guide-cta
           className="w-32 md:w-64 xl:w-100 mt-4 md:mt-7 xl:mt-10"
         >
-          <LandingButton
-            className="w-full"
-            href={buttonHref}
-            disabled={buttonDisabled}
-          >
+          <LandingButton className="w-full" href={buttonHref} disabled={true}>
             Voting
           </LandingButton>
         </div>

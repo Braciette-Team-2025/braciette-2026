@@ -7,6 +7,5 @@ export default async function OpenTalentPage() {
   if (!isFeatureEnabled(settings, "open_talent")) {
     redirect("/");
   }
-
   return <OpenTalentFormContainer />;
 }

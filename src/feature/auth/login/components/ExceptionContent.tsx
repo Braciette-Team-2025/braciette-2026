@@ -24,7 +24,9 @@ export default function ExceptionContent() {
         </div>
       </div>
       <div className="flex w-full justify-center">
-        <Button>Keluar</Button>
+        <Link href="/">
+          <Button>Keluar</Button>
+        </Link>
       </div>
     </>
   );
