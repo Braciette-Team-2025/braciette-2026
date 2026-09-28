@@ -51,6 +51,15 @@ export default function StepTwoFormUKM({
         />
       </div>
       <DriveLinkInput value={linkDrive} onChange={setLinkDrive} />
+      <div>
+        <p className="text-xs md:text-sm">
+          <span className="text-yellow-500">Note:</span> Untuk nomination
+          seperti &quot;best critical thinking, religious, etc&quot; akan secara
+          otomatis di assign oleh sistem, kamu hanya perlu mengisi achievement
+          yang pernah di dapatkan dalam organisasi tersebut sebagai pendataan
+          nominasi tersebut
+        </p>
+      </div>
       <NominasiSummary files={allRequiredFiles} />
     </div>
   );
