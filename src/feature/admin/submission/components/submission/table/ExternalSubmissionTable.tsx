@@ -61,15 +61,15 @@ export default function ExternalSubmissionTable({
                 key={data.id}
                 className="text-center bg-yellow-100 hover:bg-yellow-50"
               >
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {startIndex + index + 1}
                 </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {data.name}
                 </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {data.type}
                 </TableCell>
 

@@ -60,7 +60,7 @@ export default function InternalSubmissionTable({
               No
             </TableHead>
 
-            <TableHead className="w-[20%] border-r-2 border-yellow-500 text-center text-yellow-50">
+            <TableHead className="w-[18%] border-r-2 border-yellow-500 text-center text-yellow-50">
               Nama Ormawa
             </TableHead>
 
@@ -68,7 +68,7 @@ export default function InternalSubmissionTable({
               PIC
             </TableHead>
 
-            <TableHead className="w-[10%] border-r-2 border-yellow-500 text-center text-yellow-50">
+            <TableHead className="w-[12%] border-r-2 border-yellow-500 text-center text-yellow-50">
               Kontak PIC
             </TableHead>
 
@@ -95,27 +95,27 @@ export default function InternalSubmissionTable({
                 key={data.id}
                 className="text-center bg-yellow-100 hover:bg-yellow-50"
               >
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {startIndex + index + 1}
                 </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {data.name}
                 </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {data.pic}
                 </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {data.pic_contact}
                 </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500">
+                <TableCell className="border-r-2 border-yellow-500 whitespace-normal break-words">
                   {data.type}
                 </TableCell>
 
-                <TableCell className="border-r-2 border-yellow-500 p-2 flex justify-center items-center h-full">
+                <TableCell className="border-r-2 border-yellow-500 p-2">
                   <Select
                     value={data.status}
                     onValueChange={(val: "accepted" | "pending" | "rejected") =>
