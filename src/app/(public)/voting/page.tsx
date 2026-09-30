@@ -9,9 +9,8 @@ export default async function VotingPage() {
     redirect("/exception");
   }
   return (
-    // <ProtectedRoute>
-    //   <VotingContainer />
-    // </ProtectedRoute>
-    redirect("/exception")
+    <ProtectedRoute>
+      <VotingContainer />
+    </ProtectedRoute>
   );
 }
