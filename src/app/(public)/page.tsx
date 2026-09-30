@@ -5,7 +5,7 @@ export default async function Home() {
   const settings = await getSettings();
   return (
     <HomeContainer
-      votingEnabled={isFeatureEnabled(settings, "voting")}
+      votingEnabled={false}
       openTalentEnabled={isFeatureEnabled(settings, "open_talent")}
     />
   );

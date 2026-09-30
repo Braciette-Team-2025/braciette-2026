@@ -18,8 +18,8 @@ export default function HeroSection({
 }: HeroSectionProps) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  const votingHref = !votingEnabled && !isAuthenticated ? "/login" : "/voting";
-  const votingDisabled = !votingEnabled && isAuthenticated;
+  const votingHref = "/voting";
+  const votingDisabled = !votingEnabled;
 
   const openTalentHref =
     !openTalentEnabled && !isAuthenticated ? "/login" : "/open-talent";
