@@ -21,7 +21,7 @@ export default function HomeContainer({
   return (
     <main className="w-full flex flex-col gap-12 md:gap-0 pt-12 md:pt-0 pb-12">
       <HeroSection
-        votingEnabled={votingEnabled}
+        votingEnabled={false}
         openTalentEnabled={openTalentEnabled}
       />
       <div className="flex flex-col gap-12 md:gap-28">
