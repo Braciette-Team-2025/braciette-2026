@@ -31,23 +31,8 @@ export default function SubmissionDetailModalInternal({
         <DetailField label="Nama Ormawa" value={data.name} />
         <DetailField label="Jenis Ormawa" value={data.type} />
 
-        {isUkm ? (
-          <>
-            <DetailField label="Nama Kabinet" value={data.cabinet_name} />
-            <DetailField
-              label="Nominasi"
-              value={data.nominations?.join(", ")}
-            />
-          </>
-        ) : (
-          <>
-            <DetailField label="Nama Kabinet" value={data.cabinet_name} />
-            <DetailField
-              label="Nominasi"
-              value={data.nominations?.join(", ")}
-            />
-          </>
-        )}
+        <DetailField label="Nama Kabinet" value={data.cabinet_name} />
+        <DetailField label="Nominasi" value={data.nominations?.join(", ")} />
 
         <DetailField
           label="Program Kerja Unggulan"
@@ -57,6 +42,10 @@ export default function SubmissionDetailModalInternal({
           <p className="mb-1 text-sm font-semibold text-[#4B4B4B]">Status</p>
           <StatusBadge status={data.status} />
         </div>
+
+        {isUkm && data.achievements && data.achievements.length > 0 && (
+          <DetailField label="Prestasi" value={data.achievements} fullWidth />
+        )}
 
         <DetailField
           label="Deskripsi Singkat"

@@ -135,6 +135,7 @@ export interface InternalSubmissionDetail extends InternalSubmissionItem {
   short_description: string;
   drive_link: string;
   social_medias: { platform: string; url: string }[];
+  achievements?: string[];
 }
 
 export interface InternalSubmissionStats {
