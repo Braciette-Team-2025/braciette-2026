@@ -67,6 +67,7 @@ export const votingService = {
       {
         params: {
           type,
+          limit: 999,
         },
       },
     );
