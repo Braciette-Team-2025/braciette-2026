@@ -16,8 +16,8 @@ export default function OpenTalentGuideSection({
 }: OpenTalentGuideSectionProps) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  const buttonHref = disabled && !isAuthenticated ? "/login" : "/open-talent";
-  const buttonDisabled = disabled && isAuthenticated;
+  const buttonHref = "/open-talent";
+  const buttonDisabled = disabled;
 
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";

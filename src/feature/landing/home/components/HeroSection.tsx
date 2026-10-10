@@ -21,9 +21,8 @@ export default function HeroSection({
   const votingHref = !votingEnabled && !isAuthenticated ? "/login" : "/voting";
   const votingDisabled = !votingEnabled && isAuthenticated;
 
-  const openTalentHref =
-    !openTalentEnabled && !isAuthenticated ? "/login" : "/open-talent";
-  const openTalentDisabled = !openTalentEnabled && isAuthenticated;
+  const openTalentHref = "/open-talent";
+  const openTalentDisabled = !openTalentEnabled;
 
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
