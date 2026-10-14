@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <HomeContainer
       votingEnabled={isFeatureEnabled(settings, "voting")}
-      openTalentEnabled={false} // Temporarily disabled
+      openTalentEnabled={false}
     />
   );
 }

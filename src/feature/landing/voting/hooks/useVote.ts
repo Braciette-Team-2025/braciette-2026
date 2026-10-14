@@ -75,9 +75,16 @@ export function useVote() {
     setSelectedOrganizationId(null);
   }, []);
 
+  const resetVote = useCallback(() => {
+    setSelectedOrganizationId(null);
+    setIsConfirmModalOpen(false);
+    setPendingCategoryId(null);
+  }, []);
+
   return {
     selectedOrganizationId,
     selectOrganization,
+    resetVote,
     openConfirmModal,
     closeConfirmModal,
     confirmVote,

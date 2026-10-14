@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 
@@ -8,6 +9,7 @@ import { useAuthStore } from "@/src/feature/auth/store/authStore";
 import { useCategory } from "../hooks/useCategory";
 import { useOrganization } from "../hooks/useOrganization";
 import { useVote } from "../hooks/useVote";
+import type { Category } from "../types/category";
 
 import { VotingHero } from "../components/VotingHero";
 import { VotingSearch } from "../components/VotingSearch";
@@ -35,6 +37,7 @@ export function VotingContainer() {
   const {
     selectedOrganizationId,
     selectOrganization,
+    resetVote,
     openConfirmModal,
     closeConfirmModal,
     confirmVote,
@@ -43,6 +46,29 @@ export function VotingContainer() {
     isSuccessModalOpen,
     closeSuccessModal,
   } = useVote();
+
+  const handleResetCategory = useCallback(() => {
+    resetCategory();
+    resetVote();
+    setSearchQuery("");
+  }, [resetCategory, resetVote, setSearchQuery]);
+
+  const handleSelectCategory = useCallback(
+    (category: Category) => {
+      resetVote();
+      setSearchQuery("");
+      selectCategory(category);
+    },
+    [resetVote, setSearchQuery, selectCategory],
+  );
+
+  const handleBack = useCallback(() => {
+    if (selectedCategory) {
+      handleResetCategory();
+    } else {
+      router.back();
+    }
+  }, [selectedCategory, handleResetCategory, router]);
 
   const hasVotedByCategory: Record<string, boolean> = {
     BEM: user?.has_voted_bem ?? false,
@@ -60,8 +86,10 @@ export function VotingContainer() {
       <div className="pointer-events-none absolute inset-x-0 top-4 z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 md:top-6">
         <button
           type="button"
-          onClick={() => router.back()}
-          aria-label="Kembali"
+          onClick={handleBack}
+          aria-label={
+            selectedCategory ? "Kembali ke pilihan ormawa" : "Kembali"
+          }
           className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-yellow-500/70 bg-blue-500/60 text-yellow-500 shadow-[0_0_16px_-6px_rgba(201,162,39,0.5)] transition-colors hover:border-yellow-400 hover:text-yellow-400 sm:h-10 sm:w-10 md:h-11 md:w-11"
         >
           <ChevronLeft className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={2.5} />
@@ -74,7 +102,7 @@ export function VotingContainer() {
 
           <CategoryGrid
             categories={categories}
-            onSelect={selectCategory}
+            onSelect={handleSelectCategory}
             hasVotedByCategory={hasVotedByCategory}
           />
         </>
@@ -82,7 +110,10 @@ export function VotingContainer() {
         <>
           <VotingHero variant="organization" />
 
-          <CategoryButton category={selectedCategory} onClick={resetCategory} />
+          <CategoryButton
+            category={selectedCategory}
+            onClick={handleResetCategory}
+          />
 
           <VotingSearch
             value={searchQuery}
