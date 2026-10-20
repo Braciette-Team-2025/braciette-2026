@@ -4,6 +4,7 @@ import FaqSection from "../components/FaqSection";
 import HeroSection from "../components/HeroSection";
 import OpenTalentGuideSection from "../components/OpenTalentGuideSection";
 import PhotoSection from "../components/PhotoSection";
+import PublicVotingResultsSection from "../components/PublicVotingResultSection";
 import TimelineSection from "../components/TimelineSection";
 import VotingGuideSection from "../components/VotingGuideSection";
 import { useScrollToHashOnMount } from "../hooks/useScrollToHashOnMount";
@@ -27,6 +28,7 @@ export default function HomeContainer({
       <div className="flex flex-col gap-12 md:gap-28">
         <AboutSection />
         <PhotoSection />
+        <PublicVotingResultsSection />
         <TimelineSection />
         <VotingGuideSection disabled={!votingEnabled} />
         <OpenTalentGuideSection disabled={!openTalentEnabled} />
