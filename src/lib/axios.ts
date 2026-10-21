@@ -30,6 +30,7 @@ api.interceptors.request.use(
 );
 
 let isRefreshing = false;
+
 let failedQueue: Array<{
   resolve: (token: string) => void;
   reject: (err: unknown) => void;
@@ -43,6 +44,7 @@ function processQueue(error: unknown, token: string | null = null) {
       resolve(token!);
     }
   });
+
   failedQueue = [];
 }
 
@@ -57,6 +59,7 @@ function redirectToLogin() {
   if (typeof window === "undefined" || isLoginPage()) return;
 
   const router = getRouter();
+
   if (router) {
     router.replace("/login");
   } else {
@@ -66,26 +69,40 @@ function redirectToLogin() {
 
 api.interceptors.response.use(
   (response) => response,
-  async (error: unknown) => {
-    if (!axios.isAxiosError(error)) return Promise.reject(error);
 
-    const originalRequest = error.config as typeof error.config & {
-      _retry?: boolean;
-    };
+  async (error: unknown) => {
+    if (!axios.isAxiosError(error)) {
+      return Promise.reject(error);
+    }
+
+    const originalRequest = error.config as
+      | (NonNullable<typeof error.config> & {
+          _retry?: boolean;
+        })
+      | undefined;
+
     const requestUrl = originalRequest?.url ?? "";
     const status = error.response?.status;
 
     const isRefreshEndpoint = requestUrl.includes("/auth/refresh");
+
     const isLoginEndpoint =
       requestUrl.includes("/auth/login") || requestUrl.includes("/auth/google");
-    const isLogoutEndpoint = requestUrl.includes("/auth/logout");
 
+    const isLogoutEndpoint = requestUrl.includes("/auth/logout");
     if (isLoginEndpoint || isLogoutEndpoint) {
       return Promise.reject(error);
     }
-
     if (isRefreshEndpoint && status === 401) {
       setAccessToken(null);
+      return Promise.reject(error);
+    }
+
+    const isPublicVotingHomeEndpoint = requestUrl.includes(
+      "/v1/submission/external/home",
+    );
+
+    if (isPublicVotingHomeEndpoint && status === 401) {
       return Promise.reject(error);
     }
 
@@ -94,6 +111,7 @@ api.interceptors.response.use(
         setAccessToken(null);
         redirectToLogin();
       }
+
       return Promise.reject(error);
     }
 
@@ -104,14 +122,20 @@ api.interceptors.response.use(
         .then((token) => {
           if (originalRequest) {
             originalRequest.headers = originalRequest.headers ?? {};
+
             originalRequest.headers.Authorization = `Bearer ${token}`;
           }
+
           return api(originalRequest!);
         })
         .catch((err) => Promise.reject(err));
     }
 
-    originalRequest!._retry = true;
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
+
+    originalRequest._retry = true;
     isRefreshing = true;
 
     try {
@@ -122,16 +146,26 @@ api.interceptors.response.use(
       const newToken = refreshResponse.data.data.access_token;
 
       setAccessToken(newToken);
+
       processQueue(null, newToken);
 
-      originalRequest!.headers = originalRequest!.headers ?? {};
-      originalRequest!.headers.Authorization = `Bearer ${newToken}`;
+      originalRequest.headers = originalRequest.headers ?? {};
+      originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
-      return api(originalRequest!);
+      return api(originalRequest);
     } catch (refreshError) {
       processQueue(refreshError, null);
       setAccessToken(null);
-      redirectToLogin();
+
+      const isPublicPage =
+        typeof window !== "undefined" &&
+        (window.location.pathname === "/" ||
+          window.location.pathname.startsWith("/#"));
+
+      if (!isPublicPage) {
+        redirectToLogin();
+      }
+
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;
