@@ -9,5 +9,5 @@ export const NAVIGATION_ITEMS: NavigationItem[] = [
     href: "/voting",
     featureFlag: "voting",
   },
-  { id: "rank", label: "Rank", href: "/rank", disabled: true },
+  { id: "rank", label: "Rank", href: "/#rank" },
 ];

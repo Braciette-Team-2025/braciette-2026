@@ -15,8 +15,11 @@ import {
   DEFAULT_VOTING_CATEGORY_ID,
   VOTING_CATEGORIES,
 } from "@/src/feature/admin/voting/constants/voting";
-import { useVotingList } from "@/src/feature/admin/voting/hooks/useVoting";
-import type { VotingCategoryId } from "@/src/feature/admin/voting/types/voting";
+import { useVotingHome } from "@/src/feature/admin/voting/hooks/useVoting";
+import type {
+  VotingCategoryId,
+  VotingHomeItem,
+} from "@/src/feature/admin/voting/types/voting";
 import VotingPagination from "../components/ui/VotingPagination";
 import { useVotingAnimation } from "../hooks/animation/useVotingAnimation";
 
@@ -46,14 +49,26 @@ export default function PublicVotingResultsSection() {
     (category) => category.id === categoryId,
   );
 
-  const { data, isLoading, isError } = useVotingList(categoryId);
+  const { data, isLoading, isError } = useVotingHome(categoryId);
 
-  const items = useMemo(() => data?.data?.data ?? [], [data]);
+  const items: VotingHomeItem[] = useMemo(() => {
+    const rawData = data?.data;
+    if (Array.isArray(rawData)) {
+      return rawData;
+    }
+    return rawData?.data ?? [];
+  }, [data]);
 
-  const totalVotes = useMemo(
-    () => items.reduce((total, item) => total + item.vote_count, 0),
-    [items],
-  );
+  const totalVotes = useMemo(() => {
+    const rawData = data?.data;
+    if (!Array.isArray(rawData) && rawData?.stats) {
+      const categoryStat = rawData.stats[categoryId];
+      if (typeof categoryStat === "number") {
+        return categoryStat;
+      }
+    }
+    return items.reduce((total, item) => total + item.vote_count, 0);
+  }, [data, categoryId, items]);
 
   // maxVotes dihitung dari seluruh data (bukan per halaman) supaya
   // panjang bar tetap sebanding antar halaman.
@@ -89,6 +104,7 @@ export default function PublicVotingResultsSection() {
   return (
     <section
       ref={sectionRef}
+      id="rank"
       aria-labelledby="public-voting-title"
       className="relative w-full min-w-0 px-3 sm:px-5 md:px-6 lg:px-10"
     >

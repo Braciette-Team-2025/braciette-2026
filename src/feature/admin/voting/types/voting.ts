@@ -47,14 +47,16 @@ export interface VotingListResponse {
 
 /**
  * Response:
- * GET /v1/submission/external/home
+ * GET /v1/public/vote-results?type=BEM
+ * GET /v1/public/vote-results
  */
 export interface VotingStats {
-  total: number;
-  bem: number;
-  dpm: number;
-  hima: number;
-  ukm: number;
+  total?: number;
+  bem?: number;
+  dpm?: number;
+  hima?: number;
+  ukm?: number;
+  [key: string]: number | undefined;
 }
 
 export interface VotingHomeItem {
@@ -65,14 +67,16 @@ export interface VotingHomeItem {
   vote_count: number;
 }
 
+export interface VotingHomeData {
+  stats?: VotingStats;
+  data: VotingHomeItem[];
+  total?: number;
+  page?: number;
+  limit?: number;
+}
+
 export interface VotingHomeResponse {
   success: boolean;
   message: string;
-  data: {
-    stats: VotingStats;
-    data: VotingHomeItem[];
-    total: number;
-    page: number;
-    limit: number;
-  };
+  data: VotingHomeData;
 }
