@@ -104,6 +104,7 @@ export default function PublicVotingResultsSection() {
   return (
     <section
       ref={sectionRef}
+      id="rank"
       aria-labelledby="public-voting-title"
       className="relative w-full min-w-0 px-3 sm:px-5 md:px-6 lg:px-10"
     >
