@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Trophy } from "lucide-react";
 import {
   Table,
@@ -18,6 +18,7 @@ import {
 import { useVotingList } from "@/src/feature/admin/voting/hooks/useVoting";
 import type { VotingCategoryId } from "@/src/feature/admin/voting/types/voting";
 import VotingPagination from "../components/ui/VotingPagination";
+import { useVotingAnimation } from "../hooks/animation/useVotingAnimation";
 
 const numberFormat = new Intl.NumberFormat("id-ID");
 
@@ -31,6 +32,15 @@ export default function PublicVotingResultsSection() {
     DEFAULT_VOTING_CATEGORY_ID,
   );
   const [page, setPage] = useState(1);
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const totalCardRef = useRef<HTMLDivElement>(null);
+  const categoriesRef = useRef<HTMLDivElement>(null);
+  const tableCardRef = useRef<HTMLDivElement>(null);
+  const tableBodyRef = useRef<HTMLTableSectionElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
 
   const activeCategory = VOTING_CATEGORIES.find(
     (category) => category.id === categoryId,
@@ -61,8 +71,24 @@ export default function PublicVotingResultsSection() {
   const rangeStart = items.length === 0 ? 0 : startIndex + 1;
   const rangeEnd = startIndex + pagedItems.length;
 
+  useVotingAnimation(
+    {
+      sectionRef,
+      headingRef,
+      subtitleRef,
+      totalCardRef,
+      categoriesRef,
+      tableCardRef,
+      tableBodyRef,
+      footerRef,
+    },
+    `${categoryId}-${currentPage}-${pagedItems.length}`,
+    !isLoading && !isError && pagedItems.length > 0,
+  );
+
   return (
     <section
+      ref={sectionRef}
       aria-labelledby="public-voting-title"
       className="relative w-full min-w-0 px-3 sm:px-5 md:px-6 lg:px-10"
     >
@@ -76,6 +102,7 @@ export default function PublicVotingResultsSection() {
           <div className="relative flex min-w-0 flex-col gap-4 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="min-w-0 flex-1">
               <h1
+                ref={headingRef}
                 id="public-voting-title"
                 className="font-the-seasons flex flex-wrap items-baseline gap-x-2 gap-y-1 px-1 py-3 text-[28px] leading-none sm:gap-x-3 sm:text-[36px] md:text-[44px] lg:text-[56px] xl:text-[64px]"
               >
@@ -96,12 +123,18 @@ export default function PublicVotingResultsSection() {
                 </span>
               </h1>
 
-              <p className="mt-2 max-w-xl text-xs leading-relaxed text-blue-100/80 sm:mt-3 sm:text-sm md:text-base">
+              <p
+                ref={subtitleRef}
+                className="mt-2 max-w-xl text-xs leading-relaxed text-blue-100/80 sm:mt-3 sm:text-sm md:text-base"
+              >
                 Perolehan Suara Sementara Organisasi
               </p>
             </div>
 
-            <div className="flex min-w-0 w-full items-center gap-3 rounded-xl border border-yellow-300/25 bg-blue-950/50 px-3 py-3 sm:px-4 md:w-auto md:min-w-56 md:px-5">
+            <div
+              ref={totalCardRef}
+              className="flex min-w-0 w-full items-center gap-3 rounded-xl border border-yellow-300/25 bg-blue-950/50 px-3 py-3 sm:px-4 md:w-auto md:min-w-56 md:px-5"
+            >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-yellow-300/15 text-yellow-300 sm:h-10 sm:w-10">
                 <Trophy size={19} aria-hidden="true" />
               </span>
@@ -122,6 +155,7 @@ export default function PublicVotingResultsSection() {
             </div>
           </div>
           <div
+            ref={categoriesRef}
             className="relative mt-5 flex min-w-0 gap-2 overflow-x-auto overscroll-x-contain pb-2 sm:mt-6 md:mt-7"
             aria-label="Pilih kategori voting"
           >
@@ -149,7 +183,10 @@ export default function PublicVotingResultsSection() {
             })}
           </div>
 
-          <div className="relative mt-3 min-w-0 overflow-hidden rounded-xl border border-blue-100/15 bg-blue-950/35 sm:mt-4">
+          <div
+            ref={tableCardRef}
+            className="relative mt-3 min-w-0 overflow-hidden rounded-xl border border-blue-100/15 bg-blue-950/35 sm:mt-4"
+          >
             {isError ? (
               <div
                 role="alert"
@@ -176,7 +213,7 @@ export default function PublicVotingResultsSection() {
                     </TableRow>
                   </TableHeader>
 
-                  <TableBody>
+                  <TableBody ref={tableBodyRef}>
                     {isLoading ? (
                       Array.from({ length: 4 }).map((_, index) => (
                         <TableRow key={index} className="border-blue-100/10">
@@ -253,19 +290,22 @@ export default function PublicVotingResultsSection() {
             )}
           </div>
 
-          {!isLoading && !isError && items.length > 0 && (
-            <p className="relative mt-3 text-right text-[10px] leading-relaxed text-blue-100/55 sm:text-xs">
-              Menampilkan {rangeStart}–{rangeEnd} dari {items.length} organisasi
-            </p>
-          )}
+          <div ref={footerRef}>
+            {!isLoading && !isError && items.length > 0 && (
+              <p className="relative mt-3 text-right text-[10px] leading-relaxed text-blue-100/55 sm:text-xs">
+                Menampilkan {rangeStart}–{rangeEnd} dari {items.length}{" "}
+                organisasi
+              </p>
+            )}
 
-          {!isLoading && !isError && (
-            <VotingPagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setPage}
-            />
-          )}
+            {!isLoading && !isError && (
+              <VotingPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setPage}
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>
