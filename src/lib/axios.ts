@@ -98,9 +98,9 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const isPublicVotingHomeEndpoint = requestUrl.includes(
-      "/v1/submission/external/home",
-    );
+    const isPublicVotingHomeEndpoint =
+      requestUrl.includes("/v1/submission/external/home") ||
+      requestUrl.includes("/v1/public/vote-results");
 
     if (isPublicVotingHomeEndpoint && status === 401) {
       return Promise.reject(error);

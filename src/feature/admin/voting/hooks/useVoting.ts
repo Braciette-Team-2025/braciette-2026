@@ -7,7 +7,10 @@ import type { VotingCategoryId } from "../types/voting";
 export const votingKeys = {
   all: ["admin", "voting"] as const,
 
-  home: () => [...votingKeys.all, "home"] as const,
+  home: (category?: VotingCategoryId | string) =>
+    category
+      ? ([...votingKeys.all, "home", category] as const)
+      : ([...votingKeys.all, "home"] as const),
 
   lists: () => [...votingKeys.all, "list"] as const,
 
@@ -31,10 +34,10 @@ export function useVotingList(category: VotingCategoryId) {
   });
 }
 
-export function useVotingHome() {
+export function useVotingHome(category?: VotingCategoryId | string) {
   return useQuery({
-    queryKey: votingKeys.home(),
-    queryFn: getVotingHome,
+    queryKey: votingKeys.home(category),
+    queryFn: () => getVotingHome(category),
 
     // Data statistik tidak perlu dihantam API terus-menerus.
     staleTime: 30 * 1000,

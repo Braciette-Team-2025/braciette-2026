@@ -5,7 +5,7 @@ import type {
   VotingListResponse,
 } from "../types/voting";
 
-const BASE_URL = "/v1/submission/external";
+const BASE_URL = "/v1";
 
 const CATEGORY_TYPE_MAP: Record<VotingCategoryId, string> = {
   bem: "BEM",
@@ -19,17 +19,34 @@ export async function getVotingSubmissions(
 ): Promise<VotingListResponse> {
   const type = CATEGORY_TYPE_MAP[category];
 
-  const response = await api.get<VotingListResponse>(`${BASE_URL}/home`, {
-    params: {
-      type,
+  const response = await api.get<VotingListResponse>(
+    `${BASE_URL}/submission/external/home`,
+    {
+      params: {
+        type,
+      },
     },
-  });
+  );
 
   return response.data;
 }
 
-export async function getVotingHome(): Promise<VotingHomeResponse> {
-  const response = await api.get<VotingHomeResponse>(`${BASE_URL}/home`);
+export async function getVotingHome(
+  category?: VotingCategoryId | string,
+): Promise<VotingHomeResponse> {
+  let type: string | undefined;
+
+  if (category) {
+    type =
+      CATEGORY_TYPE_MAP[category as VotingCategoryId] ?? category.toUpperCase();
+  }
+
+  const response = await api.get<VotingHomeResponse>(
+    `${BASE_URL}/public/vote-results`,
+    {
+      params: type ? { type } : undefined,
+    },
+  );
 
   return response.data;
 }
