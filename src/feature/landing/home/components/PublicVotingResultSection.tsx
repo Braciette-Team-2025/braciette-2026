@@ -27,6 +27,8 @@ const numberFormat = new Intl.NumberFormat("id-ID");
 
 const PAGE_SIZE = 10;
 
+const VOTING_CLOSED = true;
+
 const highlightClass =
   "font-sloop text-[48px] leading-none sm:text-[64px] md:text-[80px] lg:text-[112px] xl:text-[140px]";
 
@@ -100,6 +102,58 @@ export default function PublicVotingResultsSection() {
     `${categoryId}-${currentPage}-${pagedItems.length}`,
     !isLoading && !isError && pagedItems.length > 0,
   );
+
+  if (VOTING_CLOSED) {
+    return (
+      <section
+        id="rank"
+        aria-labelledby="voting-closed-title"
+        className="relative w-full min-w-0 px-3 sm:px-5 md:px-6 lg:px-10"
+      >
+        <div className="mx-auto w-full max-w-6xl min-w-0 overflow-hidden rounded-2xl border border-yellow-200/25 bg-blue-900/55 shadow-[0_20px_70px_rgba(3,6,30,0.25)] backdrop-blur-md sm:rounded-3xl">
+          <div className="relative min-w-0 overflow-hidden px-4 py-14 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:px-10 lg:py-28">
+            {/* Glow decorations */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-14 -top-20 h-72 w-72 rounded-full bg-yellow-400/10 blur-3xl"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-20 -left-14 h-72 w-72 rounded-full bg-purple-500/10 blur-3xl"
+            />
+
+            <div className="relative flex flex-col items-center gap-6 text-center sm:gap-8">
+              {/* Icon */}
+              <div className="flex h-20 w-20 items-center justify-center rounded-full border border-yellow-300/30 bg-yellow-300/10 shadow-[0_0_40px_rgba(218,161,17,0.3)] sm:h-24 sm:w-24">
+                <Trophy
+                  size={40}
+                  className="text-yellow-300 drop-shadow-[0_0_12px_rgba(218,161,17,0.9)] sm:size-[48px]"
+                  aria-hidden="true"
+                />
+              </div>
+
+              {/* Title */}
+              <h1
+                id="voting-closed-title"
+                className="font-the-seasons text-[28px] leading-tight text-yellow-300 drop-shadow-[0_0_24px_rgba(218,161,17,0.7)] sm:text-[36px] md:text-[44px] lg:text-[52px]"
+              >
+                Terimakasih Sudah Voting
+              </h1>
+
+              {/* Divider */}
+              <div className="h-px w-24 bg-gradient-to-r from-transparent via-yellow-300/50 to-transparent sm:w-32" />
+
+              {/* Subtitle */}
+              <p className="max-w-md text-sm leading-relaxed text-blue-100/75 sm:text-base md:max-w-lg md:text-lg">
+                Pengumuman Pemenang akan disampaikan ketika Main event besok,
+                Sampai jumpa!
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
