@@ -15,7 +15,7 @@ import {
   DEFAULT_VOTING_CATEGORY_ID,
   VOTING_CATEGORIES,
 } from "@/src/feature/admin/voting/constants/voting";
-import { useVotingHome } from "@/src/feature/admin/voting/hooks/useVoting";
+import { STATIC_VOTING_RESULTS } from "@/src/feature/admin/voting/data/votingResults.static";
 import type {
   VotingCategoryId,
   VotingHomeItem,
@@ -27,7 +27,7 @@ const numberFormat = new Intl.NumberFormat("id-ID");
 
 const PAGE_SIZE = 10;
 
-const VOTING_CLOSED = true;
+const VOTING_CLOSED = false;
 
 const highlightClass =
   "font-sloop text-[48px] leading-none sm:text-[64px] md:text-[80px] lg:text-[112px] xl:text-[140px]";
@@ -51,26 +51,19 @@ export default function PublicVotingResultsSection() {
     (category) => category.id === categoryId,
   );
 
-  const { data, isLoading, isError } = useVotingHome(categoryId);
+  // Data statis (snapshot final dari backend), tidak ada request jaringan.
+  const isLoading = false;
+  const isError = false;
 
-  const items: VotingHomeItem[] = useMemo(() => {
-    const rawData = data?.data;
-    if (Array.isArray(rawData)) {
-      return rawData;
-    }
-    return rawData?.data ?? [];
-  }, [data]);
+  const items: VotingHomeItem[] = useMemo(
+    () => STATIC_VOTING_RESULTS[categoryId] ?? [],
+    [categoryId],
+  );
 
-  const totalVotes = useMemo(() => {
-    const rawData = data?.data;
-    if (!Array.isArray(rawData) && rawData?.stats) {
-      const categoryStat = rawData.stats[categoryId];
-      if (typeof categoryStat === "number") {
-        return categoryStat;
-      }
-    }
-    return items.reduce((total, item) => total + item.vote_count, 0);
-  }, [data, categoryId, items]);
+  const totalVotes = useMemo(
+    () => items.reduce((total, item) => total + item.vote_count, 0),
+    [items],
+  );
 
   // maxVotes dihitung dari seluruh data (bukan per halaman) supaya
   // panjang bar tetap sebanding antar halaman.
