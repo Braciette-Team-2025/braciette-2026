@@ -6,7 +6,6 @@ import FloatingNotesWrapper from "./ui/FloatingNotesWrapper";
 import { LandingButton } from "./ui/LandingButton";
 import VotingTextbox from "./ui/VotingTextbox";
 import { useGuideAnimation } from "../hooks/animation/Useguideanimation";
-import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
 interface VotingGuideSectionProps {
   disabled?: boolean;
@@ -15,8 +14,6 @@ interface VotingGuideSectionProps {
 export default function VotingGuideSection({
   disabled,
 }: VotingGuideSectionProps) {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-
   const buttonHref = "/voting";
   const buttonDisabled = disabled;
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { ComingSoonStarfield } from "@/src/feature/landing/coming-soon/components/scene/ComingSoonStarfield";
 import { DecorNote } from "./DecorNote";
 import { FilmStrip } from "./FilmStrip";
@@ -11,15 +12,25 @@ const FILM_GLOW =
  * dan note musik. Semua elemen animasi ditandai data-podium-* dan dianimasikan
  * oleh usePodiumAnimation. Murni dekoratif (aria-hidden).
  */
-export function PodiumBackdrop() {
+interface PodiumBackdropProps {
+  /** di landing: pakai background landing, jadi tanpa starfield sendiri */
+  embedded?: boolean;
+}
+
+export function PodiumBackdrop({ embedded = false }: PodiumBackdropProps) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      className={cn(
+        "pointer-events-none absolute inset-0 z-0 overflow-hidden",
+        // di landing: dekor memudar di tepi atas/bawah agar menyatu dengan section lain
+        embedded &&
+          "[mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]",
+      )}
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_32%,rgb(var(--podium-glow)/0.14),transparent_60%),radial-gradient(ellipse_at_88%_100%,rgb(var(--podium-glow)/0.2),transparent_55%)]" />
 
-      <ComingSoonStarfield />
+      {embedded ? null : <ComingSoonStarfield />}
 
       {/* Swirl emas */}
       <div className="absolute -left-[10%] top-[24%] w-[120%]">

@@ -5,12 +5,17 @@ import {
 import type { PodiumEntry } from "../types/podium.types";
 import { PodiumColumn } from "./PodiumColumn";
 
+interface PodiumBoardProps {
+  entries: PodiumEntry[];
+  showBadge?: boolean;
+}
+
 /**
  * Susunan podium kiri -> kanan: juara 2, 1, 3.
  * Wrapper menjadi container query (cqw) sehingga ukuran nama & angka
  * mengikuti lebar podium, bukan lebar layar.
  */
-export function PodiumBoard({ entries }: { entries: PodiumEntry[] }) {
+export function PodiumBoard({ entries, showBadge = false }: PodiumBoardProps) {
   const ordered = PODIUM_COLUMN_ORDER.flatMap((rank) => {
     const entry = entries.find((item) => item.rank === rank);
     return entry ? [entry] : [];
@@ -27,6 +32,7 @@ export function PodiumBoard({ entries }: { entries: PodiumEntry[] }) {
             key={entry.id}
             entry={entry}
             heightRatio={PODIUM_RANK_HEIGHT[entry.rank]}
+            showBadge={showBadge}
           />
         ))}
       </ol>

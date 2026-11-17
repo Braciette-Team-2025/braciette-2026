@@ -5,7 +5,6 @@ import { useHeroAnimation } from "../hooks/animation/useHeroAnimation";
 import GoldString from "./GoldString";
 import GoldStringLeftPaths from "./Goldstringleftpaths";
 import GoldStringRightPaths from "./Goldstringrightpaths";
-import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
 interface HeroSectionProps {
   votingEnabled?: boolean;
@@ -13,16 +12,14 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({
-  votingEnabled = true,
-  openTalentEnabled = true,
+  votingEnabled = false,
+  openTalentEnabled = false,
 }: HeroSectionProps) {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const votingHref = "/";
+  const votingDisabled = votingEnabled;
 
-  const votingHref = !votingEnabled && !isAuthenticated ? "/login" : "/voting";
-  const votingDisabled = !votingEnabled && isAuthenticated;
-
-  const openTalentHref = "/open-talent";
-  const openTalentDisabled = !openTalentEnabled;
+  const openTalentHref = "/";
+  const openTalentDisabled = openTalentEnabled;
 
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";

@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { jakarta, inter, sloop, theSeasons } from "@/src/styles/fonts";
+import {
+  jakarta,
+  inter,
+  sloop,
+  theSeasons,
+  playfair,
+} from "@/src/styles/fonts";
 import "./globals.css";
 import { AuthProvider } from "../feature/auth/providers/AuthProvider";
 import { ReactQueryProvider } from "../feature/auth/providers/ReactQueryProvider";
@@ -59,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${jakarta.variable} ${inter.variable} ${sloop.variable} ${theSeasons.variable} h-full antialiased`}
+      className={`${jakarta.variable} ${inter.variable} ${sloop.variable} ${theSeasons.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script
