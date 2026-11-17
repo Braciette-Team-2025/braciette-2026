@@ -1,4 +1,4 @@
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter, Playfair_Display } from "next/font/google";
 import localFont from "next/font/local";
 
 export const jakarta = Plus_Jakarta_Sans({
@@ -9,6 +9,15 @@ export const jakarta = Plus_Jakarta_Sans({
 export const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+/**
+ * Serif untuk angka di podium. Font The Seasons DEMO menampilkan watermark
+ * pada digit tertentu (mis. angka 4), jadi angka memakai font ini.
+ */
+export const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
 });
 
 export const sloop = localFont({

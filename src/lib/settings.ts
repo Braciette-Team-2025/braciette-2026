@@ -1,46 +1,27 @@
-const API_BASE_URL = process.env.API_BASE_URL;
-
-interface SettingItem {
+/**
+ * Backend sudah dinonaktifkan (event selesai). Feature flag kini statis
+ * dan tidak melakukan request jaringan.
+ */
+export interface SettingItem {
   id: string;
   name: string;
   is_enable: boolean;
 }
 
-interface SettingsResponse {
-  success: boolean;
-  message: string;
-  data: SettingItem[];
-}
+const STATIC_SETTINGS: SettingItem[] = [
+  { id: "voting", name: "voting", is_enable: false },
+  { id: "open-talent", name: "open-talent", is_enable: false },
+];
 
 export async function getSettings(): Promise<SettingItem[] | null> {
-  if (!API_BASE_URL) {
-    console.warn(
-      "[settings] API_BASE_URL is not configured — Feature flags will default to fail-open (enabled)",
-    );
-    return null;
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/v1/settings`, {
-      next: { revalidate: 60 },
-    });
-
-    if (!response.ok) return null;
-
-    const json: SettingsResponse = await response.json();
-    if (!json.success) return null;
-
-    return json.data;
-  } catch {
-    return null;
-  }
+  return STATIC_SETTINGS;
 }
 
 export function isFeatureEnabled(
   settings: SettingItem[] | null,
   featureName: string,
 ): boolean {
-  if (!settings) return true;
+  if (!settings) return false;
   const feature = settings.find((s) => s.name === featureName);
-  return feature?.is_enable ?? true;
+  return feature?.is_enable ?? false;
 }

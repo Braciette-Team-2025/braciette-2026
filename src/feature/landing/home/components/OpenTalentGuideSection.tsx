@@ -5,7 +5,6 @@ import { SUBMISSION_GUIDE_DATA } from "../constants/constants";
 import SubmissionTextbox from "./ui/SubmissionTextbox";
 import { useOpenTalentAnimation } from "../hooks/animation/useOpenTalentAnimation";
 import { LandingButton } from "./ui/LandingButton";
-import { useAuthStore } from "@/src/feature/auth/store/authStore";
 
 interface OpenTalentGuideSectionProps {
   disabled?: boolean;
@@ -14,8 +13,6 @@ interface OpenTalentGuideSectionProps {
 export default function OpenTalentGuideSection({
   disabled,
 }: OpenTalentGuideSectionProps) {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-
   const buttonHref = "/open-talent";
   const buttonDisabled = disabled;
 

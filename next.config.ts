@@ -1,13 +1,28 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${process.env.API_BASE_URL}/api/:path*`,
-      },
+  // Backend sudah dinonaktifkan (event selesai): tidak ada proxy /api lagi,
+  // dan semua halaman yang butuh backend dialihkan ke beranda.
+  async redirects() {
+    const disabled = [
+      "/login",
+      "/login/:path*",
+      "/exception",
+      "/admin",
+      "/admin/:path*",
+      "/ormawa",
+      "/ormawa/:path*",
+      "/oauth/:path*",
+      "/voting",
+      "/open-talent",
+      "/profile",
+      "/profile/:path*",
     ];
+    return disabled.map((source) => ({
+      source,
+      destination: "/",
+      permanent: false,
+    }));
   },
 
   async headers() {

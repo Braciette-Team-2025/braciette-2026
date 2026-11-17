@@ -13,16 +13,16 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({
-  votingEnabled = true,
-  openTalentEnabled = true,
+  votingEnabled = false,
+  openTalentEnabled = false,
 }: HeroSectionProps) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  const votingHref = !votingEnabled && !isAuthenticated ? "/login" : "/voting";
-  const votingDisabled = !votingEnabled && isAuthenticated;
+  const votingHref = "/";
+  const votingDisabled = votingEnabled;
 
-  const openTalentHref = "/open-talent";
-  const openTalentDisabled = !openTalentEnabled;
+  const openTalentHref = "/";
+  const openTalentDisabled = openTalentEnabled;
 
   const highlightClass =
     "font-sloop text-[60px] md:text-[120px] xl:text-[200px]";
